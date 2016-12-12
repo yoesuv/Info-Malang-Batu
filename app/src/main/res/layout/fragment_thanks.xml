@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:paddingRight="20dp"
+    android:paddingLeft="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/trims"
+        android:textSize="15sp"
+        android:id="@+id/textView_terima_kasih"
+        android:fontFamily="sans-serif-light"
+        android:layout_gravity="center_horizontal" />
+
+    <include layout="@layout/divider" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/person_1"
+            android:id="@+id/textView5"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/person_as"
+            android:id="@+id/textView6"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

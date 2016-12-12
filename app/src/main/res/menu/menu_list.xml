@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/more"
+        android:icon="@drawable/menu_more_white"
+        android:title=""
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/semua"
+                android:icon="@drawable/list_semua"
+                android:title="@string/semua"
+                android:checked="true" />
+
+            <item
+                android:id="@+id/list_kota_malang"
+                android:icon="@drawable/logo_kota_malang_64"
+                android:title="@string/kota_malang" />
+
+            <item
+                android:id="@+id/list_kota_batu"
+                android:icon="@drawable/logo_kota_batu_64"
+                android:title="@string/kota_batu" />
+
+            <item
+                android:id="@+id/list_kab_malang"
+                android:icon="@drawable/logo_kabupaten_malang_64"
+                android:title="@string/kab_malang" />
+            </group>
+        </menu>
+
+    </item>
+
+</menu>
