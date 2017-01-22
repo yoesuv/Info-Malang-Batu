@@ -27,11 +27,11 @@ import com.yoesuv.infomalangbatu.utils.PinsApiInterface;
 
 import java.util.List;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MapsFragment extends SupportMapFragment implements OnMapReadyCallback,
         GoogleMap.OnMyLocationButtonClickListener {
@@ -92,8 +92,8 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
             Call<List<PinMaps>> cMaps = iface.call();
             cMaps.enqueue(new Callback<List<PinMaps>>() {
                 @Override
-                public void onResponse(Response<List<PinMaps>> response, Retrofit retrofit) {
-                    if (response.isSuccess()) {
+                public void onResponse(Call<List<PinMaps>> call, Response<List<PinMaps>> response) {
+                    if(response.isSuccessful()) {
                         for (PinMaps pin : response.body()) {
                             MarkerOptions options = new MarkerOptions().position(new LatLng(pin.getLatitude(), pin.getLongitude()));
                             options.title(pin.getName());
@@ -108,9 +108,7 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
 
                             map.addMarker(options);
                         }
-
-                    } else {
-                        /* CONNECTION LOST */
+                    }else {
                         if (MapsFragment.this.isVisible()) {
                             snackbar = Snackbar.make(cLayout, getResources().getString(R.string.connection_fail), Snackbar.LENGTH_INDEFINITE);
                             snackbar.setAction(getResources().getString(R.string.try_again), new View.OnClickListener() {
@@ -124,17 +122,18 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
                 }
 
                 @Override
-                public void onFailure(Throwable t) {
-                    snackbar = Snackbar.make(cLayout, getResources().getString(R.string.no_inet), Snackbar.LENGTH_INDEFINITE);
-                    snackbar.setAction(getResources().getString(R.string.try_again), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            loadMap(map, mapType);
-                        }
-                    }).show();
+                public void onFailure(Call<List<PinMaps>> call, Throwable t) {
+                    if (MapsFragment.this.isVisible()) {
+                        snackbar = Snackbar.make(cLayout, getResources().getString(R.string.no_inet), Snackbar.LENGTH_INDEFINITE);
+                        snackbar.setAction(getResources().getString(R.string.try_again), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                loadMap(map, mapType);
+                            }
+                        }).show();
+                    }
                 }
             });
-
             map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(-7.982914, 112.630875)));
             map.animateCamera(CameraUpdateFactory.zoomTo(9));
         }

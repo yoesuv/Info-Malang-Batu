@@ -20,11 +20,11 @@ import com.yoesuv.infomalangbatu.utils.GalleryApiInterface;
 
 import java.util.List;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InfoGalleryFragment extends Fragment implements AdapterView.OnItemClickListener{
 
@@ -81,8 +81,8 @@ public class InfoGalleryFragment extends Fragment implements AdapterView.OnItemC
         Call<List<InfoGallery>> callData = iface.callGallery();
         callData.enqueue(new Callback<List<InfoGallery>>() {
             @Override
-            public void onResponse(Response<List<InfoGallery>> response, Retrofit retrofit) {
-                if(response.isSuccess()){
+            public void onResponse(Call<List<InfoGallery>> call, Response<List<InfoGallery>> response) {
+                if(response.isSuccessful()){
                     for(InfoGallery ig:response.body()){
                         adapter.add(ig);
                     }
@@ -101,7 +101,7 @@ public class InfoGalleryFragment extends Fragment implements AdapterView.OnItemC
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<List<InfoGallery>> call, Throwable t) {
                 if(InfoGalleryFragment.this.isVisible()){
                     snackbar = Snackbar.make(cLayout, getResources().getString(R.string.no_inet), Snackbar.LENGTH_INDEFINITE);
                     snackbar.setAction(getResources().getString(R.string.try_again), new View.OnClickListener() {

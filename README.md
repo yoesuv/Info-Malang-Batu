@@ -1,1 +1,1 @@
-Info Malang Batu versi 1.0.3
+Info Malang Batu versi 1.0.4

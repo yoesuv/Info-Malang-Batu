@@ -46,7 +46,7 @@ public class InfoGalleryAdapter extends ArrayAdapter<InfoGallery> {
         return convertView;
     }
 
-    class ThumbnailHolder{
+    private class ThumbnailHolder{
         ImageView thumbnail;
     }
 }
