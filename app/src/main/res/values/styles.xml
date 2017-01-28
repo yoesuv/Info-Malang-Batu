@@ -13,7 +13,7 @@
     </style>
 
     <style name="custom_button" parent="ThemeOverlay.AppCompat">
-        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

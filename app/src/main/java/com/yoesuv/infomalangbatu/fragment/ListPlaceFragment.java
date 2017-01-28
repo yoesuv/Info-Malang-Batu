@@ -36,11 +36,13 @@ public class ListPlaceFragment extends ListFragment{
     private CoordinatorLayout cLayout;
     private Snackbar snackbar;
 
-    private int idLokasi;
+    private int idLokasi,idLokasiBefore;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        idLokasiBefore = 100;
 
         cLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
         setHasOptionsMenu(true);
@@ -73,6 +75,11 @@ public class ListPlaceFragment extends ListFragment{
                 snackbar.dismiss();
             }
         }
+
+        if(idLokasiBefore==id){
+            return;
+        }
+
         setListShown(false);
         adapter.clear();
 
@@ -142,6 +149,8 @@ public class ListPlaceFragment extends ListFragment{
                 }
             }
         });
+
+        idLokasiBefore = id;
     }
 
     @Override
