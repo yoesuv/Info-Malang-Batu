@@ -46,7 +46,7 @@
     </string-array>
 
     <!-- INFORMASI -->
-    <string name="versi">Versi 1.0.3</string>
+    <string name="versi">Versi 1.0.4</string>
     <string name="my_name">Yusuf Saifudin</string>
     <string name="info">Informasi</string>
     <string name="contact">Kontak</string>
@@ -68,6 +68,13 @@
     <string name="person_as">(Tester)</string>
 
     <!-- CHANGELOG -->
+    <string name="ver_5">Versi 1.0.4</string>
+    <string name="ver_5_info">
+        <![CDATA[
+            + 1 tempat baru di kota Batu<br/>
+            + 1 tanda lokasi peta
+        ]]>
+    </string>
     <string name="ver_4">Versi 1.0.3</string>
     <string name="ver_4_info">
         <![CDATA[
