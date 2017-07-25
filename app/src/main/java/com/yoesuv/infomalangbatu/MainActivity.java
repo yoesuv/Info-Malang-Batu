@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -21,6 +22,8 @@ import com.yoesuv.infomalangbatu.fragment.HomeFragment;
 import com.yoesuv.infomalangbatu.fragment.InfoGalleryFragment;
 import com.yoesuv.infomalangbatu.fragment.ListPlaceFragment;
 import com.yoesuv.infomalangbatu.fragment.MapsFragment;
+
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         StartAppSDK.init(this, "201323394", true);

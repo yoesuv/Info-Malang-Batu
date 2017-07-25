@@ -27,6 +27,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA5znqaQFDcLmLclRKztkXfhJ9O-C1qBG0" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="655bd918bd372babeb0c6904b2ab35d1187a0d5a" />
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
