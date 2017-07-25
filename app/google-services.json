@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "958039428037",
+    "firebase_url": "https://info-malang-batu.firebaseio.com",
+    "project_id": "info-malang-batu",
+    "storage_bucket": "info-malang-batu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958039428037:android:f43e18b47f9d85b8",
+        "android_client_info": {
+          "package_name": "com.yoesuv.infomalangbatu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "958039428037-nakhsb7cah52sn9k5ie39ngcn5fvt9ta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yoesuv.infomalangbatu",
+            "certificate_hash": "d25a0a5fc12033710a355d53eb7dd152d2fa1701"
+          }
+        },
+        {
+          "client_id": "958039428037-g5cojmbkngms591qt8c3lnldd9rs3pe1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ1kvobjgNGeFzmU4zsDD-ADzqZseh0tM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "958039428037-g5cojmbkngms591qt8c3lnldd9rs3pe1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
