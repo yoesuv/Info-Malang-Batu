@@ -27,7 +27,7 @@
         app:cardUseCompatPadding="true"
         app:cardElevation="2dp">
 
-        <TextView
+        <com.yoesuv.infomalangbatu.utils.GravityRegularTextView
             android:layout_width="wrap_content"
             android:padding="5dp"
             android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
                 android:adjustViewBounds="true"
                 app:layout_columnWeight="1"/>
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityRegularTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -87,7 +87,7 @@
                 app:layout_columnWeight="1"
                 android:gravity="center" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityRegularTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -97,7 +97,7 @@
                 app:layout_columnWeight="1"
                 android:gravity="center" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityRegularTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
