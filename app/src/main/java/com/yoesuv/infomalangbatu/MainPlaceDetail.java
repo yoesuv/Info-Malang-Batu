@@ -1,5 +1,6 @@
 package com.yoesuv.infomalangbatu;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,9 +14,11 @@ import com.yoesuv.infomalangbatu.model.ListPlace;
 
 public class MainPlaceDetail extends AppCompatActivity {
 
+    public static String EXTRA_PLACE = "extra_place";
+
     private Toolbar toolbar;
     private ImageView imgPlaceDetail;
-    public static String EXTRA_PLACE = "extra_place";
+    private TextView tvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,22 +27,25 @@ public class MainPlaceDetail extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_detail);
         setSupportActionBar(toolbar);
+        tvTitle = (TextView) toolbar.findViewById(R.id.textView_title);
 
         ListPlace listPlace = getIntent().getExtras().getParcelable(EXTRA_PLACE);
 
         if(getSupportActionBar()!=null){
             getSupportActionBar().setElevation(5);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            if(listPlace!=null){
-                getSupportActionBar().setTitle(listPlace.getNama());
-            }
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+
+        Typeface tf = Typeface.createFromAsset(getResources().getAssets(),"pacifico.ttf");
+        tvTitle.setTypeface(tf);
 
         TextView tvPlace = (TextView) findViewById(R.id.textView_place_detail);
         imgPlaceDetail = (ImageView) findViewById(R.id.imageView_place_detail);
         imgPlaceDetail.setAdjustViewBounds(false);
 
         if(listPlace!=null){
+            tvTitle.setText(listPlace.getNama());
             tvPlace.setText(listPlace.getDeskripsi());
             Picasso.with(this).load(listPlace.getGambar()).placeholder(R.drawable.img_default).into(imgPlaceDetail, new Callback() {
 
