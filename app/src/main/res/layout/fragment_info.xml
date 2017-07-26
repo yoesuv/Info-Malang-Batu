@@ -25,7 +25,7 @@
                 android:layout_marginBottom="4dp"
                 android:adjustViewBounds="true" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityLightTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -34,7 +34,7 @@
                 android:fontFamily="sans-serif-light"
                 android:layout_gravity="center_horizontal" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityLightTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -43,7 +43,7 @@
                 android:fontFamily="sans-serif-light"
                 android:layout_gravity="center_horizontal" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityLightTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -54,7 +54,7 @@
 
             <include layout="@layout/divider" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -75,7 +75,7 @@
                     android:src="@drawable/twitter_96"
                     android:adjustViewBounds="true" />
 
-                <TextView
+                <com.yoesuv.infomalangbatu.utils.GravityLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -83,9 +83,11 @@
                     android:id="@+id/textView19"
                     android:fontFamily="sans-serif-light"
                     android:gravity="center_vertical"
+                    android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -99,7 +101,7 @@
                     android:src="@drawable/gmail_login_96"
                     android:adjustViewBounds="true" />
 
-                <TextView
+                <com.yoesuv.infomalangbatu.utils.GravityLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -107,12 +109,13 @@
                     android:id="@+id/textView20"
                     android:fontFamily="sans-serif-light"
                     android:gravity="center_vertical"
+                    android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp" />
             </LinearLayout>
 
             <include layout="@layout/divider" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -134,7 +137,7 @@
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/star_color" />
 
-                <TextView
+                <com.yoesuv.infomalangbatu.utils.GravityLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -142,12 +145,14 @@
                     android:id="@+id/textView_support"
                     android:fontFamily="sans-serif-light"
                     android:gravity="center_vertical"
+                    android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp" />
+
             </LinearLayout>
 
             <include layout="@layout/divider" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -169,7 +174,7 @@
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/high_priority_96" />
 
-                <TextView
+                <com.yoesuv.infomalangbatu.utils.GravityLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="11sp"
@@ -177,6 +182,7 @@
                     android:id="@+id/textView_disclaimer"
                     android:fontFamily="sans-serif-light"
                     android:gravity="center_vertical"
+                    android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp" />
             </LinearLayout>
 

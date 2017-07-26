@@ -19,7 +19,7 @@
             android:paddingTop="10dp"
             android:paddingRight="20dp">
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -27,7 +27,7 @@
                 android:text="@string/ver_5"
                 android:id="@+id/textView_ver_5" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityLightTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -37,7 +37,7 @@
 
             <include layout="@layout/divider" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -45,7 +45,7 @@
                 android:text="@string/ver_4"
                 android:id="@+id/textView_ver_4" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityLightTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -55,7 +55,7 @@
 
             <include layout="@layout/divider" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -63,7 +63,7 @@
                 android:text="@string/ver_3"
                 android:id="@+id/textView_ver_3" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityLightTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -73,7 +73,7 @@
 
             <include layout="@layout/divider" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -81,7 +81,7 @@
                 android:text="@string/ver_2"
                 android:id="@+id/textView_ver_2" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityLightTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -91,7 +91,7 @@
 
             <include layout="@layout/divider" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -99,7 +99,7 @@
                 android:text="@string/ver_1"
                 android:id="@+id/textView4" />
 
-            <TextView
+            <com.yoesuv.infomalangbatu.utils.GravityLightTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -108,5 +108,7 @@
                 android:id="@+id/textView_ver_1" />
 
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>

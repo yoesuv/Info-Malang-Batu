@@ -6,7 +6,7 @@
     android:paddingRight="20dp"
     android:paddingLeft="20dp">
 
-    <TextView
+    <com.yoesuv.infomalangbatu.utils.GravityLightTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/trims"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
 
-        <TextView
+        <com.yoesuv.infomalangbatu.utils.GravityLightTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/person_1"
@@ -32,7 +32,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center" />
 
-        <TextView
+        <com.yoesuv.infomalangbatu.utils.GravityLightTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/person_as"

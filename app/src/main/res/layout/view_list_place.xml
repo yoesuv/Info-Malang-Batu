@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
-                <TextView
+                <com.yoesuv.infomalangbatu.utils.GravityBoldTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="New Text"
@@ -56,14 +56,16 @@
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:layout_marginTop="12dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp" />
 
-                <TextView
+                <com.yoesuv.infomalangbatu.utils.GravityRegularTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="New Text"
                     android:id="@+id/textView_lokasi"
                     android:gravity="center_vertical"
+                    android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp" />
 
             </LinearLayout>
