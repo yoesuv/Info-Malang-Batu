@@ -15,17 +15,13 @@ import com.yoesuv.infomalangbatu.utils.ZoomOutPageTransformer;
 
 public class AboutFragment extends Fragment {
 
-    private View v;
-    private ViewPager vPager;
-    private TabLayout tabLayout;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_about, container, false);
+        View v = inflater.inflate(R.layout.fragment_about, container, false);
 
-        tabLayout = (TabLayout) v.findViewById(R.id.tabLayout);
-        vPager = (ViewPager) v.findViewById(R.id.viewPager);
+        TabLayout tabLayout = v.findViewById(R.id.tabLayout);
+        ViewPager vPager = v.findViewById(R.id.viewPager);
 
         vPager.setAdapter(new TabAdapter(v.getContext(), getChildFragmentManager()));
         vPager.setPageTransformer(true, new ZoomOutPageTransformer());

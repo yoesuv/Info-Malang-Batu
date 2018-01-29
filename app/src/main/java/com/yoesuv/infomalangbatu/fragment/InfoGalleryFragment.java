@@ -43,8 +43,8 @@ public class InfoGalleryFragment extends Fragment implements AdapterView.OnItemC
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        cLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
-        gView = (GridView) view.findViewById(R.id.grid_thumbnail);
+        cLayout = getActivity().findViewById(R.id.coordinator_layout);
+        gView = view.findViewById(R.id.grid_thumbnail);
         gView.setOnItemClickListener(this);
         gView.setDrawSelectorOnTop(true);
     }

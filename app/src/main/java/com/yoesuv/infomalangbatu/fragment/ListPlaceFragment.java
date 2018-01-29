@@ -44,7 +44,7 @@ public class ListPlaceFragment extends ListFragment{
 
         idLokasiBefore = 100;
 
-        cLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
+        cLayout = getActivity().findViewById(R.id.coordinator_layout);
         setHasOptionsMenu(true);
 
         getListView().setDivider(new ColorDrawable(Color.TRANSPARENT));

@@ -14,9 +14,6 @@ import com.yoesuv.infomalangbatu.R;
 
 public class ChildFragmentLibrary extends Fragment {
 
-    private View v;
-    private TextView tvIcons8;
-
     public static ChildFragmentLibrary getInstance(){
         return new ChildFragmentLibrary();
     }
@@ -24,9 +21,9 @@ public class ChildFragmentLibrary extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_library, container, false);
+        View v = inflater.inflate(R.layout.fragment_library, container, false);
 
-        tvIcons8 = (TextView) v.findViewById(R.id.textView_icons8_by);
+        TextView tvIcons8 = v.findViewById(R.id.textView_icons8_by);
         tvIcons8.setText(Html.fromHtml("<a href=\"http://icons8.com\">Icons8.com</a>"));
         tvIcons8.setMovementMethod(LinkMovementMethod.getInstance());
 

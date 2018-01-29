@@ -13,9 +13,6 @@ import com.yoesuv.infomalangbatu.R;
 
 public class ChildFragmentThanks extends Fragment {
 
-    private View v;
-    private TextView tvThanks;
-
     public static ChildFragmentThanks getInstance(){
         return new ChildFragmentThanks();
     }
@@ -23,8 +20,8 @@ public class ChildFragmentThanks extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_thanks, container, false);
-        tvThanks = (TextView) v.findViewById(R.id.textView_terima_kasih);
+        View v = inflater.inflate(R.layout.fragment_thanks, container, false);
+        TextView tvThanks = v.findViewById(R.id.textView_terima_kasih);
         tvThanks.setText(Html.fromHtml(getResources().getString(R.string.trims)));
 
         return v;
