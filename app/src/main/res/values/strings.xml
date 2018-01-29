@@ -68,6 +68,15 @@
     <string name="person_as">(Tester)</string>
 
     <!-- CHANGELOG -->
+    <string name="ver_6">Versi 1.0.5</string>
+    <string name="ver_6_info">
+        <![CDATA[
+            + 1 tempat baru di kota Batu<br/>
+            + 3 tempat baru di kab. Malang<br/>
+            + 3 galeri gambar<br/>
+            + 4 tanda lokasi peta
+        ]]>
+    </string>
     <string name="ver_5">Versi 1.0.4</string>
     <string name="ver_5_info">
         <![CDATA[
