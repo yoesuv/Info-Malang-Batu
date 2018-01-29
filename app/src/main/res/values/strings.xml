@@ -24,13 +24,13 @@
     <string name="mulai">MULAI</string>
     <string name="semua">Semua</string>
 
-    <string name="place_feed">https://gist.githubusercontent.com/yoesuv/252f56310942bd8d3657/raw/00e5a860fe9284c7cfda0dcfeb4819c9f3570b90/</string>
+    <string name="place_feed">https://gist.githubusercontent.com/yoesuv/252f56310942bd8d3657/raw/f0cf9082bea810c713ac855b9673b48b965e6710/</string>
     <string name="place_feed_kota_malang">https://gist.githubusercontent.com/yoesuv/364274aa0484dbc5ac4d/raw/4e599c24941e208caf50f8cc9f20725d57dac325/</string>
-    <string name="place_feed_kota_batu">https://gist.githubusercontent.com/yoesuv/9dc2940b133a7cf1886f/raw/7b93a77354aeae755f51160fc1bd036033425549/</string>
-    <string name="place_feed_kab_malang">https://gist.githubusercontent.com/yoesuv/8d126d4fe37e21cf4c43/raw/447b616ece4c0d4514de8cbd47306a1c0379b3c0/</string>
+    <string name="place_feed_kota_batu">https://gist.githubusercontent.com/yoesuv/9dc2940b133a7cf1886f/raw/4b48901aed77a6e89bb5d52cba72fe72e043a6e9/</string>
+    <string name="place_feed_kab_malang">https://gist.githubusercontent.com/yoesuv/8d126d4fe37e21cf4c43/raw/5a4e0b7b839c07885ddabeb1e482f0756e41baa7/</string>
 
-    <string name="gallery_feed">https://gist.githubusercontent.com/yoesuv/17039ff1fe37eae36359/raw/b11513dbdbe5af8ade6e6e0a97c2fcfd073ff271/</string>
-    <string name="pins_feed">https://gist.githubusercontent.com/yoesuv/e97a8b79328df283a60f/raw/2b9faa4f46fd6debc12f03ac5f56effb4d22fd90/</string>
+    <string name="gallery_feed">https://gist.githubusercontent.com/yoesuv/17039ff1fe37eae36359/raw/fd3ab2e58ce56aa56553853cf49c62f0ad9d4f47/</string>
+    <string name="pins_feed">https://gist.githubusercontent.com/yoesuv/e97a8b79328df283a60f/raw/d299fe0eef0285bd1dde5968484f7d133f6cceef/</string>
 
 
     <!-- ABOUT -->
