@@ -27,12 +27,10 @@ import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
     private TextView tvTitle;
     private String currentTitle;
     private int currentIdentifier;
 
-    private AccountHeader header;
     private Drawer myDrawer;
 
     private StartAppAd ads = new StartAppAd(this);
@@ -46,18 +44,18 @@ public class MainActivity extends AppCompatActivity {
         StartAppSDK.init(this, "201323394", true);
         StartAppAd.disableSplash();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if(getSupportActionBar()!=null){
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        tvTitle = (TextView) toolbar.findViewById(R.id.textView_title);
+        tvTitle = toolbar.findViewById(R.id.textView_title);
         Typeface tf = Typeface.createFromAsset(getResources().getAssets(),"pacifico.ttf");
         tvTitle.setTypeface(tf);
 
-        header = new AccountHeaderBuilder().withActivity(this).withHeaderBackground(R.drawable.drawer_header_2)
+        AccountHeader header = new AccountHeaderBuilder().withActivity(this).withHeaderBackground(R.drawable.drawer_header_2)
                 .withSavedInstance(savedInstanceState).build();
         myDrawer = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withAccountHeader(header)
                 .addDrawerItems(

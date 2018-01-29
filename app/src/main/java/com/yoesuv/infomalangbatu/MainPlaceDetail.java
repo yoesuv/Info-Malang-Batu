@@ -16,20 +16,23 @@ public class MainPlaceDetail extends AppCompatActivity {
 
     public static String EXTRA_PLACE = "extra_place";
 
-    private Toolbar toolbar;
     private ImageView imgPlaceDetail;
-    private TextView tvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_detail);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_detail);
+        Toolbar toolbar = findViewById(R.id.toolbar_detail);
         setSupportActionBar(toolbar);
-        tvTitle = (TextView) toolbar.findViewById(R.id.textView_title);
+        TextView tvTitle = toolbar.findViewById(R.id.textView_title);
 
-        ListPlace listPlace = getIntent().getExtras().getParcelable(EXTRA_PLACE);
+        ListPlace listPlace;
+        if(getIntent().getExtras()!=null) {
+            listPlace = getIntent().getExtras().getParcelable(EXTRA_PLACE);
+        }else{
+            listPlace = null;
+        }
 
         if(getSupportActionBar()!=null){
             getSupportActionBar().setElevation(5);
@@ -40,11 +43,11 @@ public class MainPlaceDetail extends AppCompatActivity {
         Typeface tf = Typeface.createFromAsset(getResources().getAssets(),"pacifico.ttf");
         tvTitle.setTypeface(tf);
 
-        TextView tvPlace = (TextView) findViewById(R.id.textView_place_detail);
-        imgPlaceDetail = (ImageView) findViewById(R.id.imageView_place_detail);
+        TextView tvPlace = findViewById(R.id.textView_place_detail);
+        imgPlaceDetail = findViewById(R.id.imageView_place_detail);
         imgPlaceDetail.setAdjustViewBounds(false);
 
-        if(listPlace!=null){
+        if(listPlace !=null){
             tvTitle.setText(listPlace.getNama());
             tvPlace.setText(listPlace.getDeskripsi());
             Picasso.with(this).load(listPlace.getGambar()).placeholder(R.drawable.img_default).into(imgPlaceDetail, new Callback() {

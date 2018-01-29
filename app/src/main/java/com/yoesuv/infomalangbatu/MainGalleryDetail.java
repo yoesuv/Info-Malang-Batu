@@ -13,8 +13,6 @@ import com.squareup.picasso.Picasso;
 
 public class MainGalleryDetail extends AppCompatActivity{
 
-    private Toolbar toolbar;
-    private TextView tvTitle,textView_desc;
     private ImageView img;
 
     public static String EXTRA_IMAGE = "extra_image";
@@ -25,9 +23,9 @@ public class MainGalleryDetail extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery_detail);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_gallery);
+        Toolbar toolbar = findViewById(R.id.toolbar_gallery);
         setSupportActionBar(toolbar);
-        tvTitle = (TextView) toolbar.findViewById(R.id.textView_title);
+        TextView tvTitle = toolbar.findViewById(R.id.textView_title);
 
         if(getSupportActionBar()!=null) {
             getSupportActionBar().setElevation(5);
@@ -39,21 +37,24 @@ public class MainGalleryDetail extends AppCompatActivity{
         tvTitle.setTypeface(tf);
         tvTitle.setText(R.string.gallery);
 
-        textView_desc = (TextView) findViewById(R.id.textView_gallery_detail);
-        img = (ImageView) findViewById(R.id.imageView_gallery_detail);
+        TextView textView_desc = findViewById(R.id.textView_gallery_detail);
+        img = findViewById(R.id.imageView_gallery_detail);
         img.setAdjustViewBounds(false);
 
-        textView_desc.setText(getIntent().getExtras().getString(EXTRA_DESC));
-        Picasso.with(this).load(getIntent().getExtras().getString(EXTRA_IMAGE)).placeholder(R.drawable.img_default).into(img, new Callback() {
-            @Override
-            public void onSuccess() {
-                img.setAdjustViewBounds(true);
-            }
-            @Override
-            public void onError() {
-                img.setImageResource(R.drawable.img_default);
-            }
-        });
+        if(getIntent().getExtras()!=null) {
+            textView_desc.setText(getIntent().getExtras().getString(EXTRA_DESC));
+            Picasso.with(this).load(getIntent().getExtras().getString(EXTRA_IMAGE)).placeholder(R.drawable.img_default).into(img, new Callback() {
+                @Override
+                public void onSuccess() {
+                    img.setAdjustViewBounds(true);
+                }
+
+                @Override
+                public void onError() {
+                    img.setImageResource(R.drawable.img_default);
+                }
+            });
+        }
     }
 
     @Override
