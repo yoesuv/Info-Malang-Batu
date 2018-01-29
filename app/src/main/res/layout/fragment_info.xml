@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/versi"
-                android:id="@+id/textView16"
+                android:id="@+id/textView_version_app"
                 android:fontFamily="sans-serif-light"
                 android:layout_gravity="center_horizontal" />
 

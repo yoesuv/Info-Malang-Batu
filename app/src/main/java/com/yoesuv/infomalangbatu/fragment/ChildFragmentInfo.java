@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yoesuv.infomalangbatu.BuildConfig;
 import com.yoesuv.infomalangbatu.R;
+import com.yoesuv.infomalangbatu.utils.GravityLightTextView;
 
 public class ChildFragmentInfo extends Fragment {
-
-    private View v;
 
     public static ChildFragmentInfo getInstance(){
         return new ChildFragmentInfo();
@@ -20,7 +20,12 @@ public class ChildFragmentInfo extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_info, container, false);
+        View v = inflater.inflate(R.layout.fragment_info, container, false);
+
+        GravityLightTextView textVersion = v.findViewById(R.id.textView_version_app);
+        String appVersion = "Versi "+ BuildConfig.VERSION_NAME;
+        textVersion.setText(appVersion);
+
         return v;
     }
 }
