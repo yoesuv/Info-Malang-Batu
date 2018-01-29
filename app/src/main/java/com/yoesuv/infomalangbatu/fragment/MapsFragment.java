@@ -1,10 +1,9 @@
 package com.yoesuv.infomalangbatu.fragment;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -36,6 +35,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MapsFragment extends SupportMapFragment implements OnMapReadyCallback,
         GoogleMap.OnMyLocationButtonClickListener {
 
+    private static final int REQUEST_LOCATION_CODE = 15;
+
     private CoordinatorLayout cLayout;
     private Snackbar snackbar;
     private GoogleMap gMap;
@@ -46,7 +47,7 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        cLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
+        cLayout = getActivity().findViewById(R.id.coordinator_layout);
         setHasOptionsMenu(true);
         getMapAsync(this);
     }
@@ -61,8 +62,24 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==REQUEST_LOCATION_CODE){
+            if(grantResults.length>0){
+                if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                    if(gMap!=null){
+                        loadMap(gMap, 1);
+                    }
+                }
+            }
+        }
+    }
+
     /* LOAD MAP */
     private void loadMap(final GoogleMap map, int type) {
+
+        map.clear();
 
         if (snackbar != null) {
             if (snackbar.isShown()) {
@@ -139,7 +156,11 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
         }
 
         map.setOnMyLocationButtonClickListener(this);
-        enableMyLocation();
+        if(checkLocationPermission()){
+            map.setMyLocationEnabled(true);
+            map.getUiSettings().setMyLocationButtonEnabled(true);
+            map.getUiSettings().setCompassEnabled(true);
+        }
 
     }
 
@@ -201,24 +222,14 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
         return false;
     }
 
-    private void enableMyLocation() {
-        if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                !=PackageManager.PERMISSION_GRANTED){
-            Log.e("permission","ACCESS LOCATION REQUIRED");
-            AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
-            ab.setMessage(getResources().getString(R.string.location_permission_denied));
-            ab.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            }).create();
-        }else if(gMap!=null) {
-            gMap.setMyLocationEnabled(true);
-            gMap.getUiSettings().setMyLocationButtonEnabled(true);
-            gMap.getUiSettings().setCompassEnabled(true);
+    private boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.e("result_error", "ACCESS LOCATION REQUIRED");
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_CODE);
+            return false;
+        } else {
+            return true;
         }
     }
-
 
 }
