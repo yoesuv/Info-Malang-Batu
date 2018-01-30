@@ -65,7 +65,7 @@ dependencies {
     compile('com.mikepenz:materialdrawer:4.6.4@aar') {
         transitive = true
     }
-    compile files('libs/StartAppInApp-3.5.1.jar')
+    compile 'com.startapp:inapp-sdk:3.6.9'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true
     }
