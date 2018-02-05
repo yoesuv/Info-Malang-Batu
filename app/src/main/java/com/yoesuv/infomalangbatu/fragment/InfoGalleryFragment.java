@@ -2,6 +2,7 @@ package com.yoesuv.infomalangbatu.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 
 import com.yoesuv.infomalangbatu.MainGalleryDetail;
 import com.yoesuv.infomalangbatu.R;
@@ -32,18 +34,20 @@ public class InfoGalleryFragment extends Fragment implements AdapterView.OnItemC
     private GridView gView;
     private InfoGalleryAdapter adapter;
     private Snackbar snackbar;
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_gallery, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        cLayout = getActivity().findViewById(R.id.coordinator_layout);
+        cLayout = view.findViewById(R.id.coordinator_layout);
+        progressBar = view.findViewById(R.id.progressBar_Gallery);
         gView = view.findViewById(R.id.grid_thumbnail);
         gView.setOnItemClickListener(this);
         gView.setDrawSelectorOnTop(true);
@@ -82,6 +86,7 @@ public class InfoGalleryFragment extends Fragment implements AdapterView.OnItemC
         callData.enqueue(new Callback<List<InfoGallery>>() {
             @Override
             public void onResponse(Call<List<InfoGallery>> call, Response<List<InfoGallery>> response) {
+                progressBar.setVisibility(View.INVISIBLE);
                 if(response.isSuccessful()){
                     for(InfoGallery ig:response.body()){
                         adapter.add(ig);
@@ -102,6 +107,7 @@ public class InfoGalleryFragment extends Fragment implements AdapterView.OnItemC
 
             @Override
             public void onFailure(Call<List<InfoGallery>> call, Throwable t) {
+                progressBar.setVisibility(View.INVISIBLE);
                 if(InfoGalleryFragment.this.isVisible()){
                     snackbar = Snackbar.make(cLayout, getResources().getString(R.string.no_inet), Snackbar.LENGTH_INDEFINITE);
                     snackbar.setAction(getResources().getString(R.string.try_again), new View.OnClickListener() {
