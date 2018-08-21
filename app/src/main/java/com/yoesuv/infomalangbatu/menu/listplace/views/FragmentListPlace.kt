@@ -1,14 +1,18 @@
 package com.yoesuv.infomalangbatu.menu.listplace.views
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentListplaceBinding
+import com.yoesuv.infomalangbatu.menu.listplace.adapters.ListPlaceAdapter
+import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentListPlaceViewModel
 
 class FragmentListPlace: Fragment() {
@@ -19,11 +23,49 @@ class FragmentListPlace: Fragment() {
         }
     }
 
+    private lateinit var viewModel: FragmentListPlaceViewModel
+    private lateinit var binding: FragmentListplaceBinding
+    private lateinit var adapter: ListPlaceAdapter
+    private var listPlace: MutableList<PlaceModel> = mutableListOf()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: FragmentListplaceBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_listplace, container, false)
-        val viewModel = ViewModelProviders.of(this).get(FragmentListPlaceViewModel::class.java)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_listplace, container, false)
+        viewModel = ViewModelProviders.of(this).get(FragmentListPlaceViewModel::class.java)
         binding.listplace = viewModel
+
+        setupRecycler()
+
+        viewModel.getListPlace()
+        viewModel.listPlaceResponse.observe(this, Observer {
+            onListDataChange(it)
+        })
+        viewModel.error.observe(this, Observer {
+
+        })
+
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.destroy()
+    }
+
+    private fun setupRecycler(){
+        val layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewListPlace.layoutManager = layoutManager
+        adapter = ListPlaceAdapter(activity!!, listPlace)
+        binding.recyclerViewListPlace.adapter = adapter
+    }
+
+    private fun onListDataChange(listPlace: MutableList<PlaceModel>?){
+        if(listPlace?.isNotEmpty()!!){
+            this.listPlace.clear()
+            this.listPlace.addAll(listPlace)
+            binding.recyclerViewListPlace.post{
+                adapter.notifyDataSetChanged()
+            }
+        }
     }
 
 }
