@@ -1,5 +1,6 @@
 package com.yoesuv.infomalangbatu;
 
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -163,4 +164,8 @@ public class MainActivity extends AppCompatActivity {
         ads.onBackPressed();
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
 }
