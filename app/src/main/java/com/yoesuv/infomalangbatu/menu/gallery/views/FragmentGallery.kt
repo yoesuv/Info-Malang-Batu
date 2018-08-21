@@ -19,11 +19,21 @@ class FragmentGallery: Fragment() {
         }
     }
 
+    private lateinit var viewModel:FragmentGalleryViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentGalleryBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false)
-        val viewModel = ViewModelProviders.of(this).get(FragmentGalleryViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(FragmentGalleryViewModel::class.java)
         binding.gallery = viewModel
+
+        viewModel.getGallery()
+
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.destroy()
     }
 
 }
