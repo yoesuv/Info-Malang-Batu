@@ -8,20 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="button_style" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorAccent">@color/colorPrimary</item>
-    </style>
-
-    <style name="custom_button" parent="ThemeOverlay.AppCompat">
-        <item name="colorButtonNormal">@color/colorPrimary</item>
-    </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="popUp" parent="ThemeOverlay.AppCompat.Light"/>
 
-    <style name="tab_style" parent="TextAppearance.Design.Tab">
-        <item name="android:textColor">@color/white_70</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
 </resources>
