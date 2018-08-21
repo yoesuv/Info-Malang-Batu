@@ -12,7 +12,7 @@
     <com.yoesuv.infomalangbatu.widgets.ForegroundRelativeLayout
         android:id="@+id/layoutMainItemListPlace"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_170sdp">
+        android:layout_height="@dimen/_160sdp">
 
         <FrameLayout
             android:layout_width="match_parent"
