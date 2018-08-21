@@ -40,15 +40,26 @@ android {
         targetSdkVersion 27
         versionCode 6
         versionName "1.0.5"
+        setProperty("archivesBaseName", applicationId+"-v"+versionCode+"("+versionName+")")
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
         debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+        }
+    }
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res',
+                    'src/main/res-menu'
+            ]
         }
     }
 }
@@ -63,6 +74,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.intuit.ssp:ssp-android:$project.sspVersion"
+    implementation "com.intuit.sdp:sdp-android:$project.sdpVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'
