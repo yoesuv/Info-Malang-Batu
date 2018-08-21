@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Info Malang Batu</string>
 
+    <!-- MENU APPLICATION -->
+    <string name="menu_list">Lokasi</string>
+    <string name="menu_gallery">Galeri</string>
+    <string name="menu_maps">Peta</string>
+    <string name="menu_other">Lainnya</string>
+
     <string name="drawer_opened">Pilih Menu </string>
 
     <string name="home">Awal\u0020</string>

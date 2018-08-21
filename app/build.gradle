@@ -15,6 +15,8 @@ buildscript {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 
 repositories {
@@ -62,6 +64,22 @@ android {
             ]
         }
     }
+    flavorDimensions "default"
+    productFlavors {
+        development {
+            buildConfigField "String", "BASE_URL", "\"https://info-madiun.firebaseapp.com/\""
+        }
+        production {
+            buildConfigField "String", "BASE_URL", "\"https://info-madiun.firebaseapp.com/\""
+        }
+    }
+    dataBinding{
+        enabled = true
+    }
+}
+
+androidExtensions {
+    experimental = true
 }
 
 dependencies {
@@ -76,6 +94,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.intuit.ssp:ssp-android:$project.sspVersion"
     implementation "com.intuit.sdp:sdp-android:$project.sdpVersion"
+    //implementation "com.android.databinding:compiler:$project.dataBindingCompilerVersion"
+
+    implementation "android.arch.lifecycle:extensions:$project.archLifecycleVersion"
+    kapt "android.arch.lifecycle:compiler:$project.archLifecycleVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'
