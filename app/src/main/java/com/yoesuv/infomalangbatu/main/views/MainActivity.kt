@@ -8,6 +8,9 @@ import android.view.WindowManager
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.ActivityMainBinding
 import com.yoesuv.infomalangbatu.main.viewmodels.MainViewModel
+import com.yoesuv.infomalangbatu.menu.gallery.views.FragmentGallery
+import com.yoesuv.infomalangbatu.menu.listplace.views.FragmentListPlace
+import com.yoesuv.infomalangbatu.menu.other.views.FragmentOther
 import com.yoesuv.infomalangbatu.utils.BottomNavigationViewHelper
 
 class MainActivity: AppCompatActivity() {
@@ -24,6 +27,8 @@ class MainActivity: AppCompatActivity() {
 
         setupToolbar()
         setupBottomNavigation()
+
+        supportFragmentManager.beginTransaction().replace(R.id.containerMain, FragmentListPlace.getInstance()).commit()
     }
 
     private fun setupToolbar(){
@@ -34,6 +39,14 @@ class MainActivity: AppCompatActivity() {
     private fun setupBottomNavigation(){
         binding.bottomNavigationViewMain.itemIconTintList = null
         BottomNavigationViewHelper.disableShiftMode(binding.bottomNavigationViewMain)
+        binding.bottomNavigationViewMain.setOnNavigationItemSelectedListener {
+            when {
+                it.itemId==R.id.menuList -> supportFragmentManager.beginTransaction().replace(R.id.containerMain, FragmentListPlace.getInstance()).commit()
+                it.itemId==R.id.menuGallery -> supportFragmentManager.beginTransaction().replace(R.id.containerMain, FragmentGallery.getInstance()).commit()
+                else -> supportFragmentManager.beginTransaction().replace(R.id.containerMain, FragmentOther.getInstance()).commit()
+            }
+            return@setOnNavigationItemSelectedListener true
+        }
     }
 
 }

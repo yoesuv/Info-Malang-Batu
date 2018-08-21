@@ -60,17 +60,20 @@ android {
         main {
             res.srcDirs = [
                     'src/main/res',
-                    'src/main/res-menu'
+                    'src/main/res-menu',
+                    'src/main/res-menu/listplace',
+                    'src/main/res-menu/gallery',
+                    'src/main/res-menu/other'
             ]
         }
     }
     flavorDimensions "default"
     productFlavors {
         development {
-            buildConfigField "String", "BASE_URL", "\"https://info-madiun.firebaseapp.com/\""
+            buildConfigField "String", "BASE_URL", "\"https://info-malang-batu.firebaseapp.com/\""
         }
         production {
-            buildConfigField "String", "BASE_URL", "\"https://info-madiun.firebaseapp.com/\""
+            buildConfigField "String", "BASE_URL", "\"https://info-malang-batu.firebaseapp.com/\""
         }
     }
     dataBinding{
