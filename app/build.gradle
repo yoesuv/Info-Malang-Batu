@@ -63,6 +63,7 @@ android {
                     'src/main/res-menu',
                     'src/main/res-menu/listplace',
                     'src/main/res-menu/gallery',
+                    'src/main/res-menu/maps',
                     'src/main/res-menu/other'
             ]
         }
