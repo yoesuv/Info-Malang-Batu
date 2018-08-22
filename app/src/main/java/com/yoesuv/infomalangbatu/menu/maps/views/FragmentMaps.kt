@@ -8,12 +8,11 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
+import com.yoesuv.infomalangbatu.menu.maps.adapters.MyCustomInfoWindowAdapter
+import com.yoesuv.infomalangbatu.menu.maps.models.MarkerTag
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.networks.ServiceFactory
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,6 +29,8 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
 
     private val restApi = ServiceFactory.create()
     private val compositeDisposable = CompositeDisposable()
+
+    private var markerLocation: Marker? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,7 +63,10 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
                 markerOptions.position(LatLng(pin.latitude!!, pin.longitude!!))
                 markerOptions.title(pin.name)
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin))
-                googleMap?.addMarker(markerOptions)
+                markerLocation =  googleMap?.addMarker(markerOptions)
+                markerLocation?.tag = MarkerTag(pin.name!!, 0, pin.latitude, pin.longitude)
+
+                googleMap?.setInfoWindowAdapter(MyCustomInfoWindowAdapter(activity))
             }
         }
     }
