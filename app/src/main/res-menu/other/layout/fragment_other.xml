@@ -7,16 +7,22 @@
             type="com.yoesuv.infomalangbatu.menu.other.viewmodels.FragmentOtherViewModel"/>
     </data>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.yoesuv.infomalangbatu.widgets.TextViewPacifico
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Fragment Other"/>
+        <com.gigamole.navigationtabstrip.NavigationTabStrip
+            android:id="@+id/navigationTabStrip"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"/>
 
-    </RelativeLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPagerOther"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
 
 </layout>

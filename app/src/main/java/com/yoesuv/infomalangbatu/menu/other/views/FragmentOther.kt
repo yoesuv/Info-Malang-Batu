@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentOtherBinding
+import com.yoesuv.infomalangbatu.menu.other.adapters.TabOtherAdapter
 import com.yoesuv.infomalangbatu.menu.other.viewmodels.FragmentOtherViewModel
 
 class FragmentOther: Fragment() {
@@ -23,6 +24,10 @@ class FragmentOther: Fragment() {
         val binding: FragmentOtherBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_other, container, false)
         val viewModel = ViewModelProviders.of(this).get(FragmentOtherViewModel::class.java)
         binding.other = viewModel
+
+        binding.viewPagerOther.adapter = TabOtherAdapter(childFragmentManager)
+        binding.navigationTabStrip.setViewPager(binding.viewPagerOther)
+
         return binding.root
     }
 
