@@ -8,10 +8,13 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.MarkerOptions
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
+import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.networks.ServiceFactory
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -38,17 +41,30 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
         compositeDisposable.clear()
     }
 
-    private fun getMapPins(){
+    private fun getMapPins(googleMap: GoogleMap?){
         compositeDisposable.add(
                 restApi.getMapPins()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # map pin size ${it.size}")
+                            setupPin(googleMap, it)
                         },{
 
                         })
         )
+    }
+
+    private fun setupPin(googleMap: GoogleMap?, listPin: MutableList<PinModel>){
+        if (listPin.isNotEmpty()) {
+            for (pin in listPin){
+                val markerOptions = MarkerOptions()
+                markerOptions.position(LatLng(pin.latitude!!, pin.longitude!!))
+                markerOptions.title(pin.name)
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin))
+                googleMap?.addMarker(markerOptions)
+            }
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
@@ -58,6 +74,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
         googleMap?.animateCamera(CameraUpdateFactory.zoomTo(9F))
         googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.style_map))
 
-        getMapPins()
+        getMapPins(googleMap)
     }
 }
