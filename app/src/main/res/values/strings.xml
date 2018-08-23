@@ -39,18 +39,6 @@
     <string name="pins_feed">https://gist.githubusercontent.com/yoesuv/e97a8b79328df283a60f/raw/d299fe0eef0285bd1dde5968484f7d133f6cceef/</string>
 
 
-    <!-- ABOUT -->
-    <string name="informasi">Informasi</string>
-    <string name="changelog">versi rilis</string>
-    <string name="thanks_to">Terima kasih</string>
-    <string name="library">Pustaka</string>
-    <string-array name="tab_text">
-        <item>@string/informasi</item>
-        <item>@string/changelog</item>
-        <item>@string/thanks_to</item>
-        <item>@string/library</item>
-    </string-array>
-
     <!-- INFORMASI -->
     <string name="versi">Versi 1.0.4</string>
     <string name="my_name">Yusuf Saifudin</string>

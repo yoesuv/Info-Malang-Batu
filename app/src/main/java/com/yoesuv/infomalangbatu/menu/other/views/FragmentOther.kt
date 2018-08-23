@@ -2,8 +2,10 @@ package com.yoesuv.infomalangbatu.menu.other.views
 
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +29,12 @@ class FragmentOther: Fragment() {
 
         binding.viewPagerOther.adapter = TabOtherAdapter(childFragmentManager)
         binding.navigationTabStrip.setViewPager(binding.viewPagerOther)
+        binding.navigationTabStrip.setTitles(getString(R.string.info), getString(R.string.changelog), getString(R.string.thanks_to), getString(R.string.library))
+        binding.navigationTabStrip.inactiveColor = ContextCompat.getColor(context!!, R.color.grey_50)
+        binding.navigationTabStrip.activeColor = Color.WHITE
+        binding.navigationTabStrip.stripColor = ContextCompat.getColor(context!!, R.color.colorAccent)
+        binding.navigationTabStrip.titleSize = 25F
+        binding.navigationTabStrip.cornersRadius = 0F
 
         return binding.root
     }

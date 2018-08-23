@@ -15,7 +15,7 @@
         <com.gigamole.navigationtabstrip.NavigationTabStrip
             android:id="@+id/navigationTabStrip"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="@dimen/_35sdp"
             android:background="@color/colorPrimary"/>
 
         <android.support.v4.view.ViewPager

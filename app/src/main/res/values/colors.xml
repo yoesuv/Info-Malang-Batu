@@ -5,4 +5,5 @@
     <color name="colorAccent">#FFC107</color>
 
     <color name="default_text_color">#808080</color>
+    <color name="grey_50">#FAFAFA</color>
 </resources>
