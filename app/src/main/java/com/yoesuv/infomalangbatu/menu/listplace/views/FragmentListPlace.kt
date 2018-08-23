@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.yoesuv.infomalangbatu.R
+import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databinding.FragmentListplaceBinding
 import com.yoesuv.infomalangbatu.menu.listplace.adapters.ListPlaceAdapter
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
@@ -42,7 +44,8 @@ class FragmentListPlace: Fragment() {
             onListDataChange(it)
         })
         viewModel.error.observe(this, Observer {
-
+            Log.e(AppConstants.TAG_ERROR,"FragmentListPlace # error ${it?.message}")
+            it?.printStackTrace()
         })
 
         return binding.root
