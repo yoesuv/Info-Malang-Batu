@@ -1,11 +1,14 @@
 package com.yoesuv.infomalangbatu.menu.other.views
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.yoesuv.infomalangbatu.R
+import com.yoesuv.infomalangbatu.databinding.ChildFragmentThanksBinding
+import com.yoesuv.infomalangbatu.utils.AppHelper
 
 class ChildFragmentThanks: Fragment() {
 
@@ -16,7 +19,9 @@ class ChildFragmentThanks: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.child_fragment_thanks, container, false)
+        val binding: ChildFragmentThanksBinding = DataBindingUtil.inflate(inflater, R.layout.child_fragment_thanks, container, false)
+        binding.textViewThanks.text = AppHelper.fromHtml(getString(R.string.trims))
+        return binding.root
     }
 
 }

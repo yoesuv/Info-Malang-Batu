@@ -5,4 +5,14 @@
     <string name="changelog">Versi Rilis</string>
     <string name="thanks_to">Terima kasih</string>
     <string name="library">Pustaka</string>
+
+    <!-- THANKS -->
+    <string name="trims">
+        <![CDATA[
+        terima kasih kepada <i>blog-blog</i> maupun perorangan yang fotonya dimuat dalam aplikasi ini, dan tidak bisa
+    disebutkan satu persatu (<i>kalian luar biasa</i>....).
+        ]]>
+    </string>
+    <string name="person_1">Ahmad Sofi (Tester)</string>
+
 </resources>
