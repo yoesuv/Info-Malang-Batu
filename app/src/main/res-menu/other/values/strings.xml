@@ -6,6 +6,59 @@
     <string name="thanks_to">Terima kasih</string>
     <string name="library">Pustaka</string>
 
+    <!-- CHANGELOG -->
+    <string name="ver_6">Versi 1.0.5</string>
+    <string name="ver_6_info">
+        <![CDATA[
+            + 1 tempat baru di kota Batu<br/>
+            + 3 tempat baru di kab. Malang<br/>
+            + 3 galeri gambar<br/>
+            + 4 tanda lokasi peta
+        ]]>
+    </string>
+    <string name="ver_5">Versi 1.0.4</string>
+    <string name="ver_5_info">
+        <![CDATA[
+            + 1 tempat baru di kota Batu<br/>
+            + 1 tanda lokasi peta
+        ]]>
+    </string>
+    <string name="ver_4">Versi 1.0.3</string>
+    <string name="ver_4_info">
+        <![CDATA[
+            • perbaruan kecil design<br/>
+            + 2 tempat baru di kota Malang<br/>
+            + 2 tanda lokasi peta
+        ]]>
+    </string>
+    <string name="ver_3">Versi 1.0.2</string>
+    <string name="ver_3_info">
+        <![CDATA[
+            • perbaruan kecil design<br/>
+            + 2 tempat baru di kab. Malang<br/>
+            + 3 galeri gambar<br/>
+            + 2 tanda lokasi peta
+        ]]>
+    </string>
+    <string name="ver_2">Versi 1.0.1</string>
+    <string name="ver_2_info">
+        <![CDATA[
+            • menu navigasi baru<br/>
+            + 11 tempat baru di kab. Malang<br/>
+            + 3 galeri gambar<br/>
+            + 10 tanda lokasi peta
+        ]]>
+    </string>
+    <string name="ver_1">Versi 1.0.0</string>
+    <string name="ver_1_info">
+        <![CDATA[
+            • rilis perdana<br/>
+            • 38 daftar tempat<br/>
+            • 30 galeri gambar<br/>
+            • 36 tanda lokasi peta
+        ]]>
+    </string>
+
     <!-- THANKS -->
     <string name="trims">
         <![CDATA[
