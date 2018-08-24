@@ -43,6 +43,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".menu.listplace.views.DetailListPlaceActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>
