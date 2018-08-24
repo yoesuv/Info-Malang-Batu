@@ -20,6 +20,7 @@ class ItemListPlaceViewModel(private val weakContext: WeakReference<FragmentActi
     fun itemClick(view: View){
         Log.d(AppConstants.TAG_DEBUG,"ItemListPlaceViewModel # $placeModel")
         val intent = Intent(weakContext.get(), DetailListPlaceActivity::class.java)
+        intent.putExtra(DetailListPlaceActivity.EXTRA_DATA_LISTPLACE, placeModel)
         weakContext.get()?.startActivity(intent)
     }
 

@@ -7,9 +7,15 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.ActivityDetailListplaceBinding
+import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
+import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.CustomDetailListPlaceViewModelFactory
 import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.DetailListPlaceViewModel
 
 class DetailListPlaceActivity: AppCompatActivity() {
+
+    companion object {
+        const val EXTRA_DATA_LISTPLACE = "extra_data_list_place"
+    }
 
     private lateinit var binding: ActivityDetailListplaceBinding
     private lateinit var viewModel: DetailListPlaceViewModel
@@ -17,7 +23,8 @@ class DetailListPlaceActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_listplace)
-        viewModel = ViewModelProviders.of(this).get(DetailListPlaceViewModel::class.java)
+        val placeModel: PlaceModel? = intent?.getParcelableExtra(EXTRA_DATA_LISTPLACE)
+        viewModel = ViewModelProviders.of(this, CustomDetailListPlaceViewModelFactory(placeModel, application)).get(DetailListPlaceViewModel::class.java)
         binding.listPlace = viewModel
 
         setupToolbar()
