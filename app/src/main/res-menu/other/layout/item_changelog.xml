@@ -22,9 +22,9 @@
             android:id="@+id/textViewItemChangeLogVersion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
             android:textStyle="bold"
             android:text="@{changelog.version}"
-            android:textColor="@color/colorPrimary"
             tools:text="@string/app_name"/>
 
         <android.support.v7.widget.AppCompatTextView
@@ -39,6 +39,7 @@
             android:id="@+id/dividerItemChangeLog"
             android:layout_width="match_parent"
             android:layout_height="1px"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_below="@id/textViewItemChangeLogDescription"
             layout="@layout/divider"/>
 

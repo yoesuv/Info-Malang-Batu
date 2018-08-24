@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.ChildFragmentChangelogBinding
 import com.yoesuv.infomalangbatu.menu.other.adapters.ChangeLogAdapter
+import com.yoesuv.infomalangbatu.menu.other.models.ChangeLogModel
 import com.yoesuv.infomalangbatu.menu.other.viewmodels.ChildFragmentChangelogViewModel
 
 class ChildFragmentChangeLog: Fragment() {
@@ -25,6 +26,7 @@ class ChildFragmentChangeLog: Fragment() {
     private lateinit var binding: ChildFragmentChangelogBinding
     private lateinit var viewModel: ChildFragmentChangelogViewModel
     private lateinit var adapter:ChangeLogAdapter
+    private var listChangeLog: MutableList<ChangeLogModel> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.child_fragment_changelog, container, false)
@@ -35,7 +37,7 @@ class ChildFragmentChangeLog: Fragment() {
 
         viewModel.setupData(context!!)
         viewModel.listData.observe(this, Observer {
-
+            onListDataChange(it)
         })
 
         return binding.root
@@ -44,9 +46,18 @@ class ChildFragmentChangeLog: Fragment() {
     private fun setupRecycler(){
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerViewChangelog.layoutManager = layoutManager
-        adapter = ChangeLogAdapter(activity!!)
+        adapter = ChangeLogAdapter(activity!!, listChangeLog)
         binding.recyclerViewChangelog.adapter = adapter
+    }
 
+    private fun onListDataChange(list: MutableList<ChangeLogModel>?){
+        if (list?.isNotEmpty()!!){
+            listChangeLog.clear()
+            listChangeLog.addAll(list)
+            binding.recyclerViewChangelog.post {
+                adapter.notifyDataSetChanged()
+            }
+        }
     }
 
 }

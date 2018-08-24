@@ -13,12 +13,13 @@ class ChildFragmentChangelogViewModel: ViewModel() {
 
     fun setupData(context: Context){
         listChangelog.clear()
+        listChangelog.add(ChangeLogModel(context.getString(R.string.ver_7),context.getString(R.string.ver_7_info), false))
         listChangelog.add(ChangeLogModel(context.getString(R.string.ver_6),context.getString(R.string.ver_6_info), false))
         listChangelog.add(ChangeLogModel(context.getString(R.string.ver_5),context.getString(R.string.ver_5_info), false))
         listChangelog.add(ChangeLogModel(context.getString(R.string.ver_4),context.getString(R.string.ver_4_info), false))
         listChangelog.add(ChangeLogModel(context.getString(R.string.ver_3),context.getString(R.string.ver_3_info), false))
         listChangelog.add(ChangeLogModel(context.getString(R.string.ver_2),context.getString(R.string.ver_2_info), false))
-        listChangelog.add(ChangeLogModel(context.getString(R.string.ver_1),context.getString(R.string.ver_1_info), false))
+        listChangelog.add(ChangeLogModel(context.getString(R.string.ver_1),context.getString(R.string.ver_1_info), true))
         listData.value = listChangelog
     }
 

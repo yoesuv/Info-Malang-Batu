@@ -1,17 +1,18 @@
 package com.yoesuv.infomalangbatu.menu.other.adapters
 
-import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.yoesuv.infomalangbatu.R
+import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databinding.ItemChangelogBinding
 import com.yoesuv.infomalangbatu.menu.other.models.ChangeLogModel
 import com.yoesuv.infomalangbatu.menu.other.viewmodels.ItemChangeLogViewModel
 
-class ChangeLogAdapter(val activity: FragmentActivity): RecyclerView.Adapter<ChangeLogAdapter.ChangeLogViewHolder>() {
+class ChangeLogAdapter(val activity: FragmentActivity, private var listChangeLog: MutableList<ChangeLogModel>): RecyclerView.Adapter<ChangeLogAdapter.ChangeLogViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChangeLogViewHolder {
         val binding: ItemChangelogBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.item_changelog, parent, false)
@@ -19,18 +20,19 @@ class ChangeLogAdapter(val activity: FragmentActivity): RecyclerView.Adapter<Cha
     }
 
     override fun getItemCount(): Int {
-        return 10
+        return listChangeLog.size
     }
 
     override fun onBindViewHolder(holder: ChangeLogViewHolder, position: Int) {
-        holder.bindData(activity, null)
+        val fixPosition = holder.adapterPosition
+        holder.bindData(listChangeLog[fixPosition])
     }
 
     class ChangeLogViewHolder(val binding: ItemChangelogBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bindData(activity: FragmentActivity, changeLogModel: ChangeLogModel?){
-            val viewModel = ViewModelProviders.of(activity).get(ItemChangeLogViewModel::class.java)
-            binding.changelog = viewModel
+        fun bindData(changeLogModel: ChangeLogModel?){
+            Log.d(AppConstants.TAG_DEBUG,"ChangeLogAdapter # ${changeLogModel?.title}")
+            binding.changelog = ItemChangeLogViewModel(changeLogModel)
         }
 
     }

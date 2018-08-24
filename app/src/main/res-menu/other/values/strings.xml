@@ -7,6 +7,13 @@
     <string name="library">Pustaka</string>
 
     <!-- CHANGELOG -->
+    <string name="ver_7">Versi 2.0.0</string>
+    <string name="ver_7_info">
+        <![CDATA[
+            • desain baru aplikasi<br/>
+            + fitur petunjuk arah
+        ]]>
+    </string>
     <string name="ver_6">Versi 1.0.5</string>
     <string name="ver_6_info">
         <![CDATA[
