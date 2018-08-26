@@ -16,6 +16,11 @@
 #   public *;
 #}
 
+# BottomNavigationViewHelper
+-keepclassmembers class android.support.design.internal.BottomNavigationMenuView {
+    boolean mShiftingMode;
+}
+
 # OkHttp
 -keepattributes Signature
 -keepattributes *Annotation*
