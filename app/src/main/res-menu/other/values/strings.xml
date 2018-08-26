@@ -6,6 +6,8 @@
     <string name="thanks_to">Terima kasih</string>
     <string name="library">Pustaka</string>
 
+    <string name="info_app_version">Versi %1$s</string>
+
     <!-- CHANGELOG -->
     <string name="ver_7">Versi 2.0.0</string>
     <string name="ver_7_info">

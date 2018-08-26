@@ -19,10 +19,10 @@
 
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/imageViewAppInfo"
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_100sdp"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/placeholder_image"/>
+                    app:srcCompat="@drawable/ic_app_info"/>
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -40,7 +40,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:text="@string/app_name"
-                        android:textSize="@dimen/_18ssp"
+                        android:textSize="@dimen/_16ssp"
+                        android:textStyle="bold"
                         android:textColor="@color/default_text_color"/>
 
                     <android.support.v7.widget.AppCompatTextView
