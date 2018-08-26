@@ -28,10 +28,10 @@ repositories {
 android {
     signingConfigs {
         config {
-            keyAlias 'yoesuv'
-            keyPassword 'idamanmertua'
-            storeFile file('/home/yusuf/Documents/compile/-yusuf.keystore')
-            storePassword 'idamanmertua'
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+            storeFile file('../-yusuf.keystore')
+            storePassword STORE_PASSWORD
         }
     }
     compileSdkVersion 27
