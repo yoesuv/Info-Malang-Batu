@@ -1,9 +1,10 @@
 package com.yoesuv.infomalangbatu.menu.other.views
 
-import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
@@ -12,7 +13,6 @@ import android.view.ViewGroup
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentOtherBinding
 import com.yoesuv.infomalangbatu.menu.other.adapters.TabOtherAdapter
-import com.yoesuv.infomalangbatu.menu.other.viewmodels.FragmentOtherViewModel
 
 class FragmentOther: Fragment() {
 
@@ -24,8 +24,6 @@ class FragmentOther: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentOtherBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_other, container, false)
-        val viewModel = ViewModelProviders.of(this).get(FragmentOtherViewModel::class.java)
-        binding.other = viewModel
 
         binding.viewPagerOther.adapter = TabOtherAdapter(childFragmentManager)
         binding.navigationTabStrip.setViewPager(binding.viewPagerOther)
@@ -36,7 +34,20 @@ class FragmentOther: Fragment() {
         binding.navigationTabStrip.titleSize = 25F
         binding.navigationTabStrip.cornersRadius = 0F
 
+        setupAppBar(0F)
+
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        setupAppBar(8F)
+    }
+
+    private fun setupAppBar(elevation: Float){
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+            activity?.findViewById<AppBarLayout>(R.id.appBarMain)?.elevation = elevation
+        }
     }
 
 }

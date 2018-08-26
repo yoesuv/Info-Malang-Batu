@@ -1,5 +1,5 @@
 
 # Info Malang Batu #
 
-versi 1.0.5
-version code 6
+version name 2.0.0<br/>
+version code 7
