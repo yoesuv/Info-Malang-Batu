@@ -1,6 +1,8 @@
 package com.yoesuv.infomalangbatu.menu.maps.views
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.SystemClock
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.View
@@ -15,6 +17,7 @@ import com.yoesuv.infomalangbatu.menu.maps.adapters.MyCustomInfoWindowAdapter
 import com.yoesuv.infomalangbatu.menu.maps.models.MarkerTag
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.networks.ServiceFactory
+import com.yoesuv.infomalangbatu.utils.BounceAnimation
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -71,6 +74,16 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
         }
     }
 
+    private fun setMarkerAnimation(googleMap: GoogleMap?){
+        googleMap?.setOnMarkerClickListener {
+            val handler = Handler()
+            val anim = BounceAnimation(SystemClock.uptimeMillis(), 1000L, it, handler)
+            handler.post(anim)
+            it.showInfoWindow()
+            return@setOnMarkerClickListener true
+        }
+    }
+
     override fun onMapReady(googleMap: GoogleMap?) {
         Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # onMapReady")
         googleMap?.clear()
@@ -79,5 +92,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
         googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.style_map))
 
         getMapPins(googleMap)
+        setMarkerAnimation(googleMap)
     }
 }
