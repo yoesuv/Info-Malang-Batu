@@ -1,6 +1,7 @@
 package com.yoesuv.infomalangbatu.main.views
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -30,6 +31,13 @@ class MainActivity: AppCompatActivity() {
         setupBottomNavigation()
 
         supportFragmentManager.beginTransaction().replace(R.id.containerMain, FragmentListPlace.getInstance()).commit()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        for(fragment in supportFragmentManager.fragments){
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
     }
 
     private fun setupToolbar(){

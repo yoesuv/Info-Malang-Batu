@@ -1,10 +1,20 @@
 package com.yoesuv.infomalangbatu.utils
 
+import android.app.Activity
 import com.yoesuv.infomalangbatu.R
 import android.content.Context
+import android.content.IntentSender
 import android.location.LocationManager
 import android.os.Build
 import android.text.Html
+import android.util.Log
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
+import com.google.android.gms.tasks.Task
+import com.yoesuv.infomalangbatu.data.AppConstants
+import com.yoesuv.infomalangbatu.menu.maps.views.FragmentMaps
 
 /**
  *  Created by yusuf on 5/1/18.
@@ -32,6 +42,36 @@ object AppHelper {
             Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY).toString()
         }else{
             Html.fromHtml(source).toString()
+        }
+    }
+
+    fun displayLocationSettingsRequest(activity: Activity){
+        val googleApiClient = GoogleApiClient.Builder(activity.applicationContext).addApi(LocationServices.API).build()
+        googleApiClient.connect()
+        val locationRequest: LocationRequest = LocationRequest.create()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 10000
+        locationRequest.fastestInterval = 10000/2
+
+        val builder: LocationSettingsRequest.Builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+        builder.setAlwaysShow(true)
+
+        val result: Task<LocationSettingsResponse> = LocationServices.getSettingsClient(activity).checkLocationSettings(builder.build())
+        result.addOnCompleteListener { task ->
+            try {
+                val response: LocationSettingsResponse = task.getResult(ApiException::class.java)
+            }catch (ex: ApiException) {
+                if(ex.statusCode== LocationSettingsStatusCodes.RESOLUTION_REQUIRED){
+                    val resolvableApiException = ex as ResolvableApiException
+                    try{
+                        resolvableApiException.startResolutionForResult(activity, FragmentMaps.REQUEST_FEATURE_LOCATION_PERMISSION_CODE)
+                    }catch (e: IntentSender.SendIntentException){
+                        Log.e(AppConstants.TAG_ERROR, "AppHelper # displayLocationSettingsRequest -> RESOLUTION_REQUIRED ${e.message}")
+                    }
+                }else if(ex.statusCode== LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE){
+                    Log.e(AppConstants.TAG_ERROR, "AppHelper # displayLocationSettingsRequest -> LocationSettings DISABLED")
+                }
+            }
         }
     }
 

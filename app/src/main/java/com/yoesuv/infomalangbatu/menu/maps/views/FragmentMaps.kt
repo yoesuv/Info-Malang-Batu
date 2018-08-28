@@ -1,5 +1,7 @@
 package com.yoesuv.infomalangbatu.menu.maps.views
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
@@ -17,6 +19,7 @@ import com.yoesuv.infomalangbatu.menu.maps.adapters.MyCustomInfoWindowAdapter
 import com.yoesuv.infomalangbatu.menu.maps.models.MarkerTag
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.networks.ServiceFactory
+import com.yoesuv.infomalangbatu.utils.AppHelper
 import com.yoesuv.infomalangbatu.utils.BounceAnimation
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -25,6 +28,9 @@ import io.reactivex.schedulers.Schedulers
 class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
 
     companion object {
+
+        const val REQUEST_FEATURE_LOCATION_PERMISSION_CODE:Int = 12
+
         fun getInstance(): Fragment{
             return FragmentMaps()
         }
@@ -43,6 +49,17 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.clear()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode== REQUEST_FEATURE_LOCATION_PERMISSION_CODE) {
+            if (resultCode==Activity.RESULT_OK) {
+                Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # location settings ENABLED after display location settings")
+            } else if (resultCode==Activity.RESULT_CANCELED) {
+                Log.e(AppConstants.TAG_ERROR,"FragmentMaps # location settings DISABLED after display location settings")
+            }
+        }
     }
 
     private fun getMapPins(googleMap: GoogleMap?){
@@ -93,5 +110,12 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
 
         getMapPins(googleMap)
         setMarkerAnimation(googleMap)
+
+        if (AppHelper.checkLocationSetting(context!!)) {
+            Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # location settings enabled")
+        } else {
+            Log.e(AppConstants.TAG_ERROR,"FragmentMaps # location settings disabled")
+            AppHelper.displayLocationSettingsRequest(activity as Activity)
+        }
     }
 }
