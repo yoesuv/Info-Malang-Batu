@@ -57,7 +57,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
             if (resultCode==Activity.RESULT_OK) {
                 Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # location settings ENABLED after display location settings")
             } else if (resultCode==Activity.RESULT_CANCELED) {
-                Log.e(AppConstants.TAG_ERROR,"FragmentMaps # location settings DISABLED after display location settings")
+                AppHelper.displayToastError(context!!, getString(R.string.location_setting_off))
             }
         }
     }
@@ -68,10 +68,9 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
-                            Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # map pin size ${it.size}")
                             setupPin(googleMap, it)
                         },{
-
+                            AppHelper.displayToastError(context?.applicationContext!!,getString(R.string.error_get_data_map_pins))
                         })
         )
     }
@@ -102,7 +101,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-        Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # onMapReady")
         googleMap?.clear()
         googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(-7.982914, 112.630875)))
         googleMap?.animateCamera(CameraUpdateFactory.zoomTo(9F))
@@ -114,7 +112,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
         if (AppHelper.checkLocationSetting(context!!)) {
             Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # location settings enabled")
         } else {
-            Log.e(AppConstants.TAG_ERROR,"FragmentMaps # location settings disabled")
             AppHelper.displayLocationSettingsRequest(activity as Activity)
         }
     }
