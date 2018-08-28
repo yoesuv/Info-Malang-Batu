@@ -1,13 +1,18 @@
 package com.yoesuv.infomalangbatu.menu.maps.views
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.View
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -42,6 +47,13 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
 
     private var markerLocation: Marker? = null
     private var mGoogleMap: GoogleMap? = null
+    private var mFusedLocationProviderClient: FusedLocationProviderClient? = null
+    private var myLocationCallback: MyLocationCallback? = null
+
+    override fun onCreate(bundle: Bundle?) {
+        super.onCreate(bundle)
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context!!)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,6 +63,9 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.clear()
+        if (myLocationCallback!=null) {
+            LocationServices.getFusedLocationProviderClient(context!!).removeLocationUpdates(myLocationCallback)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -107,6 +122,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
         rxPermission.request(android.Manifest.permission.ACCESS_FINE_LOCATION,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 .subscribe{ result: Boolean ->
+                    Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # requestPermission is $result")
                     if (result) {
                         enableUserLocation(googleMap)
                     } else {
@@ -116,8 +132,18 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
     }
 
 
+    @SuppressLint("MissingPermission")
     private fun enableUserLocation(googleMap: GoogleMap?){
-
+        myLocationCallback = MyLocationCallback(googleMap)
+        googleMap?.isMyLocationEnabled = true
+        googleMap?.uiSettings?.isMyLocationButtonEnabled = true
+        googleMap?.uiSettings?.isZoomControlsEnabled = true
+        googleMap?.setPadding(0, 0, 0, 215)
+        val locationRequest: LocationRequest = LocationRequest.create()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 2000
+        locationRequest.fastestInterval = 1000
+        mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback, Looper.myLooper())
     }
 
 
