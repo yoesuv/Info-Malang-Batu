@@ -3,11 +3,9 @@ package com.yoesuv.infomalangbatu.menu.other.adapters
 import android.databinding.DataBindingUtil
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.yoesuv.infomalangbatu.R
-import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databinding.ItemChangelogBinding
 import com.yoesuv.infomalangbatu.menu.other.models.ChangeLogModel
 import com.yoesuv.infomalangbatu.menu.other.viewmodels.ItemChangeLogViewModel
@@ -31,7 +29,6 @@ class ChangeLogAdapter(val activity: FragmentActivity, private var listChangeLog
     class ChangeLogViewHolder(val binding: ItemChangelogBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindData(changeLogModel: ChangeLogModel?){
-            Log.d(AppConstants.TAG_DEBUG,"ChangeLogAdapter # ${changeLogModel?.title}")
             binding.changelog = ItemChangeLogViewModel(changeLogModel)
         }
 

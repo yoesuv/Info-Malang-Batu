@@ -13,6 +13,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.tbruyelle.rxpermissions2.RxPermissions
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.menu.maps.adapters.MyCustomInfoWindowAdapter
@@ -40,6 +41,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
     private val compositeDisposable = CompositeDisposable()
 
     private var markerLocation: Marker? = null
+    private var mGoogleMap: GoogleMap? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,7 +57,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode== REQUEST_FEATURE_LOCATION_PERMISSION_CODE) {
             if (resultCode==Activity.RESULT_OK) {
-                Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # location settings ENABLED after display location settings")
+                requestPermission(mGoogleMap)
             } else if (resultCode==Activity.RESULT_CANCELED) {
                 AppHelper.displayToastError(context!!, getString(R.string.location_setting_off))
             }
@@ -100,7 +102,27 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
         }
     }
 
+    private fun requestPermission(googleMap: GoogleMap?){
+        val rxPermission = RxPermissions(activity as Activity)
+        rxPermission.request(android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                .subscribe{ result: Boolean ->
+                    if (result) {
+                        enableUserLocation(googleMap)
+                    } else {
+                        AppHelper.displayToastError(context?.applicationContext!!, getString(R.string.access_location_denied))
+                    }
+                }
+    }
+
+
+    private fun enableUserLocation(googleMap: GoogleMap?){
+
+    }
+
+
     override fun onMapReady(googleMap: GoogleMap?) {
+        mGoogleMap = googleMap
         googleMap?.clear()
         googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(-7.982914, 112.630875)))
         googleMap?.animateCamera(CameraUpdateFactory.zoomTo(9F))
@@ -110,7 +132,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
         setMarkerAnimation(googleMap)
 
         if (AppHelper.checkLocationSetting(context!!)) {
-            Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # location settings enabled")
+            requestPermission(googleMap)
         } else {
             AppHelper.displayLocationSettingsRequest(activity as Activity)
         }

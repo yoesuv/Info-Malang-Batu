@@ -2,4 +2,5 @@
 <resources>
     <string name="error_get_data_map_pins">Gagal Memuat Data Lokasi Peta</string>
     <string name="location_setting_off">Fitur Lokasi Dimatikan</string>
+    <string name="access_location_denied">Akses Lokasi Ditolak</string>
 </resources>

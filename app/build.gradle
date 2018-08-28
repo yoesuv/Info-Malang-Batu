@@ -110,6 +110,7 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$project.glideVersion"
     implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:$project.navigationTabStripVersion"
     implementation "com.github.GrenderG:Toasty:$project.toastyVersion"
+    implementation "com.tbruyelle.rxpermissions2:rxpermissions:$project.rxPermissionVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'
