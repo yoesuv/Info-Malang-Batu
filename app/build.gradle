@@ -111,6 +111,7 @@ dependencies {
     implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:$project.navigationTabStripVersion"
     implementation "com.github.GrenderG:Toasty:$project.toastyVersion"
     implementation "com.tbruyelle.rxpermissions2:rxpermissions:$project.rxPermissionVersion"
+    implementation "com.akexorcist:googledirectionlibrary:$project.googleDirectionLibraryVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'
