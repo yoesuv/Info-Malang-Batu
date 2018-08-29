@@ -8,5 +8,6 @@ object AppConstants {
     const val CONNECTION_TIME_OUT = 30 * 1000L
     const val PREFERENCE_NAME = "com.yoesuv.infomalangbatu.pref"
     const val GOOGLE_MAPS_SERVER_KEY = "AIzaSyB21TKg6wQRlNtu3b4-Y1XS9k_LmdJ7Kog"
+    const val FIREBASE_PERFORMANCE_TRACE = "info_malang_batu_trace"
 
 }

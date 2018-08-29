@@ -2,6 +2,7 @@ package com.yoesuv.infomalangbatu
 
 import android.app.Application
 import android.util.Log
+import com.google.firebase.perf.FirebasePerformance
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.utils.PreferencesHelper
 
@@ -20,6 +21,8 @@ class App: Application() {
         } else {
             Log.d(AppConstants.TAG_DEBUG,"App # build type release")
         }
+        //val myTrace = FirebasePerformance.getInstance().newTrace(AppConstants.FIREBASE_PERFORMANCE_TRACE)
+        //myTrace.start()
     }
 
 }
