@@ -65,9 +65,9 @@ class FragmentListPlace: Fragment() {
         val id = item?.itemId
         when (id) {
             R.id.listSemua -> viewModel.getListPlace()
-            R.id.listKabMalang -> viewModel.getListPlace()
-            R.id.listKotaBatu -> viewModel.getListPlace()
-            R.id.listKotaMalang -> viewModel.getListPlace()
+            R.id.listKabMalang -> viewModel.getListPlaceKabMalang()
+            R.id.listKotaBatu -> viewModel.getListPlaceKotaBatu()
+            R.id.listKotaMalang -> viewModel.getListPlaceKotaMalang()
         }
         item?.isChecked = true
         return super.onOptionsItemSelected(item)
@@ -84,6 +84,7 @@ class FragmentListPlace: Fragment() {
         binding.swipeRefreshLayoutListPlace.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary))
         binding.swipeRefreshLayoutListPlace.setOnRefreshListener {
             binding.swipeRefreshLayoutListPlace.isRefreshing = false
+            activity?.invalidateOptionsMenu()
             viewModel.getListPlace()
         }
     }
@@ -94,6 +95,7 @@ class FragmentListPlace: Fragment() {
             this.listPlace.addAll(listPlace)
             binding.recyclerViewListPlace.post{
                 adapter.notifyDataSetChanged()
+                binding.recyclerViewListPlace.scrollToPosition(0)
             }
         }
     }

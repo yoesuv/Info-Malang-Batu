@@ -35,6 +35,54 @@ class FragmentListPlaceViewModel: ViewModel() {
         )
     }
 
+    fun getListPlaceKabMalang(){
+        isLoading.set(true)
+        compositeDisposable.add(
+                restApi.getListPlaceKabMalang()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            isLoading.set(false)
+                            listPlaceResponse.value = it
+                        },{
+                            isLoading.set(false)
+                            error.value = it
+                        })
+        )
+    }
+
+    fun getListPlaceKotaBatu(){
+        isLoading.set(true)
+        compositeDisposable.add(
+                restApi.getListPlaceKotaBatu()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            isLoading.set(false)
+                            listPlaceResponse.value = it
+                        },{
+                            isLoading.set(false)
+                            error.value = it
+                        })
+        )
+    }
+
+    fun getListPlaceKotaMalang(){
+        isLoading.set(true)
+        compositeDisposable.add(
+                restApi.getListPlaceKotaMalang()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            isLoading.set(false)
+                            listPlaceResponse.value = it
+                        },{
+                            isLoading.set(false)
+                            error.value = it
+                        })
+        )
+    }
+
     fun destroy(){
         compositeDisposable.clear()
     }
