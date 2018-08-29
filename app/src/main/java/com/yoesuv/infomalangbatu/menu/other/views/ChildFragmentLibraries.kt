@@ -5,10 +5,12 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.yoesuv.infomalangbatu.R
+import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databinding.ChildFragmentLibrariesBinding
 import com.yoesuv.infomalangbatu.menu.other.adapters.LibrariesAdapter
 import com.yoesuv.infomalangbatu.menu.other.models.LibraryModel
@@ -45,10 +47,12 @@ class ChildFragmentLibraries: Fragment() {
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerViewListLibraries.layoutManager = layoutManager
         adapter = LibrariesAdapter(context!!, listLibraries)
+        binding.recyclerViewListLibraries.adapter = adapter
     }
 
     private fun onListDataChanged(list: MutableList<LibraryModel>?){
         if (list?.isNotEmpty()!!) {
+            Log.d(AppConstants.TAG_DEBUG,"ChildFragmentLibraries # onListDataChanged data size ${list.size}")
             listLibraries.clear()
             listLibraries.addAll(list)
             binding.recyclerViewListLibraries.post {
