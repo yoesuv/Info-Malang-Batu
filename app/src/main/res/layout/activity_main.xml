@@ -27,7 +27,8 @@
                 android:background="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways">
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/popUpTheme">
 
                 <com.yoesuv.infomalangbatu.widgets.TextViewPacifico
                     android:id="@+id/textViewToolbarMain"

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="detail_list_place">Detail Lokasi</string>
+    <string name="list_semua">Semua</string>
+    <string name="kab_malang">Kab. Malang</string>
+    <string name="kota_batu">Kota Batu</string>
+    <string name="kota_malang">Kota Malang</string>
+
 </resources>

@@ -8,9 +8,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databinding.FragmentListplaceBinding
@@ -48,12 +46,31 @@ class FragmentListPlace: Fragment() {
             it?.printStackTrace()
         })
 
+        setHasOptionsMenu(true)
+
         return binding.root
     }
 
     override fun onDestroy() {
         super.onDestroy()
         viewModel.destroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.menu_list_place, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val id = item?.itemId
+        when (id) {
+            R.id.listSemua -> viewModel.getListPlace()
+            R.id.listKabMalang -> viewModel.getListPlace()
+            R.id.listKotaBatu -> viewModel.getListPlace()
+            R.id.listKotaMalang -> viewModel.getListPlace()
+        }
+        item?.isChecked = true
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupRecycler(){

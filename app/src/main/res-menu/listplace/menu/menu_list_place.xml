@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/menuFilterList"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_sorting_options"
+        android:title="@string/menu_list"
+        app:showAsAction="ifRoom">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/listSemua"
+                    android:icon="@drawable/ic_action_list_semua"
+                    android:title="@string/list_semua"
+                    android:checked="true" />
+
+                <item
+                    android:id="@+id/listKabMalang"
+                    android:icon="@drawable/ic_action_kab_malang"
+                    android:title="@string/kab_malang" />
+
+                <item
+                    android:id="@+id/listKotaBatu"
+                    android:icon="@drawable/ic_action_kota_batu"
+                    android:title="@string/kota_batu" />
+
+                <item
+                    android:id="@+id/listKotaMalang"
+                    android:icon="@drawable/ic_action_kota_malang"
+                    android:title="@string/kota_malang" />
+
+            </group>
+
+        </menu>
+
+    </item>
+
+</menu>

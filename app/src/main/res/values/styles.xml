@@ -9,6 +9,6 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="popUp" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="popUpTheme" parent="ThemeOverlay.AppCompat.Light"/>
 
 </resources>
