@@ -22,6 +22,7 @@ class DetailListPlaceActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        overridePendingTransition(R.anim.slide_in_bottom, R.anim.scale_close)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_listplace)
         val placeModel: PlaceModel? = intent?.getParcelableExtra(EXTRA_DATA_LISTPLACE)
         viewModel = ViewModelProviders.of(this, CustomDetailListPlaceViewModelFactory(placeModel, application)).get(DetailListPlaceViewModel::class.java)
@@ -35,6 +36,11 @@ class DetailListPlaceActivity: AppCompatActivity() {
             onBackPressed()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.scale_open, R.anim.slide_out_bottom)
     }
 
     private fun setupToolbar(){
