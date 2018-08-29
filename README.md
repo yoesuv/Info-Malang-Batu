@@ -11,6 +11,7 @@
 
 ### List Libraries Used in this Project ###
 * [Android-GoogleDirectionLibrary](https://github.com/akexorcist/Android-GoogleDirectionLibrary)
+* [Dexcount Gradle Plugin](https://github.com/KeepSafe/dexcount-gradle-plugin)
 * [Fabric](https://www.fabric.io)
 * [Glide](https://github.com/bumptech/glide)
 * [Icons8 Icon](https://icons8.com/)
