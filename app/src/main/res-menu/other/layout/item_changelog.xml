@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="changelog"
             type="com.yoesuv.infomalangbatu.menu.other.viewmodels.ItemChangeLogViewModel"/>
@@ -41,6 +42,7 @@
             android:layout_height="1px"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_below="@id/textViewItemChangeLogDescription"
+            android:visibility="@{safeUnbox(changelog.isLast()) ? View.GONE : View.VISIBLE}"
             layout="@layout/divider"/>
 
     </com.yoesuv.infomalangbatu.widgets.ForegroundRelativeLayout>

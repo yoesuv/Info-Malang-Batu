@@ -16,7 +16,7 @@
             android:id="@+id/swipeRefreshLayoutListPlace"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            bind:showView="@{listplace.isLoading}">
+            bind:showView="@{safeUnbox(listplace.isLoading)}">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewListPlace"
@@ -29,7 +29,7 @@
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            bind:hideView="@{listplace.isLoading}">
+            bind:hideView="@{safeUnbox(listplace.isLoading)}">
 
             <ProgressBar
                 android:id="@+id/progressBarListPlace"

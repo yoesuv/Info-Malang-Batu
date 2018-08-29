@@ -16,7 +16,7 @@
             android:id="@+id/swipeRefreshLayoutGallery"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            bind:showView="@{gallery.isLoading}">
+            bind:showView="@{safeUnbox(gallery.isLoading)}">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewGallery"
@@ -26,7 +26,7 @@
         </android.support.v4.widget.SwipeRefreshLayout>
 
         <RelativeLayout
-            bind:hideView="@{gallery.isLoading}"
+            bind:hideView="@{safeUnbox(gallery.isLoading)}"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
