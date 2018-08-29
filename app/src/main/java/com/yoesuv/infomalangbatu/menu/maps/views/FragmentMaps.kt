@@ -10,6 +10,7 @@ import android.os.Looper
 import android.os.SystemClock
 import android.support.v4.app.Fragment
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import com.akexorcist.googledirection.DirectionCallback
 import com.akexorcist.googledirection.GoogleDirection
@@ -150,7 +151,8 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         googleMap?.isMyLocationEnabled = true
         googleMap?.uiSettings?.isMyLocationButtonEnabled = true
         googleMap?.uiSettings?.isZoomControlsEnabled = true
-        googleMap?.setPadding(0, 0, 0, 215)
+        val paddingBottom = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 108F, resources.displayMetrics))
+        googleMap?.setPadding(0, 0, 0, paddingBottom)
         val locationRequest: LocationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = 2000
@@ -209,6 +211,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     }
 
     override fun onDirectionSuccess(direction: Direction?, rawBody: String?) {
+        Log.e(AppConstants.TAG_ERROR,"FragmentMaps # ${direction?.errorMessage}")
         if (direction?.isOK!!) {
             if (direction.routeList.size>0) {
                 mGoogleMap?.clear()

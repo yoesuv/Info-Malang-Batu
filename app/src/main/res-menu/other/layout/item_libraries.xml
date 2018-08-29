@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="library"
+            type="com.yoesuv.infomalangbatu.menu.other.viewmodels.ItemLibrariesViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/fragment_other_global_margin"
+        android:layout_marginRight="@dimen/fragment_other_global_margin">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{library.name}"
+            android:textStyle="bold"
+            android:textSize="@dimen/_16ssp"
+            tools:text="Library Name"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{library.url}"
+            android:textColor="@color/colorPrimary"
+            tools:text="Library URL"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text="@{library.license}"
+            android:textSize="@dimen/_11ssp"
+            tools:text="license"/>
+
+    </LinearLayout>
+
+</layout>
