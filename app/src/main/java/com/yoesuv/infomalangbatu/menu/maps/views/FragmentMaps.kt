@@ -195,10 +195,10 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
                         .avoid(AvoidType.TOLLS)
                         .execute(this)
             } else {
-                AppHelper.displayToastError(context!!,"Gagal Mendapatkan Lokasi Saat Ini")
+                AppHelper.displayToastError(context!!, context?.getString(R.string.error_get_user_location)!!)
             }
         } else {
-            AppHelper.displayToastError(context!!,"Gagal Mendapatkan Lokasi Saat Ini")
+            AppHelper.displayToastError(context!!, context?.getString(R.string.error_get_user_location)!!)
         }
     }
 
@@ -232,7 +232,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     }
 
     override fun onDirectionSuccess(direction: Direction?, rawBody: String?) {
-        Log.e(AppConstants.TAG_ERROR,"FragmentMaps # ${direction?.errorMessage}")
         if (direction?.isOK!!) {
             if (direction.routeList.size>0) {
                 mGoogleMap?.clear()
@@ -244,15 +243,17 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
                     mGoogleMap?.addPolyline(DirectionConverter.createPolyline(context, directionPositionList, 5, Color.parseColor(color)))
                 }
             } else {
-                AppHelper.displayToastError(context!!,"Gagal Mendapatkan Rute")
+                AppHelper.displayToastError(context!!, context?.getString(R.string.error_no_route_found)!!)
             }
         } else {
-            AppHelper.displayToastError(context!!,"Gagal Mendapatkan Petunjuk Arah")
+            Log.e(AppConstants.TAG_ERROR,"FragmentMaps # onDirectionSuccess NOT OK -> ${direction.errorMessage}")
+            AppHelper.displayToastError(context!!, context?.getString(R.string.error_direction_not_success)!!)
         }
     }
 
     override fun onDirectionFailure(t: Throwable?) {
+        Log.e(AppConstants.TAG_ERROR,"FragmentMaps # onDirectionFailure -> ${t?.message}")
         t?.printStackTrace()
-        AppHelper.displayToastError(context!!,"Gagal Memproses Petunjuk Arah")
+        AppHelper.displayToastError(context!!, context?.getString(R.string.error_failed_get_direction)!!)
     }
 }

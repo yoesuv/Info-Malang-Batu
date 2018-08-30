@@ -3,4 +3,8 @@
     <string name="error_get_data_map_pins">Gagal Memuat Data Lokasi Peta</string>
     <string name="location_setting_off">Fitur Lokasi Dimatikan</string>
     <string name="access_location_denied">Akses Lokasi Ditolak</string>
+    <string name="error_get_user_location">Gagal Mendapatkan Lokasi Saat Ini</string>
+    <string name="error_no_route_found">Gagal Mendapatkan Rute</string>
+    <string name="error_direction_not_success">Gagal Mendapatkan Petunjuk Arah</string>
+    <string name="error_failed_get_direction">Gagal Memproses Petunjuk Arah</string>
 </resources>
