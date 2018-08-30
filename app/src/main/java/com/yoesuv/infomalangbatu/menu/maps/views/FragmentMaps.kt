@@ -11,6 +11,9 @@ import android.os.SystemClock
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.util.TypedValue
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import com.akexorcist.googledirection.DirectionCallback
 import com.akexorcist.googledirection.GoogleDirection
@@ -66,6 +69,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context!!)
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,7 +96,20 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.menu_maps, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId==R.id.menuMapRefresh){
+            getMapPins(mGoogleMap)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun getMapPins(googleMap: GoogleMap?){
+        googleMap?.clear()
         compositeDisposable.add(
                 restApi.getMapPins()
                         .subscribeOn(Schedulers.io())
@@ -177,7 +194,11 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
                         .transportMode(TransportMode.DRIVING)
                         .avoid(AvoidType.TOLLS)
                         .execute(this)
+            } else {
+                AppHelper.displayToastError(context!!,"Gagal Mendapatkan Lokasi Saat Ini")
             }
+        } else {
+            AppHelper.displayToastError(context!!,"Gagal Mendapatkan Lokasi Saat Ini")
         }
     }
 
@@ -223,7 +244,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
                     mGoogleMap?.addPolyline(DirectionConverter.createPolyline(context, directionPositionList, 5, Color.parseColor(color)))
                 }
             } else {
-                AppHelper.displayToastError(context!!,"Tidak Mendapatkan Rute")
+                AppHelper.displayToastError(context!!,"Gagal Mendapatkan Rute")
             }
         } else {
             AppHelper.displayToastError(context!!,"Gagal Mendapatkan Petunjuk Arah")
