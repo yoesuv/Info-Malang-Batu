@@ -47,6 +47,8 @@ android {
         versionCode 7
         versionName "2.0.0"
         setProperty("archivesBaseName", applicationId+"-v"+versionCode+"("+versionName+")")
+        resValue "string", "MAPS_API_KEY", "AIzaSyB21TKg6wQRlNtu3b4-Y1XS9k_LmdJ7Kog"
+        resValue "string", "DIRECTION_API_KEY", "AIzaSyCmk6JE4IG0k3aFbmHWASvP5_WmTmGVsno"
     }
     buildTypes {
         release {
@@ -116,7 +118,6 @@ dependencies {
     implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:$project.navigationTabStripVersion"
     implementation "com.github.GrenderG:Toasty:$project.toastyVersion"
     implementation "com.tbruyelle.rxpermissions2:rxpermissions:$project.rxPermissionVersion"
-    implementation "com.akexorcist:googledirectionlibrary:$project.googleDirectionLibraryVersion"
 
     compile("com.crashlytics.sdk.android:crashlytics:$project.crashlyticsVersion") {
         transitive = true
