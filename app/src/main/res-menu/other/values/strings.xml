@@ -16,6 +16,7 @@
     <string name="rate">Beri nilai aplikasi ini jika suka, terima kasih.</string>
     <string name="discl">Kebijakan</string>
     <string name="disclaimer">aplikasi ini tidak menjamin semua bentuk data 100% akurat. oleh karena itu, segala bentuk kritik dan saran akan sangat diapresiasi.</string>
+    <string name="link_github">https://github.com/yoesuv/Info-Malang-Batu</string>
 
     <string name="info_app_version">Versi %1$s</string>
 
@@ -24,7 +25,7 @@
     <string name="ver_7_info">
         <![CDATA[
             • desain baru aplikasi<br/>
-            + fitur petunjuk arah
+            • optimasi
         ]]>
     </string>
     <string name="ver_6">Versi 1.0.5</string>
