@@ -28,6 +28,10 @@ object AppHelper {
         Toasty.error(context, message, Toast.LENGTH_SHORT, true).show()
     }
 
+    fun displayToastNormal(context: Context, message: String){
+        Toasty.normal(context, message, Toast.LENGTH_SHORT).show()
+    }
+
     fun getToolbarHeight(context: Context): Int {
         val styledAttributes = context.theme.obtainStyledAttributes(
                 intArrayOf(R.attr.actionBarSize))

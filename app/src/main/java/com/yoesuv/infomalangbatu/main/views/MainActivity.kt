@@ -13,9 +13,14 @@ import com.yoesuv.infomalangbatu.menu.gallery.views.FragmentGallery
 import com.yoesuv.infomalangbatu.menu.listplace.views.FragmentListPlace
 import com.yoesuv.infomalangbatu.menu.maps.views.FragmentMaps
 import com.yoesuv.infomalangbatu.menu.other.views.FragmentOther
+import com.yoesuv.infomalangbatu.utils.AppHelper
 import com.yoesuv.infomalangbatu.utils.BottomNavigationViewHelper
 
 class MainActivity: AppCompatActivity() {
+
+    companion object {
+        var BACK_PRESSED: Long = 0L
+    }
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
@@ -38,6 +43,15 @@ class MainActivity: AppCompatActivity() {
         for(fragment in supportFragmentManager.fragments){
             fragment.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    override fun onBackPressed() {
+        if ((BACK_PRESSED+2000L) > System.currentTimeMillis()) {
+            super.onBackPressed()
+        } else {
+            AppHelper.displayToastNormal(this, getString(R.string.confirm_close))
+        }
+        BACK_PRESSED = System.currentTimeMillis()
     }
 
     private fun setupToolbar(){

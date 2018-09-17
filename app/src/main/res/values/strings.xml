@@ -7,4 +7,6 @@
     <string name="menu_maps">Peta</string>
     <string name="menu_other">Lainnya</string>
 
+    <string name="confirm_close">Tekan Lagi untuk Menutup Aplikasi</string>
+
 </resources>
