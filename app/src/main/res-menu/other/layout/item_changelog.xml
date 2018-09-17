@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="changelog"
+            type="com.yoesuv.infomalangbatu.menu.other.viewmodels.ItemChangeLogViewModel"/>
+    </data>
+
+    <com.yoesuv.infomalangbatu.widgets.ForegroundRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@android:color/transparent"
+        android:foreground="?attr/selectableItemBackground"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textViewItemChangeLogVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textStyle="bold"
+            android:text="@{changelog.version}"
+            tools:text="@string/app_name"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textViewItemChangeLogDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewItemChangeLogVersion"
+            android:text="@{changelog.description}"
+            tools:text="@string/app_name"/>
+
+        <include
+            android:id="@+id/dividerItemChangeLog"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_below="@id/textViewItemChangeLogDescription"
+            android:visibility="@{safeUnbox(changelog.isLast()) ? View.GONE : View.VISIBLE}"
+            layout="@layout/divider"/>
+
+    </com.yoesuv.infomalangbatu.widgets.ForegroundRelativeLayout>
+
+</layout>

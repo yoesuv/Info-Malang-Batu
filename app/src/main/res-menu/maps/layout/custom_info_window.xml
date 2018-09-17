@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yoesuv.infomalangbatu.widgets.ForegroundRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    android:padding="@dimen/_3sdp">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textViewMapLocationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="@string/app_name"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/default_text_color"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/imageViewMapLocationDirection"
+        android:layout_width="@dimen/icon_info_window_size"
+        android:layout_height="@dimen/icon_info_window_size"
+        android:layout_marginLeft="@dimen/_4sdp"
+        android:layout_marginRight="@dimen/_4sdp"
+        android:layout_toRightOf="@id/textViewMapLocationName"
+        android:layout_toEndOf="@id/textViewMapLocationName"
+        app:srcCompat="@drawable/ic_direction" />
+
+</com.yoesuv.infomalangbatu.widgets.ForegroundRelativeLayout>

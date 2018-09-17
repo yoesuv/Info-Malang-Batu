@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="itemListPlace"
+            type="com.yoesuv.infomalangbatu.menu.listplace.viewmodels.ItemListPlaceViewModel"/>
+    </data>
+
+    <com.yoesuv.infomalangbatu.widgets.ForegroundRelativeLayout
+        android:id="@+id/layoutMainItemListPlace"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@android:color/transparent"
+        android:foreground="?attr/selectableItemBackground"
+        android:onClick="@{itemListPlace::itemClick}">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/placeholder_image"
+                tools:loadImage="@{itemListPlace.imageUrl}"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/list_place_gradient"/>
+
+        </FrameLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textViewName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_above="@id/textViewLocation"
+            android:text="@{itemListPlace.title}"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/_16ssp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="@string/app_name"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:text="@{itemListPlace.location}"
+            android:textColor="@android:color/white"
+            android:layout_alignParentBottom="true"
+            android:textSize="@dimen/_14ssp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="@string/app_name"/>
+
+    </com.yoesuv.infomalangbatu.widgets.ForegroundRelativeLayout>
+
+</layout>

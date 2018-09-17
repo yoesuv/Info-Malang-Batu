@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- OTHER -->
+    <string name="informasi">Informasi</string>
+    <string name="changelog">Versi Rilis</string>
+    <string name="thanks_to">Terima kasih</string>
+    <string name="library">Pustaka</string>
+
+    <!-- INFORMASI -->
+    <string name="my_name">Yusuf Saifudin</string>
+    <string name="info">Informasi</string>
+    <string name="contact">Kontak</string>
+    <string name="my_twitter">\@yoesuv</string>
+    <string name="my_email">yusuf.saifudin@gmail.com</string>
+    <string name="support">Dukungan</string>
+    <string name="rate">Beri nilai aplikasi ini jika suka, terima kasih.</string>
+    <string name="discl">Kebijakan</string>
+    <string name="disclaimer">aplikasi ini tidak menjamin semua bentuk data 100% akurat. oleh karena itu, segala bentuk kritik dan saran akan sangat diapresiasi.</string>
+
+    <string name="info_app_version">Versi %1$s</string>
+
+    <!-- CHANGELOG -->
+    <string name="ver_7">Versi 2.0.0</string>
+    <string name="ver_7_info">
+        <![CDATA[
+            • desain baru aplikasi<br/>
+            + fitur petunjuk arah
+        ]]>
+    </string>
+    <string name="ver_6">Versi 1.0.5</string>
+    <string name="ver_6_info">
+        <![CDATA[
+            + 1 tempat baru di kota Batu<br/>
+            + 3 tempat baru di kab. Malang<br/>
+            + 3 galeri gambar<br/>
+            + 4 tanda lokasi peta
+        ]]>
+    </string>
+    <string name="ver_5">Versi 1.0.4</string>
+    <string name="ver_5_info">
+        <![CDATA[
+            + 1 tempat baru di kota Batu<br/>
+            + 1 tanda lokasi peta
+        ]]>
+    </string>
+    <string name="ver_4">Versi 1.0.3</string>
+    <string name="ver_4_info">
+        <![CDATA[
+            • perbaruan kecil design<br/>
+            + 2 tempat baru di kota Malang<br/>
+            + 2 tanda lokasi peta
+        ]]>
+    </string>
+    <string name="ver_3">Versi 1.0.2</string>
+    <string name="ver_3_info">
+        <![CDATA[
+            • perbaruan kecil design<br/>
+            + 2 tempat baru di kab. Malang<br/>
+            + 3 galeri gambar<br/>
+            + 2 tanda lokasi peta
+        ]]>
+    </string>
+    <string name="ver_2">Versi 1.0.1</string>
+    <string name="ver_2_info">
+        <![CDATA[
+            • menu navigasi baru<br/>
+            + 11 tempat baru di kab. Malang<br/>
+            + 3 galeri gambar<br/>
+            + 10 tanda lokasi peta
+        ]]>
+    </string>
+    <string name="ver_1">Versi 1.0.0</string>
+    <string name="ver_1_info">
+        <![CDATA[
+            • rilis perdana<br/>
+            • 38 daftar tempat<br/>
+            • 30 galeri gambar<br/>
+            • 36 tanda lokasi peta
+        ]]>
+    </string>
+
+    <!-- THANKS -->
+    <string name="trims">
+        <![CDATA[
+        terima kasih kepada <i>blog-blog</i> maupun perorangan yang fotonya dimuat dalam aplikasi ini, dan tidak bisa
+    disebutkan satu persatu (<i>kalian luar biasa</i>....).
+        ]]>
+    </string>
+    <string name="person_1">Ahmad Sofi (Tester)</string>
+
+    <!-- LIBRARIES -->
+    <string name="glide">Glide</string>
+    <string name="glide_url">https://github.com/bumptech/glide</string>
+    <string name="glide_license">
+        <![CDATA[
+            Sam Judd<br/><br/>
+            Licensed under BSD, part MIT and Apache 2.0.
+        ]]>
+    </string>
+    <string name="icons8">Icons8</string>
+    <string name="icons8_url">https://icons8.com</string>
+    <string name="icons8_license">
+        <![CDATA[
+        Licensed under Creative Commons Attribution-NoDerivs 3.0 Unported<br/><br/>
+        You are free to:<br>
+        Share — copy and redistribute the material in any medium or format
+        for any purpose, even commercially.<br/><br/>
+        The licensor cannot revoke these freedoms as long as you follow the license terms.<br/><br/>
+        Under the following terms:<br/>
+        Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but   not in any way that suggests the licensor endorses you or your use.<br/>
+        NoDerivatives — If you remix, transform, or build upon the material, you may not distribute the modified material.
+        <br/>
+        No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+        ]]>
+    </string>
+    <string name="navigation_tab_strip">NavigationTabStrip</string>
+    <string name="navigation_tab_strip_url">https://github.com/Devlight/NavigationTabStrip</string>
+    <string name="navigation_tab_strip_license">
+        <![CDATA[
+            Copyright © 2016 Basil Miller<br/><br/>
+            Licensed under the Apache License, Version 2.0 (the "License");
+            you may not use this file except in compliance with the License.
+            You may obtain a copy of the License at<br/><br/>
+            http://www.apache.org/licenses/LICENSE-2.0<br/><br/>
+            Unless required by applicable law or agreed to in writing, software
+            distributed under the License is distributed on an "AS IS" BASIS,
+            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+            See the License for the specific language governing permissions and
+            limitations under the License.
+        ]]>
+    </string>
+    <string name="retrofit">Retrofit</string>
+    <string name="retrofit_url">https://github.com/square/retrofit</string>
+    <string name="retrofit_license">
+        <![CDATA[
+            Copyright 2013 Square, Inc.<br/><br/>
+            Licensed under the Apache License, Version 2.0 (the "License");
+            you may not use this file except in compliance with the License.
+            You may obtain a copy of the License at<br/><br/>
+            http://www.apache.org/licenses/LICENSE-2.0<br/><br/>
+            Unless required by applicable law or agreed to in writing, software
+            distributed under the License is distributed on an "AS IS" BASIS,
+            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+            See the License for the specific language governing permissions and
+            limitations under the License.
+        ]]>
+    </string>
+    <string name="rxAndroid">RxAndroid</string>
+    <string name="rxAndroid_url">https://github.com/ReactiveX/RxAndroid</string>
+    <string name="rxAndroid_license">
+        <![CDATA[
+            Copyright 2015 The RxAndroid authors<br/><br/>
+            Licensed under the Apache License, Version 2.0 (the "License");
+            you may not use this file except in compliance with the License.
+            You may obtain a copy of the License at<br/><br/>
+            http://www.apache.org/licenses/LICENSE-2.0<br/><br/>
+            Unless required by applicable law or agreed to in writing, software
+            distributed under the License is distributed on an "AS IS" BASIS,
+            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+            See the License for the specific language governing permissions and
+            limitations under the License.
+        ]]>
+    </string>
+    <string name="rxjava">RxJava</string>
+    <string name="rxjava_url">https://github.com/ReactiveX/RxJava</string>
+    <string name="rxjava_license">
+        <![CDATA[
+            Copyright © 2016-present, RxJava Contributors.<br/><br/>
+            Licensed under the Apache License, Version 2.0 (the "License");
+            you may not use this file except in compliance with the License.
+            You may obtain a copy of the License at<br/><br/>
+            http://www.apache.org/licenses/LICENSE-2.0<br/><br/>
+            Unless required by applicable law or agreed to in writing, software
+            distributed under the License is distributed on an "AS IS" BASIS,
+            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+            See the License for the specific language governing permissions and
+            limitations under the License.
+        ]]>
+    </string>
+    <string name="rx_permission">RxPermission</string>
+    <string name="rx_permission_url">https://github.com/tbruyelle/RxPermissions</string>
+    <string name="rx_permission_license">
+        <![CDATA[
+            Copyright © 2015 Thomas Bruyelle<br/><br/>
+            Licensed under the Apache License, Version 2.0 (the "License");
+            you may not use this file except in compliance with the License.
+            You may obtain a copy of the License at<br/><br/>
+            http://www.apache.org/licenses/LICENSE-2.0<br/><br/>
+            Unless required by applicable law or agreed to in writing, software
+            distributed under the License is distributed on an "AS IS" BASIS,
+            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+            See the License for the specific language governing permissions and
+            limitations under the License.
+        ]]>
+    </string>
+    <string name="sdp_android">SDP - a scalable size unit</string>
+    <string name="sdp_android_url">https://github.com/intuit/sdp</string>
+    <string name="sdp_android_license">
+        <![CDATA[
+            Copyright © 2013 - 2015 Intuit Inc.<br/><br/>
+            Licensed under the MIT License;
+            Permission is hereby granted, free of charge, to any person obtaining a copy
+            of this software and associated documentation files (the "Software"), to deal
+            in the Software without restriction, including without limitation the rights
+            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+            copies of the Software, and to permit persons to whom the Software is
+            furnished to do so, subject to the following conditions:<br/><br/>
+            The above copyright notice and this permission notice shall be included in all
+            copies or substantial portions of the Software.<br/><br/>
+            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+            SOFTWARE.
+        ]]>
+    </string>
+    <string name="ssp_android">SSP - a scalable size unit for texts</string>
+    <string name="ssp_android_url">https://github.com/intuit/ssp</string>
+    <string name="toasty">Toasty</string>
+    <string name="toasty_url">https://github.com/GrenderG/Toasty</string>
+    <string name="toasty_license">
+        <![CDATA[
+            GNU Lesser General Public License v3.0<br/><br/>
+            Everyone is permitted to copy and distribute verbatim copies
+            of this license document, but changing it is not allowed.
+        ]]>
+    </string>
+    <string name="aosp">Android Open Source Project</string>
+    <string name="aosp_url">https://source.android.com/setup/start/licenses</string>
+    <string name="aosp_license">
+        <![CDATA[
+            Copyright © 2006 The Android Open Source Project<br/><br/>
+            Licensed under the Apache License, Version 2.0 (the "License");
+            you may not use this file except in compliance with the License.
+            You may obtain a copy of the License at<br/><br/>
+            http://www.apache.org/licenses/LICENSE-2.0<br/><br/>
+            Unless required by applicable law or agreed to in writing, software
+            distributed under the License is distributed on an "AS IS" BASIS,
+            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+            See the License for the specific language governing permissions and
+            limitations under the License.
+        ]]>
+    </string>
+    <string name="okhttp">OkHttp</string>
+    <string name="okhttp_url">https://github.com/square/okhttp</string>
+    <string name="okhttp_license">
+        <![CDATA[
+            Copyright © Square, Inc.<br/><br/>
+            Licensed under the Apache License, Version 2.0 (the "License");
+            you may not use this file except in compliance with the License.
+            You may obtain a copy of the License at<br/><br/>
+            http://www.apache.org/licenses/LICENSE-2.0<br/><br/>
+            Unless required by applicable law or agreed to in writing, software
+            distributed under the License is distributed on an "AS IS" BASIS,
+            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+            See the License for the specific language governing permissions and
+            limitations under the License.
+        ]]>
+    </string>
+
+</resources>

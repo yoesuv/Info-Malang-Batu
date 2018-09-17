@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#000080</color>
-    <color name="colorPrimaryDark">#000080</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#1D6AFE</color>
+    <color name="colorPrimaryDark">#1D6AFE</color>
+    <color name="colorAccent">#FFC107</color>
 
-    <color name="grey_50">#fafafa</color>
-    <color name="black_20">#33000000</color>
-    <color name="transp_colorDrawer">#AAFF4081</color>
-    <color name="white_70">#B3ffffff</color>
+    <color name="default_text_color">#808080</color>
+    <color name="grey_50">#FAFAFA</color>
+    <color name="purple_app">#c124fe</color>
 </resources>
