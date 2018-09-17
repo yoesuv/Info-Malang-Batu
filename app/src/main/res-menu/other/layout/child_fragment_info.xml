@@ -125,6 +125,16 @@
 
                 <include layout="@layout/divider"/>
 
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/textViewGithub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/link_github"
+                    android:textColor="@color/default_text_color"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/ic_github"
+                    android:drawableStart="@drawable/ic_github"/>
+
             </LinearLayout>
 
         </LinearLayout>
