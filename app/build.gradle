@@ -38,14 +38,14 @@ android {
             storePassword STORE_PASSWORD
         }
     }
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.yoesuv.infomalangbatu"
         minSdkVersion 16
-        targetSdkVersion 27
-        versionCode 7
-        versionName "2.0.0"
+        targetSdkVersion 28
+        versionCode 8
+        versionName "2.0.1"
         setProperty("archivesBaseName", applicationId+"-v"+versionCode+"("+versionName+")")
         resValue "string", "MAPS_API_KEY", "AIzaSyB21TKg6wQRlNtu3b4-Y1XS9k_LmdJ7Kog"
     }
@@ -95,6 +95,9 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     implementation "com.android.support:appcompat-v7:$project.supportLibraryVersion"
+    implementation "com.android.support:animated-vector-drawable:$project.supportLibraryVersion"
+    implementation "com.android.support:support-media-compat:$project.supportLibraryVersion"
+    implementation "com.android.support:support-v4:$project.supportLibraryVersion"
     implementation "com.android.support:design:$project.supportLibraryVersion"
     implementation "com.android.support:cardview-v7:$project.supportLibraryVersion"
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
