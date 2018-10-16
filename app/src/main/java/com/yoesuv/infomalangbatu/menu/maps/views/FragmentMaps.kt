@@ -20,6 +20,7 @@ import com.akexorcist.googledirection.GoogleDirection
 import com.akexorcist.googledirection.constant.AvoidType
 import com.akexorcist.googledirection.constant.TransportMode
 import com.akexorcist.googledirection.model.Direction
+import com.akexorcist.googledirection.model.Route
 import com.akexorcist.googledirection.util.DirectionConverter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
@@ -61,6 +62,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null
     private var myLocationCallback: MyLocationCallback? = null
 
+    private var destination: LatLng? = null
     private val colors = arrayListOf("#7F2196f3","#7F4CAF50","#7FF44336")
 
     override fun onCreate(bundle: Bundle?) {
@@ -179,7 +181,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     private fun getDirection(marker: Marker){
         val tag: MarkerTag = marker.tag as MarkerTag
         Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # info window clicked $tag")
-        val destination = LatLng(tag.latitude, tag.longitude)
+        destination = LatLng(tag.latitude, tag.longitude)
         val latitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LATITUDE)
         val longitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LONGITUDE)
 
@@ -198,6 +200,14 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         } else {
             AppHelper.displayToastError(context!!, getString(R.string.error_get_user_location))
         }
+    }
+
+    private fun setCameraWithCoordinationBounds(route: Route){
+        val southwest:LatLng = route.bound.southwestCoordination.coordination
+        val northeast:LatLng = route.bound.northeastCoordination.coordination
+        val bounds = LatLngBounds(southwest, northeast)
+        mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
+
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
@@ -221,18 +231,22 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         if (direction?.isOK!!) {
             if (direction.routeList.size>0) {
                 mGoogleMap?.clear()
-
+                mGoogleMap?.addMarker(MarkerOptions().position(destination!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin)))
+                setCameraWithCoordinationBounds(direction.routeList[0])
                 for (i:Int in 0 until direction.routeList.size) {
                     val color = colors[i % colors.size]
                     val route = direction.routeList[i]
                     val directionPositionList = route.legList[0].directionPoint
                     mGoogleMap?.addPolyline(DirectionConverter.createPolyline(context, directionPositionList, 5, Color.parseColor(color)))
                 }
+            } else {
+                AppHelper.displayToastError(context!!, context?.getString(R.string.error_direction_not_success)!!)
             }
         }
     }
 
     override fun onDirectionFailure(t: Throwable?) {
-
+        AppHelper.displayToastError(context!!, context?.getString(R.string.error_direction_not_success)!!)
+        t?.printStackTrace()
     }
 }
