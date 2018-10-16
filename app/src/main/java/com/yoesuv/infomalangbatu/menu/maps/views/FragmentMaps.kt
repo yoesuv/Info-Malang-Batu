@@ -3,6 +3,7 @@ package com.yoesuv.infomalangbatu.menu.maps.views
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +15,12 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import com.akexorcist.googledirection.DirectionCallback
+import com.akexorcist.googledirection.GoogleDirection
+import com.akexorcist.googledirection.constant.AvoidType
+import com.akexorcist.googledirection.constant.TransportMode
+import com.akexorcist.googledirection.model.Direction
+import com.akexorcist.googledirection.util.DirectionConverter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -23,6 +30,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.tbruyelle.rxpermissions2.RxPermissions
+import com.yoesuv.infomalangbatu.App
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.menu.maps.adapters.MyCustomInfoWindowAdapter
@@ -35,14 +43,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
+class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback {
 
     companion object {
 
         const val REQUEST_FEATURE_LOCATION_PERMISSION_CODE:Int = 12
-        const val PREFERENCE_LATITUDE = "preference_latitude"
-        const val PREFERENCE_LONGITUDE = "preference_longitude"
-
         fun getInstance(): Fragment{
             return FragmentMaps()
         }
@@ -55,6 +60,8 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
     private var mGoogleMap: GoogleMap? = null
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null
     private var myLocationCallback: MyLocationCallback? = null
+
+    private val colors = arrayListOf("#7F2196f3","#7F4CAF50","#7FF44336")
 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
@@ -169,6 +176,30 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
         mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback, Looper.myLooper())
     }
 
+    private fun getDirection(marker: Marker){
+        val tag: MarkerTag = marker.tag as MarkerTag
+        Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # info window clicked $tag")
+        val destination = LatLng(tag.latitude, tag.longitude)
+        val latitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LATITUDE)
+        val longitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LONGITUDE)
+
+        if (latitude!="") {
+            if (longitude!="") {
+                GoogleDirection.withServerKey(context?.getString(R.string.DIRECTION_API_KEY))
+                        .from(LatLng(latitude?.toDouble()!!, longitude?.toDouble()!!))
+                        .to(destination)
+                        .alternativeRoute(true)
+                        .transportMode(TransportMode.DRIVING)
+                        .avoid(AvoidType.TOLLS)
+                        .execute(this)
+            } else {
+                AppHelper.displayToastError(context!!, getString(R.string.error_get_user_location))
+            }
+        } else {
+            AppHelper.displayToastError(context!!, getString(R.string.error_get_user_location))
+        }
+    }
+
     override fun onMapReady(googleMap: GoogleMap?) {
         mGoogleMap = googleMap
         googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.style_map))
@@ -180,5 +211,28 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
         } else {
             AppHelper.displayLocationSettingsRequest(activity as Activity)
         }
+
+        googleMap?.setOnInfoWindowClickListener { marker ->
+            getDirection(marker)
+        }
+    }
+
+    override fun onDirectionSuccess(direction: Direction?, rawBody: String?) {
+        if (direction?.isOK!!) {
+            if (direction.routeList.size>0) {
+                mGoogleMap?.clear()
+
+                for (i:Int in 0 until direction.routeList.size) {
+                    val color = colors[i % colors.size]
+                    val route = direction.routeList[i]
+                    val directionPositionList = route.legList[0].directionPoint
+                    mGoogleMap?.addPolyline(DirectionConverter.createPolyline(context, directionPositionList, 5, Color.parseColor(color)))
+                }
+            }
+        }
+    }
+
+    override fun onDirectionFailure(t: Throwable?) {
+
     }
 }
