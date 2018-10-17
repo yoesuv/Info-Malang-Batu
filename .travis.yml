@@ -10,6 +10,10 @@ android:
     - android-28
     - extra-android-m2repository
 
+env:
+  global:
+    - JAVA_HOME=/usr/lib/jvm/java-8-oracle
+
 jdk:
   - oraclejdk8
 
@@ -17,7 +21,8 @@ notifications:
   email: false
 
 script:
-  - ./gradlew clean build connectedCheck --stacktrace
+  - ./gradlew clean
+  - ./gradlew build connectedCheck --stacktrace
 #  - ./gradlew assemble check
 #  - ./gradlew checkstyle
 #  - ./gradlew build
