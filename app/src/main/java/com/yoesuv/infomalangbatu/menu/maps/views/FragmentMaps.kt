@@ -40,6 +40,7 @@ import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.networks.ServiceFactory
 import com.yoesuv.infomalangbatu.utils.AppHelper
 import com.yoesuv.infomalangbatu.utils.BounceAnimation
+import com.yoesuv.infomalangbatu.widgets.AppDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -62,13 +63,18 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null
     private var myLocationCallback: MyLocationCallback? = null
 
+    private var origin: LatLng? = null
     private var destination: LatLng? = null
     private val colors = arrayListOf("#7F2196f3","#7F4CAF50","#7FF44336")
+    private lateinit var progressDialog: AppDialog
 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context!!)
         setHasOptionsMenu(true)
+        progressDialog = AppDialog(context!!)
+        progressDialog.setCancelable(false)
+        progressDialog.setCanceledOnTouchOutside(false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -189,14 +195,19 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         val tag: MarkerTag = marker?.tag as MarkerTag
         Log.d(AppConstants.TAG_DEBUG, "FragmentMaps # info window clicked $tag")
         if (tag.type==0) {
-            destination = LatLng(tag.latitude, tag.longitude)
+            if (!progressDialog.isShowing) {
+                progressDialog.show()
+            }
+
             val latitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LATITUDE)
             val longitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LONGITUDE)
+            origin = LatLng(latitude?.toDouble()!!, longitude?.toDouble()!!)
+            destination = LatLng(tag.latitude, tag.longitude)
 
             if (latitude != "") {
                 if (longitude != "") {
                     GoogleDirection.withServerKey(context?.getString(R.string.DIRECTION_API_KEY))
-                            .from(LatLng(latitude?.toDouble()!!, longitude?.toDouble()!!))
+                            .from(origin)
                             .to(destination)
                             .alternativeRoute(true)
                             .transportMode(TransportMode.DRIVING)
@@ -238,9 +249,13 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     }
 
     override fun onDirectionSuccess(direction: Direction?, rawBody: String?) {
+        if (progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
         if (direction?.isOK!!) {
             if (direction.routeList.size>0) {
                 mGoogleMap?.clear()
+                mGoogleMap?.addMarker(MarkerOptions().position(origin!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_origin)))?.tag = MarkerTag("Origin",3,0.0,0.0)
                 mGoogleMap?.addMarker(MarkerOptions().position(destination!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin)))?.tag = MarkerTag("Destination",3,0.0,0.0)
                 setCameraWithCoordinationBounds(direction.routeList[0])
                 for (i:Int in 0 until direction.routeList.size) {
@@ -256,6 +271,9 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     }
 
     override fun onDirectionFailure(t: Throwable?) {
+        if (progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
         AppHelper.displayToastError(context!!, context?.getString(R.string.error_direction_not_success)!!)
         t?.printStackTrace()
     }
