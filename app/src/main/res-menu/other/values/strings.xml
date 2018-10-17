@@ -15,12 +15,19 @@
     <string name="support">Dukungan</string>
     <string name="rate">Beri nilai aplikasi ini jika suka, terima kasih.</string>
     <string name="discl">Kebijakan</string>
-    <string name="disclaimer">aplikasi ini tidak menjamin semua bentuk data 100% akurat. oleh karena itu, segala bentuk kritik dan saran akan sangat diapresiasi.</string>
+    <string name="disclaimer">aplikasi ini tidak menjamin semua bentuk data 100&#37; akurat. oleh karena itu, segala bentuk kritik dan saran akan sangat diapresiasi.</string>
     <string name="link_github">https://github.com/yoesuv/Info-Malang-Batu</string>
 
     <string name="info_app_version">Versi %1$s</string>
 
     <!-- CHANGELOG -->
+    <string name="ver_8">Versi 2.0.1</string>
+    <string name="ver_8_info">
+        <![CDATA[
+            • memperkecil ukuran aplikasi<br/>
+            • optimasi performa
+        ]]>
+    </string>
     <string name="ver_7">Versi 2.0.0</string>
     <string name="ver_7_info">
         <![CDATA[
@@ -249,6 +256,22 @@
     <string name="okhttp_license">
         <![CDATA[
             Copyright © Square, Inc.<br/><br/>
+            Licensed under the Apache License, Version 2.0 (the "License");
+            you may not use this file except in compliance with the License.
+            You may obtain a copy of the License at<br/><br/>
+            http://www.apache.org/licenses/LICENSE-2.0<br/><br/>
+            Unless required by applicable law or agreed to in writing, software
+            distributed under the License is distributed on an "AS IS" BASIS,
+            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+            See the License for the specific language governing permissions and
+            limitations under the License.
+        ]]>
+    </string>
+    <string name="google_direction">Android-GoogleDirectionLibrary</string>
+    <string name="google_direction_url">https://github.com/akexorcist/Android-GoogleDirectionLibrary</string>
+    <string name="google_direction_license">
+        <![CDATA[
+            Copyright © 2017 Akexorcist<br/><br/>
             Licensed under the Apache License, Version 2.0 (the "License");
             you may not use this file except in compliance with the License.
             You may obtain a copy of the License at<br/><br/>

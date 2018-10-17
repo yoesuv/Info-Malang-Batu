@@ -25,7 +25,7 @@ class LibrariesAdapter(var context: Context, var listLibraries: MutableList<Libr
         holder.bindData(listLibraries[holder.adapterPosition])
     }
 
-    class LibrariesViewHolder(val binding: ItemLibrariesBinding?) : RecyclerView.ViewHolder(binding?.root) {
+    class LibrariesViewHolder(val binding: ItemLibrariesBinding?) : RecyclerView.ViewHolder(binding?.root!!) {
 
         fun bindData(libraryModel: LibraryModel){
             binding?.library = ItemLibrariesViewModel(libraryModel)

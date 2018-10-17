@@ -3,6 +3,7 @@ package com.yoesuv.infomalangbatu.menu.maps.views
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +15,13 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import com.akexorcist.googledirection.DirectionCallback
+import com.akexorcist.googledirection.GoogleDirection
+import com.akexorcist.googledirection.constant.AvoidType
+import com.akexorcist.googledirection.constant.TransportMode
+import com.akexorcist.googledirection.model.Direction
+import com.akexorcist.googledirection.model.Route
+import com.akexorcist.googledirection.util.DirectionConverter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -23,6 +31,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.tbruyelle.rxpermissions2.RxPermissions
+import com.yoesuv.infomalangbatu.App
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.menu.maps.adapters.MyCustomInfoWindowAdapter
@@ -31,18 +40,16 @@ import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.networks.ServiceFactory
 import com.yoesuv.infomalangbatu.utils.AppHelper
 import com.yoesuv.infomalangbatu.utils.BounceAnimation
+import com.yoesuv.infomalangbatu.widgets.AppDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
+class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback {
 
     companion object {
 
         const val REQUEST_FEATURE_LOCATION_PERMISSION_CODE:Int = 12
-        const val PREFERENCE_LATITUDE = "preference_latitude"
-        const val PREFERENCE_LONGITUDE = "preference_longitude"
-
         fun getInstance(): Fragment{
             return FragmentMaps()
         }
@@ -56,10 +63,18 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null
     private var myLocationCallback: MyLocationCallback? = null
 
+    private var origin: LatLng? = null
+    private var destination: LatLng? = null
+    private val colors = arrayListOf("#7F2196f3","#7F4CAF50","#7FF44336")
+    private lateinit var progressDialog: AppDialog
+
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context!!)
         setHasOptionsMenu(true)
+        progressDialog = AppDialog(context!!)
+        progressDialog.setCancelable(false)
+        progressDialog.setCanceledOnTouchOutside(false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -130,18 +145,24 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
     }
 
     private fun setMarkerAnimation(googleMap: GoogleMap?){
-        googleMap?.setOnMarkerClickListener {
-            val handler = Handler()
-            val anim = BounceAnimation(SystemClock.uptimeMillis(), 1000L, it, handler)
-            handler.post(anim)
-            it.showInfoWindow()
+        googleMap?.setOnMarkerClickListener { marker ->
+            val tag: MarkerTag = marker.tag as MarkerTag
+            if (tag.type==0) {
+                val handler = Handler()
+                val anim = BounceAnimation(SystemClock.uptimeMillis(), 1000L, marker, handler)
+                handler.post(anim)
+                marker.showInfoWindow()
+            } else {
+                marker.hideInfoWindow()
+            }
             return@setOnMarkerClickListener true
         }
     }
 
     private fun requestPermission(googleMap: GoogleMap?){
         val rxPermission = RxPermissions(activity as Activity)
-        rxPermission.request(android.Manifest.permission.ACCESS_FINE_LOCATION,
+        compositeDisposable.add(
+                rxPermission.request(android.Manifest.permission.ACCESS_FINE_LOCATION,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 .subscribe{ result: Boolean ->
                     Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # requestPermission is $result")
@@ -151,6 +172,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
                         AppHelper.displayToastError(context?.applicationContext!!, getString(R.string.access_location_denied))
                     }
                 }
+        )
     }
 
 
@@ -169,6 +191,46 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
         mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback, Looper.myLooper())
     }
 
+    private fun getDirection(marker: Marker?){
+        val tag: MarkerTag = marker?.tag as MarkerTag
+        Log.d(AppConstants.TAG_DEBUG, "FragmentMaps # info window clicked $tag")
+        if (tag.type==0) {
+            if (!progressDialog.isShowing) {
+                progressDialog.show()
+            }
+
+            val latitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LATITUDE)
+            val longitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LONGITUDE)
+            origin = LatLng(latitude?.toDouble()!!, longitude?.toDouble()!!)
+            destination = LatLng(tag.latitude, tag.longitude)
+
+            if (latitude != "") {
+                if (longitude != "") {
+                    GoogleDirection.withServerKey(context?.getString(R.string.DIRECTION_API_KEY))
+                            .from(origin)
+                            .to(destination)
+                            .alternativeRoute(true)
+                            .transportMode(TransportMode.DRIVING)
+                            .avoid(AvoidType.TOLLS)
+                            .execute(this)
+                } else {
+                    AppHelper.displayToastError(context!!, getString(R.string.error_get_user_location))
+                }
+            } else {
+                AppHelper.displayToastError(context!!, getString(R.string.error_get_user_location))
+            }
+        }
+
+    }
+
+    private fun setCameraWithCoordinationBounds(route: Route){
+        val southwest:LatLng = route.bound.southwestCoordination.coordination
+        val northeast:LatLng = route.bound.northeastCoordination.coordination
+        val bounds = LatLngBounds(southwest, northeast)
+        mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
+
+    }
+
     override fun onMapReady(googleMap: GoogleMap?) {
         mGoogleMap = googleMap
         googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.style_map))
@@ -180,5 +242,39 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback {
         } else {
             AppHelper.displayLocationSettingsRequest(activity as Activity)
         }
+
+        googleMap?.setOnInfoWindowClickListener { marker ->
+            getDirection(marker)
+        }
+    }
+
+    override fun onDirectionSuccess(direction: Direction?, rawBody: String?) {
+        if (progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
+        if (direction?.isOK!!) {
+            if (direction.routeList.size>0) {
+                mGoogleMap?.clear()
+                mGoogleMap?.addMarker(MarkerOptions().position(origin!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_origin)))?.tag = MarkerTag("Origin",3,0.0,0.0)
+                mGoogleMap?.addMarker(MarkerOptions().position(destination!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin)))?.tag = MarkerTag("Destination",3,0.0,0.0)
+                setCameraWithCoordinationBounds(direction.routeList[0])
+                for (i:Int in 0 until direction.routeList.size) {
+                    val color = colors[i % colors.size]
+                    val route = direction.routeList[i]
+                    val directionPositionList = route.legList[0].directionPoint
+                    mGoogleMap?.addPolyline(DirectionConverter.createPolyline(context, directionPositionList, 5, Color.parseColor(color)))
+                }
+            } else {
+                AppHelper.displayToastError(context!!, context?.getString(R.string.error_direction_not_success)!!)
+            }
+        }
+    }
+
+    override fun onDirectionFailure(t: Throwable?) {
+        if (progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
+        AppHelper.displayToastError(context!!, context?.getString(R.string.error_direction_not_success)!!)
+        t?.printStackTrace()
     }
 }
