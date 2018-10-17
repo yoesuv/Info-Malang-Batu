@@ -16,4 +16,5 @@ notifications:
 
 script:
   - ./gradlew assemble check
-  - ./gradlew checkstyle
+#  - ./gradlew checkstyle
+#  - ./gradlew build
