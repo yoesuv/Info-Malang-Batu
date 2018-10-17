@@ -83,8 +83,11 @@ android {
             buildConfigField "String", "BASE_URL", "\"https://info-malang-batu.firebaseapp.com/\""
         }
     }
-    dataBinding{
+    dataBinding {
         enabled = true
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
