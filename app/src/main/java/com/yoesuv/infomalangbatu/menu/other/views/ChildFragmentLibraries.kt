@@ -1,10 +1,10 @@
 package com.yoesuv.infomalangbatu.menu.other.views
 
-import android.arch.lifecycle.Observer
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +16,10 @@ import com.yoesuv.infomalangbatu.menu.other.adapters.LibrariesAdapter
 import com.yoesuv.infomalangbatu.menu.other.models.LibraryModel
 import com.yoesuv.infomalangbatu.menu.other.viewmodels.ChildFragmentLibrariesViewModel
 
-class ChildFragmentLibraries: Fragment() {
+class ChildFragmentLibraries: androidx.fragment.app.Fragment() {
 
     companion object {
-        fun getInstance(): Fragment{
+        fun getInstance(): androidx.fragment.app.Fragment {
             return ChildFragmentLibraries()
         }
     }
@@ -44,7 +44,7 @@ class ChildFragmentLibraries: Fragment() {
     }
 
     private fun setupRecycler(){
-        val layoutManager = LinearLayoutManager(context)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         binding.recyclerViewListLibraries.layoutManager = layoutManager
         adapter = LibrariesAdapter(context!!, listLibraries)
         binding.recyclerViewListLibraries.adapter = adapter

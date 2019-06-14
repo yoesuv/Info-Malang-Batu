@@ -1,9 +1,9 @@
 package com.yoesuv.infomalangbatu.menu.gallery.viewmodels
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import android.content.Intent
-import android.databinding.ObservableField
-import android.support.v4.app.FragmentActivity
+import androidx.databinding.ObservableField
+import androidx.fragment.app.FragmentActivity
 import android.util.Log
 import android.view.View
 import com.yoesuv.infomalangbatu.data.AppConstants
@@ -11,7 +11,7 @@ import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.gallery.views.DetailGalleryActivity
 import java.lang.ref.WeakReference
 
-class ItemGalleryViewModel(private val activity: WeakReference<FragmentActivity>, private val galleryModel: GalleryModel): ViewModel() {
+class ItemGalleryViewModel(private val activity: WeakReference<androidx.fragment.app.FragmentActivity>, private val galleryModel: GalleryModel): ViewModel() {
     var image: ObservableField<String> = ObservableField(galleryModel.thumbnail!!)
 
     fun itemClick(view: View){

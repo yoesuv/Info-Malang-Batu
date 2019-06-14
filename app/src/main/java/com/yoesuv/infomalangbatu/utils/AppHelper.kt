@@ -69,7 +69,7 @@ object AppHelper {
         val result: Task<LocationSettingsResponse> = LocationServices.getSettingsClient(activity).checkLocationSettings(builder.build())
         result.addOnCompleteListener { task ->
             try {
-                val response: LocationSettingsResponse = task.getResult(ApiException::class.java)
+                val response: LocationSettingsResponse? = task.getResult(ApiException::class.java)
             }catch (ex: ApiException) {
                 if(ex.statusCode== LocationSettingsStatusCodes.RESOLUTION_REQUIRED){
                     val resolvableApiException = ex as ResolvableApiException

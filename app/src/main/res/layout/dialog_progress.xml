@@ -10,7 +10,7 @@
         android:layout_marginBottom="@dimen/_16sdp"
         android:layout_centerInParent="true"/>
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dialogTextProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

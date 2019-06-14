@@ -1,10 +1,10 @@
 package com.yoesuv.infomalangbatu.main.views
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.WindowManager
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.ActivityMainBinding

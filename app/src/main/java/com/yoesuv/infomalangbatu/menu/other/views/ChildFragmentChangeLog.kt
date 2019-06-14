@@ -1,11 +1,11 @@
 package com.yoesuv.infomalangbatu.menu.other.views
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +15,10 @@ import com.yoesuv.infomalangbatu.menu.other.adapters.ChangeLogAdapter
 import com.yoesuv.infomalangbatu.menu.other.models.ChangeLogModel
 import com.yoesuv.infomalangbatu.menu.other.viewmodels.ChildFragmentChangelogViewModel
 
-class ChildFragmentChangeLog: Fragment() {
+class ChildFragmentChangeLog: androidx.fragment.app.Fragment() {
 
     companion object {
-        fun getInstance(): Fragment{
+        fun getInstance(): androidx.fragment.app.Fragment {
             return ChildFragmentChangeLog()
         }
     }
@@ -44,7 +44,7 @@ class ChildFragmentChangeLog: Fragment() {
     }
 
     private fun setupRecycler(){
-        val layoutManager = LinearLayoutManager(context)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         binding.recyclerViewChangelog.layoutManager = layoutManager
         adapter = ChangeLogAdapter(activity!!, listChangeLog)
         binding.recyclerViewChangelog.adapter = adapter

@@ -1,8 +1,8 @@
 package com.yoesuv.infomalangbatu.utils.binding
 
 import android.animation.Animator
-import android.databinding.BindingAdapter
-import android.support.v7.widget.AppCompatImageView
+import androidx.databinding.BindingAdapter
+import androidx.appcompat.widget.AppCompatImageView
 import android.view.View
 import com.bumptech.glide.GenericTransitionOptions
 import com.yoesuv.infomalangbatu.data.AppConstants

@@ -1,12 +1,12 @@
 package com.yoesuv.infomalangbatu.menu.other.views
 
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import com.google.android.material.appbar.AppBarLayout
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +14,10 @@ import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentOtherBinding
 import com.yoesuv.infomalangbatu.menu.other.adapters.TabOtherAdapter
 
-class FragmentOther: Fragment() {
+class FragmentOther: androidx.fragment.app.Fragment() {
 
     companion object {
-        fun getInstance(): Fragment{
+        fun getInstance(): androidx.fragment.app.Fragment {
             return FragmentOther()
         }
     }

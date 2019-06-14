@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
@@ -50,7 +50,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     companion object {
 
         const val REQUEST_FEATURE_LOCATION_PERMISSION_CODE:Int = 12
-        fun getInstance(): Fragment{
+        fun getInstance(): androidx.fragment.app.Fragment {
             return FragmentMaps()
         }
     }

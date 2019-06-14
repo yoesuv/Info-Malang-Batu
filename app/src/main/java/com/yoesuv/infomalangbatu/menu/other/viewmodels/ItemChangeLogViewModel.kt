@@ -1,7 +1,7 @@
 package com.yoesuv.infomalangbatu.menu.other.viewmodels
 
-import android.arch.lifecycle.ViewModel
-import android.databinding.ObservableField
+import androidx.lifecycle.ViewModel
+import androidx.databinding.ObservableField
 import com.yoesuv.infomalangbatu.menu.other.models.ChangeLogModel
 import com.yoesuv.infomalangbatu.utils.AppHelper
 

@@ -1,6 +1,6 @@
 package com.yoesuv.infomalangbatu.menu.maps.adapters
 
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.FragmentActivity
 import android.view.LayoutInflater
 import android.view.View
 import com.google.android.gms.maps.GoogleMap
@@ -9,7 +9,7 @@ import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.menu.maps.models.MarkerTag
 import kotlinx.android.synthetic.main.custom_info_window.view.*
 
-class MyCustomInfoWindowAdapter(activity: FragmentActivity?): GoogleMap.InfoWindowAdapter {
+class MyCustomInfoWindowAdapter(activity: androidx.fragment.app.FragmentActivity?): GoogleMap.InfoWindowAdapter {
 
     private val mContents: View = LayoutInflater.from(activity?.applicationContext).inflate(R.layout.custom_info_window, null)
 

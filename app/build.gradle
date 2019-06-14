@@ -11,7 +11,7 @@ buildscript {
         // We recommend changing it to the latest version from our changelog:
         // https://docs.fabric.io/android/changelog.html#fabric-gradle-plugin
         classpath 'io.fabric.tools:gradle:1.+'
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.3'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.6'
     }
 }
 
@@ -38,14 +38,14 @@ android {
             storePassword STORE_PASSWORD
         }
     }
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 29
+    buildToolsVersion '29.0.0'
     defaultConfig {
         applicationId "com.yoesuv.infomalangbatu"
         minSdkVersion 16
-        targetSdkVersion 28
-        versionCode 8
-        versionName "2.0.1"
+        targetSdkVersion 29
+        versionCode 9
+        versionName "2.1.0"
         setProperty("archivesBaseName", applicationId+"-v"+versionCode+"("+versionName+")")
         resValue "string", "MAPS_API_KEY", "AIzaSyB21TKg6wQRlNtu3b4-Y1XS9k_LmdJ7Kog"
         resValue "string", "DIRECTION_API_KEY", "AIzaSyAe8YMnV8J3om1ht5EIiOqV_ESejniRq6U"
@@ -57,7 +57,7 @@ android {
             signingConfig signingConfigs.config
         }
         debug {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
@@ -98,15 +98,15 @@ androidExtensions {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    implementation "com.android.support:appcompat-v7:$project.supportLibraryVersion"
-    implementation "com.android.support:animated-vector-drawable:$project.supportLibraryVersion"
-    implementation "com.android.support:support-media-compat:$project.supportLibraryVersion"
-    implementation "com.android.support:support-v4:$project.supportLibraryVersion"
-    implementation "com.android.support:design:$project.supportLibraryVersion"
-    implementation "com.android.support:cardview-v7:$project.supportLibraryVersion"
-    implementation 'com.google.android.gms:play-services-maps:15.0.1'
-    implementation 'com.google.android.gms:play-services-location:15.0.1'
-    implementation 'com.google.firebase:firebase-perf:16.1.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.vectordrawable:vectordrawable-animated:1.0.0'
+    implementation 'androidx.media:media:1.0.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.firebase:firebase-perf:17.0.2'
 
     implementation "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
@@ -117,8 +117,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.intuit.ssp:ssp-android:$project.sspVersion"
     implementation "com.intuit.sdp:sdp-android:$project.sdpVersion"
-    implementation "android.arch.lifecycle:extensions:$project.archLifecycleVersion"
-    kapt "android.arch.lifecycle:compiler:$project.archLifecycleVersion"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
     implementation "com.github.bumptech.glide:glide:$project.glideVersion"
     kapt "com.github.bumptech.glide:compiler:$project.glideVersion"
     implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:$project.navigationTabStripVersion"

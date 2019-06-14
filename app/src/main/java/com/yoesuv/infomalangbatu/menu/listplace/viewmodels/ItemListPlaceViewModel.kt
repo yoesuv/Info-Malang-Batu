@@ -1,9 +1,9 @@
 package com.yoesuv.infomalangbatu.menu.listplace.viewmodels
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import android.content.Intent
-import android.databinding.ObservableField
-import android.support.v4.app.FragmentActivity
+import androidx.databinding.ObservableField
+import androidx.fragment.app.FragmentActivity
 import android.util.Log
 import android.view.View
 import com.yoesuv.infomalangbatu.data.AppConstants
@@ -11,7 +11,7 @@ import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.listplace.views.DetailListPlaceActivity
 import java.lang.ref.WeakReference
 
-class ItemListPlaceViewModel(private val weakContext: WeakReference<FragmentActivity>, private val placeModel: PlaceModel): ViewModel() {
+class ItemListPlaceViewModel(private val weakContext: WeakReference<androidx.fragment.app.FragmentActivity>, private val placeModel: PlaceModel): ViewModel() {
 
     var title: ObservableField<String> = ObservableField(placeModel.name!!)
     var location: ObservableField<String> = ObservableField(placeModel.location!!)

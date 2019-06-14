@@ -1,8 +1,8 @@
 package com.yoesuv.infomalangbatu.menu.gallery.viewmodels
 
 import android.app.Application
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 
 class CustomDetailGalleryViewModelFactory(private val galleryModel: GalleryModel?, private val application: Application): ViewModelProvider.NewInstanceFactory() {
