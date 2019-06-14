@@ -1,16 +1,23 @@
 package com.yoesuv.infomalangbatu
 
-import android.app.Application
+import android.content.Context
 import android.util.Log
+import androidx.multidex.MultiDex
+import androidx.multidex.MultiDexApplication
 import com.crashlytics.android.Crashlytics
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.utils.PreferencesHelper
 import io.fabric.sdk.android.Fabric
 
-class App: Application() {
+class App: MultiDexApplication() {
 
     companion object {
         var prefHelper: PreferencesHelper? = null
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 
     override fun onCreate() {

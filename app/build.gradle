@@ -44,6 +44,7 @@ android {
         applicationId "com.yoesuv.infomalangbatu"
         minSdkVersion 16
         targetSdkVersion 29
+        multiDexEnabled true
         versionCode 9
         versionName "2.1.0"
         setProperty("archivesBaseName", applicationId+"-v"+versionCode+"("+versionName+")")
@@ -125,6 +126,7 @@ dependencies {
     implementation "com.github.GrenderG:Toasty:$project.toastyVersion"
     implementation "com.tbruyelle.rxpermissions2:rxpermissions:$project.rxPermissionVersion"
     implementation "com.akexorcist:googledirectionlibrary:$project.googleDirectionLibraryVersion"
+    implementation 'com.android.support:multidex:1.0.3'
     compile("com.crashlytics.sdk.android:crashlytics:$project.crashlyticsVersion") {
         transitive = true
     }
