@@ -18,7 +18,8 @@ notifications:
 
 script:
   - ./gradlew clean
-  - ./gradlew build
+  - ./gradlew assembleProductionDebug
+  - ./gradlew assembleProductionRelease
 #  - ./gradlew assemble check
 #  - ./gradlew checkstyle
 #  - ./gradlew build
