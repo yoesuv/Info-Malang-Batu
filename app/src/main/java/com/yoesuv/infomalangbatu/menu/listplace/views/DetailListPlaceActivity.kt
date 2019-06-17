@@ -1,5 +1,6 @@
 package com.yoesuv.infomalangbatu.menu.listplace.views
 
+import android.os.Build
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
@@ -22,7 +23,9 @@ class DetailListPlaceActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        overridePendingTransition(R.anim.slide_in_bottom, R.anim.scale_close)
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
+            overridePendingTransition(R.anim.slide_in_bottom, R.anim.scale_close)
+        }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_listplace)
         val placeModel: PlaceModel? = intent?.getParcelableExtra(EXTRA_DATA_LISTPLACE)
         viewModel = ViewModelProviders.of(this, CustomDetailListPlaceViewModelFactory(placeModel, application)).get(DetailListPlaceViewModel::class.java)
@@ -40,7 +43,9 @@ class DetailListPlaceActivity: AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        overridePendingTransition(R.anim.scale_open, R.anim.slide_out_bottom)
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
+            overridePendingTransition(R.anim.scale_open, R.anim.slide_out_bottom)
+        }
     }
 
     private fun setupToolbar(){
