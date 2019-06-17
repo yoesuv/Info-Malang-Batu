@@ -15,10 +15,10 @@ import com.yoesuv.infomalangbatu.menu.other.adapters.ChangeLogAdapter
 import com.yoesuv.infomalangbatu.menu.other.models.ChangeLogModel
 import com.yoesuv.infomalangbatu.menu.other.viewmodels.ChildFragmentChangelogViewModel
 
-class ChildFragmentChangeLog: androidx.fragment.app.Fragment() {
+class ChildFragmentChangeLog: Fragment() {
 
     companion object {
-        fun getInstance(): androidx.fragment.app.Fragment {
+        fun getInstance(): Fragment {
             return ChildFragmentChangeLog()
         }
     }
@@ -44,7 +44,7 @@ class ChildFragmentChangeLog: androidx.fragment.app.Fragment() {
     }
 
     private fun setupRecycler(){
-        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(context)
         binding.recyclerViewChangelog.layoutManager = layoutManager
         adapter = ChangeLogAdapter(activity!!, listChangeLog)
         binding.recyclerViewChangelog.adapter = adapter

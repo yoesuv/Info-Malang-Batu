@@ -1,6 +1,5 @@
 package com.yoesuv.infomalangbatu.menu.maps.views
 
-import android.util.Log
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.GoogleMap
@@ -13,7 +12,6 @@ class MyLocationCallback(private val googleMap: GoogleMap?): LocationCallback() 
         super.onLocationResult(result)
         val listLocation = result?.locations
         if (listLocation?.isNotEmpty()!!) {
-            Log.d(AppConstants.TAG_DEBUG,"MyLocationCallback # result ${listLocation.size} location")
             App.prefHelper?.setString(AppConstants.PREFERENCE_LATITUDE, listLocation[0].latitude.toString())
             App.prefHelper?.setString(AppConstants.PREFERENCE_LONGITUDE, listLocation[0].longitude.toString())
         }

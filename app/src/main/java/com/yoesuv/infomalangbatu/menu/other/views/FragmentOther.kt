@@ -14,10 +14,10 @@ import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentOtherBinding
 import com.yoesuv.infomalangbatu.menu.other.adapters.TabOtherAdapter
 
-class FragmentOther: androidx.fragment.app.Fragment() {
+class FragmentOther: Fragment() {
 
     companion object {
-        fun getInstance(): androidx.fragment.app.Fragment {
+        fun getInstance(): Fragment {
             return FragmentOther()
         }
     }

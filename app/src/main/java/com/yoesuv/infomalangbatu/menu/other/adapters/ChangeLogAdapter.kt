@@ -10,7 +10,7 @@ import com.yoesuv.infomalangbatu.databinding.ItemChangelogBinding
 import com.yoesuv.infomalangbatu.menu.other.models.ChangeLogModel
 import com.yoesuv.infomalangbatu.menu.other.viewmodels.ItemChangeLogViewModel
 
-class ChangeLogAdapter(val activity: androidx.fragment.app.FragmentActivity, private var listChangeLog: MutableList<ChangeLogModel>): androidx.recyclerview.widget.RecyclerView.Adapter<ChangeLogAdapter.ChangeLogViewHolder>() {
+class ChangeLogAdapter(val activity: FragmentActivity, private var listChangeLog: MutableList<ChangeLogModel>): RecyclerView.Adapter<ChangeLogAdapter.ChangeLogViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChangeLogViewHolder {
         val binding: ItemChangelogBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.item_changelog, parent, false)
@@ -26,7 +26,7 @@ class ChangeLogAdapter(val activity: androidx.fragment.app.FragmentActivity, pri
         holder.bindData(listChangeLog[fixPosition])
     }
 
-    class ChangeLogViewHolder(val binding: ItemChangelogBinding) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
+    class ChangeLogViewHolder(val binding: ItemChangelogBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindData(changeLogModel: ChangeLogModel?){
             binding.changelog = ItemChangeLogViewModel(changeLogModel)

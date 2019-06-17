@@ -19,7 +19,7 @@ import com.yoesuv.infomalangbatu.menu.gallery.viewmodels.FragmentGalleryViewMode
 class FragmentGallery: androidx.fragment.app.Fragment() {
 
     companion object {
-        fun getInstance(): androidx.fragment.app.Fragment {
+        fun getInstance(): Fragment {
             return FragmentGallery()
         }
     }
@@ -45,13 +45,8 @@ class FragmentGallery: androidx.fragment.app.Fragment() {
         return binding.root
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.destroy()
-    }
-
     private fun setupRecycler(){
-        val layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, 3)
+        val layoutManager = GridLayoutManager(context, 3)
         binding.recyclerViewGallery.layoutManager = layoutManager
         adapter = GalleryAdapter(activity!!, listDataGallery)
         binding.recyclerViewGallery.adapter = adapter

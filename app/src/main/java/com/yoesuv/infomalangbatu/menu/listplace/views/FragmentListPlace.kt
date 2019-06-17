@@ -16,10 +16,10 @@ import com.yoesuv.infomalangbatu.menu.listplace.adapters.ListPlaceAdapter
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentListPlaceViewModel
 
-class FragmentListPlace: androidx.fragment.app.Fragment() {
+class FragmentListPlace: Fragment() {
 
     companion object {
-        fun getInstance(): androidx.fragment.app.Fragment {
+        fun getInstance(): Fragment {
             return FragmentListPlace()
         }
     }
@@ -51,11 +51,6 @@ class FragmentListPlace: androidx.fragment.app.Fragment() {
         return binding.root
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.destroy()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.menu_list_place, menu)
@@ -74,7 +69,7 @@ class FragmentListPlace: androidx.fragment.app.Fragment() {
     }
 
     private fun setupRecycler(){
-        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(context)
         binding.recyclerViewListPlace.layoutManager = layoutManager
         adapter = ListPlaceAdapter(activity!!, listPlace)
         binding.recyclerViewListPlace.adapter = adapter

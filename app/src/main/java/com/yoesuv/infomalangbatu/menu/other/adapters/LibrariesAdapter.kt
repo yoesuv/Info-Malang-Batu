@@ -10,7 +10,7 @@ import com.yoesuv.infomalangbatu.databinding.ItemLibrariesBinding
 import com.yoesuv.infomalangbatu.menu.other.models.LibraryModel
 import com.yoesuv.infomalangbatu.menu.other.viewmodels.ItemLibrariesViewModel
 
-class LibrariesAdapter(var context: Context, var listLibraries: MutableList<LibraryModel>): androidx.recyclerview.widget.RecyclerView.Adapter<LibrariesAdapter.LibrariesViewHolder>() {
+class LibrariesAdapter(var context: Context, var listLibraries: MutableList<LibraryModel>): RecyclerView.Adapter<LibrariesAdapter.LibrariesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibrariesViewHolder {
         val binding: ItemLibrariesBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.item_libraries, parent, false)
@@ -25,7 +25,7 @@ class LibrariesAdapter(var context: Context, var listLibraries: MutableList<Libr
         holder.bindData(listLibraries[holder.adapterPosition])
     }
 
-    class LibrariesViewHolder(val binding: ItemLibrariesBinding?) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding?.root!!) {
+    class LibrariesViewHolder(val binding: ItemLibrariesBinding?) : RecyclerView.ViewHolder(binding?.root!!) {
 
         fun bindData(libraryModel: LibraryModel){
             binding?.library = ItemLibrariesViewModel(libraryModel)

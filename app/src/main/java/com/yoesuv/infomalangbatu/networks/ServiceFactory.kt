@@ -1,12 +1,8 @@
 package com.yoesuv.infomalangbatu.networks
 
-import android.content.Context
 import android.os.Build
-import android.util.Log
-import com.google.android.gms.security.ProviderInstaller
 import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.data.AppConstants
-import okhttp3.CipherSuite
 import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.TlsVersion
@@ -31,7 +27,6 @@ object ServiceFactory {
     fun create(): RestApi{
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
             //for lollipop and latest
-            Log.d(AppConstants.TAG_DEBUG,"ServiceFactory # create RestApi for SDK >= 21 (lollipop and latest)")
             val sc = SSLContext.getInstance("SSL")
             try {
                 val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
@@ -65,7 +60,6 @@ object ServiceFactory {
             return retrofit.create(RestApi::class.java)
         } else {
             //for kitkat and lower
-            Log.d(AppConstants.TAG_DEBUG,"ServiceFactory # create RestApi for SDK < 21 (kitkat and lower)")
             val sc = SSLContext.getInstance("TLSv1.2")
             sc.init(null, null, null)
 

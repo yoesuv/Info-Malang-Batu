@@ -38,7 +38,7 @@ class DetailListPlaceActivity: AppCompatActivity() {
         if (item?.itemId==android.R.id.home) {
             onBackPressed()
         }
-        return super.onOptionsItemSelected(item)
+        return super.onOptionsItemSelected(item!!)
     }
 
     override fun onBackPressed() {
@@ -49,10 +49,10 @@ class DetailListPlaceActivity: AppCompatActivity() {
     }
 
     private fun setupToolbar(){
-        setSupportActionBar(binding.toolbarDetailListPlace?.toolbarInclude)
+        setSupportActionBar(binding.toolbarDetailListPlace.toolbarInclude)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.toolbarDetailListPlace?.textViewToolbarInclude?.text = getString(R.string.detail_list_place)
+        binding.toolbarDetailListPlace.textViewToolbarInclude.text = getString(R.string.detail_list_place)
     }
 
 }
