@@ -12,18 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayoutListPlace"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             bind:showView="@{safeUnbox(listplace.isLoading)}">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewListPlace"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <RelativeLayout
             android:layout_centerInParent="true"

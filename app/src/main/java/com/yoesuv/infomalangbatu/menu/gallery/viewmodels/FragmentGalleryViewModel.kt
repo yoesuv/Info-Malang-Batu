@@ -1,8 +1,8 @@
 package com.yoesuv.infomalangbatu.menu.gallery.viewmodels
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.databinding.ObservableField
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.networks.ServiceFactory
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -34,7 +34,8 @@ class FragmentGalleryViewModel: ViewModel() {
         )
     }
 
-    fun destroy(){
+    override fun onCleared() {
+        super.onCleared()
         compositeDisposable.clear()
     }
 

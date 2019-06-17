@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -17,7 +17,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center">
 
-                <android.support.v7.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imageViewAppInfo"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_80sdp"
@@ -34,7 +34,7 @@
                     android:layout_toRightOf="@id/imageViewAppInfo"
                     android:layout_toEndOf="@id/imageViewAppInfo">
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/textViewAppName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                         android:textStyle="bold"
                         android:textColor="@color/default_text_color"/>
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/textViewVersion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -62,14 +62,14 @@
 
                 <include layout="@layout/divider"/>
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/contact"
                     android:textStyle="bold"
                     android:textColor="@color/default_text_color"/>
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/my_email"
@@ -78,7 +78,7 @@
                     android:drawableLeft="@drawable/ic_email"
                     android:drawableStart="@drawable/ic_email"/>
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/my_twitter"
@@ -89,14 +89,14 @@
 
                 <include layout="@layout/divider"/>
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/support"
                     android:textStyle="bold"
                     android:textColor="@color/default_text_color"/>
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/rate"
@@ -107,14 +107,14 @@
 
                 <include layout="@layout/divider"/>
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/discl"
                     android:textStyle="bold"
                     android:textColor="@color/default_text_color"/>
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/disclaimer"
@@ -125,7 +125,7 @@
 
                 <include layout="@layout/divider"/>
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/textViewGithub"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -139,6 +139,6 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

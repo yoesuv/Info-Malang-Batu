@@ -1,7 +1,7 @@
 package com.yoesuv.infomalangbatu.menu.other.viewmodels
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import android.content.Context
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.menu.other.models.ChangeLogModel
@@ -13,6 +13,7 @@ class ChildFragmentChangelogViewModel: ViewModel() {
 
     fun setupData(context: Context){
         listChangelog.clear()
+        listChangelog.add(ChangeLogModel(context.getString(R.string.ver_9),context.getString(R.string.ver_9_info), false))
         listChangelog.add(ChangeLogModel(context.getString(R.string.ver_8),context.getString(R.string.ver_8_info), false))
         listChangelog.add(ChangeLogModel(context.getString(R.string.ver_7),context.getString(R.string.ver_7_info), false))
         listChangelog.add(ChangeLogModel(context.getString(R.string.ver_6),context.getString(R.string.ver_6_info), false))

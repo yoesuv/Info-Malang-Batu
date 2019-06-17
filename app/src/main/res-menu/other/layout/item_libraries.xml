@@ -15,21 +15,21 @@
         android:layout_marginLeft="@dimen/fragment_other_global_margin"
         android:layout_marginRight="@dimen/fragment_other_global_margin">
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{library.name}"
             android:textStyle="bold"
             android:textSize="@dimen/_14ssp" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{library.url}"
             android:textSize="@dimen/_11ssp"
             android:textColor="@color/colorPrimary" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"

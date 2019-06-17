@@ -1,16 +1,14 @@
 package com.yoesuv.infomalangbatu.menu.other.views
 
-import android.arch.lifecycle.Observer
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.yoesuv.infomalangbatu.R
-import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databinding.ChildFragmentLibrariesBinding
 import com.yoesuv.infomalangbatu.menu.other.adapters.LibrariesAdapter
 import com.yoesuv.infomalangbatu.menu.other.models.LibraryModel
@@ -19,7 +17,7 @@ import com.yoesuv.infomalangbatu.menu.other.viewmodels.ChildFragmentLibrariesVie
 class ChildFragmentLibraries: Fragment() {
 
     companion object {
-        fun getInstance(): Fragment{
+        fun getInstance(): Fragment {
             return ChildFragmentLibraries()
         }
     }
@@ -52,7 +50,6 @@ class ChildFragmentLibraries: Fragment() {
 
     private fun onListDataChanged(list: MutableList<LibraryModel>?){
         if (list?.isNotEmpty()!!) {
-            Log.d(AppConstants.TAG_DEBUG,"ChildFragmentLibraries # onListDataChanged data size ${list.size}")
             listLibraries.clear()
             listLibraries.addAll(list)
             binding.recyclerViewListLibraries.post {

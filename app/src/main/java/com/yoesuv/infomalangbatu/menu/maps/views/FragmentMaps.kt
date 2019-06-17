@@ -8,8 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
-import android.support.v4.app.Fragment
-import android.util.Log
+import androidx.fragment.app.Fragment
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuInflater
@@ -50,7 +49,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     companion object {
 
         const val REQUEST_FEATURE_LOCATION_PERMISSION_CODE:Int = 12
-        fun getInstance(): Fragment{
+        fun getInstance(): Fragment {
             return FragmentMaps()
         }
     }
@@ -165,7 +164,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
                 rxPermission.request(android.Manifest.permission.ACCESS_FINE_LOCATION,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 .subscribe{ result: Boolean ->
-                    Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # requestPermission is $result")
                     if (result) {
                         enableUserLocation(googleMap)
                     } else {
@@ -193,7 +191,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
 
     private fun getDirection(marker: Marker?){
         val tag: MarkerTag = marker?.tag as MarkerTag
-        Log.d(AppConstants.TAG_DEBUG, "FragmentMaps # info window clicked $tag")
         if (tag.type==0) {
             if (!progressDialog.isShowing) {
                 progressDialog.show()
