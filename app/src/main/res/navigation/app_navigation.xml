@@ -15,7 +15,17 @@
             android:id="@+id/fragmentGallery"
             android:label="@string/menu_gallery"
             android:name="com.yoesuv.infomalangbatu.menu.gallery.views.FragmentGallery"
-            tools:layout="@layout/fragment_gallery"/>
+            tools:layout="@layout/fragment_gallery">
+
+        <action android:id="@+id/action_notification_to_gallery_detail"
+                app:destination="@id/fragmentDetailGallery"/>
+
+    </fragment>
+
+    <fragment android:id="@+id/fragmentDetailGallery"
+              android:label="@string/menu_gallery"
+              android:name="com.yoesuv.infomalangbatu.menu.gallery.views.FragmentDetailGallery"
+              tools:layout="@layout/fragment_detail_gallery"/>
 
     <fragment
             android:id="@+id/fragmentMap"
