@@ -43,11 +43,15 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- container -->
-        <FrameLayout
-            android:id="@+id/containerMain"
+        <fragment
+            android:id="@+id/fragmentMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:navGraph="@navigation/app_navigation"
+            app:defaultNavHost="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:layout="@layout/fragment_listplace"/>
 
         <!-- bottom menu -->
         <com.google.android.material.bottomnavigation.BottomNavigationView

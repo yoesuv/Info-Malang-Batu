@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/app_navigation"
+            app:startDestination="@id/fragmentList">
+
+    <fragment
+            android:id="@+id/fragmentList"
+            android:label="@string/menu_list"
+            android:name="com.yoesuv.infomalangbatu.menu.listplace.views.FragmentListPlace"
+            tools:layout="@layout/fragment_listplace"/>
+
+    <fragment
+            android:id="@+id/fragmentGallery"
+            android:label="@string/menu_gallery"
+            android:name="com.yoesuv.infomalangbatu.menu.gallery.views.FragmentGallery"
+            tools:layout="@layout/fragment_gallery"/>
+
+    <fragment
+            android:id="@+id/fragmentMap"
+            android:label="@string/menu_maps"
+            android:name="com.yoesuv.infomalangbatu.menu.maps.views.FragmentMaps"/>
+
+    <fragment
+            android:id="@+id/fragmentOther"
+            android:label="@string/menu_other"
+            android:name="com.yoesuv.infomalangbatu.menu.other.views.FragmentOther"
+            tools:layout="@layout/fragment_other"/>
+
+</navigation>
