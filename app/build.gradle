@@ -121,6 +121,8 @@ dependencies {
     implementation "com.tbruyelle.rxpermissions2:rxpermissions:$project.rxPermissionVersion"
     implementation "com.akexorcist:googledirectionlibrary:$project.googleDirectionLibraryVersion"
     implementation 'com.android.support:multidex:1.0.3'
+    implementation "androidx.navigation:navigation-fragment-ktx:$project.navigationLibraryVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$project.navigationLibraryVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'
