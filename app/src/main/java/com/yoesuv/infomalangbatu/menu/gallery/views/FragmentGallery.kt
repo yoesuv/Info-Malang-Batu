@@ -27,7 +27,6 @@ class FragmentGallery: androidx.fragment.app.Fragment() {
     private lateinit var viewModel: FragmentGalleryViewModel
     private lateinit var binding: FragmentGalleryBinding
     private lateinit var adapter: GalleryAdapter
-    private var listDataGallery: MutableList<GalleryModel> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false)
@@ -48,7 +47,7 @@ class FragmentGallery: androidx.fragment.app.Fragment() {
     private fun setupRecycler(){
         val layoutManager = GridLayoutManager(context, 3)
         binding.recyclerViewGallery.layoutManager = layoutManager
-        adapter = GalleryAdapter(activity!!, listDataGallery)
+        adapter = GalleryAdapter()
         binding.recyclerViewGallery.adapter = adapter
     }
 
@@ -62,11 +61,7 @@ class FragmentGallery: androidx.fragment.app.Fragment() {
 
     private fun onListDataChanged(listData: MutableList<GalleryModel>?){
         if (listData?.isNotEmpty()!!){
-            listDataGallery.clear()
-            listDataGallery.addAll(listData)
-            binding.recyclerViewGallery.post {
-                adapter.notifyDataSetChanged()
-            }
+            adapter.submitList(listData)
         }
     }
 
