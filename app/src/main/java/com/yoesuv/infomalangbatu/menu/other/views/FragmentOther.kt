@@ -16,12 +16,6 @@ import com.yoesuv.infomalangbatu.menu.other.adapters.TabOtherAdapter
 
 class FragmentOther: Fragment() {
 
-    companion object {
-        fun getInstance(): Fragment {
-            return FragmentOther()
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentOtherBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_other, container, false)
 

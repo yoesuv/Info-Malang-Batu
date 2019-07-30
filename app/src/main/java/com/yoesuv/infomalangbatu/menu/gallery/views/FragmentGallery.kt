@@ -20,12 +20,6 @@ import com.yoesuv.infomalangbatu.menu.gallery.viewmodels.FragmentGalleryViewMode
 
 class FragmentGallery: androidx.fragment.app.Fragment() {
 
-    companion object {
-        fun getInstance(): Fragment {
-            return FragmentGallery()
-        }
-    }
-
     private lateinit var viewModel: FragmentGalleryViewModel
     private lateinit var binding: FragmentGalleryBinding
     private lateinit var adapter: GalleryAdapter

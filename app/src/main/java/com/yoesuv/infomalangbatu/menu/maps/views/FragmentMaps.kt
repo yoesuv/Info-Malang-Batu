@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
-import androidx.fragment.app.Fragment
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuInflater
@@ -47,11 +46,7 @@ import io.reactivex.schedulers.Schedulers
 class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback {
 
     companion object {
-
         const val REQUEST_FEATURE_LOCATION_PERMISSION_CODE:Int = 12
-        fun getInstance(): Fragment {
-            return FragmentMaps()
-        }
     }
 
     private val restApi = ServiceFactory.create()
