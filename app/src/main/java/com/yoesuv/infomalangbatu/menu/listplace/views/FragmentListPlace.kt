@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
+import androidx.navigation.fragment.findNavController
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentListplaceBinding
 import com.yoesuv.infomalangbatu.menu.listplace.adapters.ListPlaceAdapter
@@ -64,7 +65,7 @@ class FragmentListPlace: Fragment() {
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerViewListPlace.layoutManager = layoutManager
         adapter = ListPlaceAdapter {
-
+            onItemClick(it)
         }
         binding.recyclerViewListPlace.adapter = adapter
     }
@@ -82,6 +83,13 @@ class FragmentListPlace: Fragment() {
         if(listPlace?.isNotEmpty()!!){
             adapter.submitList(listPlace)
         }
+    }
+
+    private fun onItemClick(placeModel: PlaceModel) {
+        val action = FragmentListPlaceDirections.actionToListPlaceDetail()
+        action.dataDetailListPlace = placeModel
+        findNavController().navigate(action)
+
     }
 
 }

@@ -67,7 +67,7 @@ class FragmentGallery: androidx.fragment.app.Fragment() {
     }
 
     private fun onItemGalleryClick(galleryModel: GalleryModel){
-        val action = FragmentGalleryDirections.actionNotificationToGalleryDetail()
+        val action = FragmentGalleryDirections.actionToGalleryDetail()
         action.dataDetailGallery = galleryModel
         findNavController().navigate(action)
     }
