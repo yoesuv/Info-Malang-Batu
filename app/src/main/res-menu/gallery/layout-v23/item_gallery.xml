@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:background="@android:color/transparent">
+        android:background="@android:color/transparent"
+        android:foreground="?attr/selectableItemBackground">
 
         <com.yoesuv.infomalangbatu.widgets.SquareImageView
             android:layout_width="match_parent"

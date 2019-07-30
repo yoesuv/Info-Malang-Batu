@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/tools">
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -16,12 +16,13 @@
             android:id="@+id/swipeRefreshLayoutListPlace"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            bind:showView="@{safeUnbox(listplace.isLoading)}">
+            tools:showView="@{safeUnbox(listplace.isLoading)}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewListPlace"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_listplace"/>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -29,7 +30,7 @@
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            bind:hideView="@{safeUnbox(listplace.isLoading)}">
+            tools:hideView="@{safeUnbox(listplace.isLoading)}">
 
             <ProgressBar
                 android:id="@+id/progressBarListPlace"

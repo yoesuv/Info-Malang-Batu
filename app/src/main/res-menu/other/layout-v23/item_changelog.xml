@@ -15,6 +15,7 @@
         android:clickable="true"
         android:focusable="true"
         android:background="@android:color/transparent"
+        android:foreground="?attr/selectableItemBackground"
         android:paddingLeft="@dimen/_10sdp"
         android:paddingRight="@dimen/_10sdp">
 

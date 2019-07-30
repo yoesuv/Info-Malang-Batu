@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/activity_detail_image_height"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/placeholder_image"
+                tools:srcCompat="@tools:sample/backgrounds/scenic"
                 tools:loadImage="@{detailGallery.imageUrl}"/>
 
         <androidx.appcompat.widget.AppCompatTextView

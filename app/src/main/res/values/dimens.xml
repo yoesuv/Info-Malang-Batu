@@ -2,4 +2,5 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_detail_image_height">@dimen/_200sdp</dimen>
     <dimen name="fragment_other_global_margin">@dimen/_10sdp</dimen>
+    <dimen name="item_list_place_image_height">@dimen/_150sdp</dimen>
 </resources>
