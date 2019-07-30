@@ -11,7 +11,7 @@ import com.yoesuv.infomalangbatu.databinding.ItemGalleryBinding
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.gallery.viewmodels.ItemGalleryViewModel
 
-class GalleryAdapter: ListAdapter<GalleryModel, GalleryAdapter.GalleryViewHolder>(DiffCallback) {
+class GalleryAdapter(val onClick:(GalleryModel) -> Unit): ListAdapter<GalleryModel, GalleryAdapter.GalleryViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,6 +20,9 @@ class GalleryAdapter: ListAdapter<GalleryModel, GalleryAdapter.GalleryViewHolder
     }
 
     override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
+        holder.itemView.setOnClickListener {
+            onClick(getItem(holder.adapterPosition))
+        }
         holder.bindData(getItem(holder.adapterPosition))
     }
 

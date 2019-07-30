@@ -15,6 +15,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'androidx.navigation.safeargs'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }

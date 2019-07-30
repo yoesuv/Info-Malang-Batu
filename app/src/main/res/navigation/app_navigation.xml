@@ -11,6 +11,7 @@
             android:name="com.yoesuv.infomalangbatu.menu.listplace.views.FragmentListPlace"
             tools:layout="@layout/fragment_listplace"/>
 
+    <!-- fragment gallery -->
     <fragment
             android:id="@+id/fragmentGallery"
             android:label="@string/menu_gallery"
@@ -22,11 +23,21 @@
 
     </fragment>
 
-    <fragment android:id="@+id/fragmentDetailGallery"
-              android:label="@string/menu_gallery"
-              android:name="com.yoesuv.infomalangbatu.menu.gallery.views.FragmentDetailGallery"
-              tools:layout="@layout/fragment_detail_gallery"/>
+    <fragment
+            android:id="@+id/fragmentDetailGallery"
+            android:label="@string/menu_gallery"
+            android:name="com.yoesuv.infomalangbatu.menu.gallery.views.FragmentDetailGallery"
+            tools:layout="@layout/fragment_detail_gallery">
 
+        <argument
+                android:name="data_detail_gallery"
+                app:argType="com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel"
+                app:nullable="true"
+                android:defaultValue="@null"/>
+
+    </fragment>
+
+    <!-- fragment map -->
     <fragment
             android:id="@+id/fragmentMap"
             android:label="@string/menu_maps"

@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentGalleryBinding
 import com.yoesuv.infomalangbatu.menu.gallery.adapters.GalleryAdapter
@@ -30,6 +32,11 @@ class FragmentGallery: androidx.fragment.app.Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(FragmentGalleryViewModel::class.java)
         binding.gallery = viewModel
 
@@ -40,14 +47,14 @@ class FragmentGallery: androidx.fragment.app.Fragment() {
         viewModel.listGalleryResponse.observe(this, Observer {
             onListDataChanged(it)
         })
-
-        return binding.root
     }
 
     private fun setupRecycler(){
         val layoutManager = GridLayoutManager(context, 3)
         binding.recyclerViewGallery.layoutManager = layoutManager
-        adapter = GalleryAdapter()
+        adapter = GalleryAdapter {
+            onItemGalleryClick(it)
+        }
         binding.recyclerViewGallery.adapter = adapter
     }
 
@@ -63,6 +70,12 @@ class FragmentGallery: androidx.fragment.app.Fragment() {
         if (listData?.isNotEmpty()!!){
             adapter.submitList(listData)
         }
+    }
+
+    private fun onItemGalleryClick(galleryModel: GalleryModel){
+        val action = FragmentGalleryDirections.actionNotificationToGalleryDetail()
+        action.dataDetailGallery = galleryModel
+        findNavController().navigate(action)
     }
 
 }
