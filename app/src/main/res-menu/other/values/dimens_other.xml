@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="tab_title_text_size">@dimen/_8ssp</dimen>
+    <dimen name="icon_app_info_size">@dimen/_80sdp</dimen>
+    <dimen name="default_other_text_size">@dimen/_12ssp</dimen>
+    <dimen name="default_text_license_size">@dimen/_9ssp</dimen>
+</resources>

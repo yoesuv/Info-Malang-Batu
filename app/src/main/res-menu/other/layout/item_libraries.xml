@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:text="@{library.license}"
-            android:textSize="@dimen/_9ssp"
+            android:textSize="@dimen/default_text_license_size"
             tools:text="@tools:sample/lorem/random"/>
 
         <include

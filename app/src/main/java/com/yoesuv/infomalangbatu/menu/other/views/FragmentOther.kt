@@ -25,7 +25,6 @@ class FragmentOther: Fragment() {
         binding.navigationTabStrip.inactiveColor = ContextCompat.getColor(context!!, R.color.grey_50)
         binding.navigationTabStrip.activeColor = Color.WHITE
         binding.navigationTabStrip.stripColor = ContextCompat.getColor(context!!, R.color.colorAccent)
-        binding.navigationTabStrip.titleSize = 25F
         binding.navigationTabStrip.cornersRadius = 0F
 
         setupAppBar(0F)
