@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
                     android:text="@string/app_name"
-                    android:textSize="@dimen/_16ssp"/>
+                    android:textSize="@dimen/toolbar_title_size"/>
 
             </androidx.appcompat.widget.Toolbar>
 

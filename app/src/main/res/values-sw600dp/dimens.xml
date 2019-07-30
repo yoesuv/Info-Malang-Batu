@@ -1,7 +1,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="toolbar_title_size">@dimen/_16ssp</dimen>
+    <dimen name="toolbar_title_size">@dimen/_14ssp</dimen>
     <dimen name="activity_detail_image_height">@dimen/_200sdp</dimen>
     <dimen name="fragment_other_global_margin">@dimen/_10sdp</dimen>
-    <dimen name="item_list_place_image_height">@dimen/_150sdp</dimen>
+    <dimen name="item_list_place_image_height">@dimen/_140sdp</dimen>
 </resources>
