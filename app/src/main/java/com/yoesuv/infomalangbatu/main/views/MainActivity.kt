@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.view.WindowManager
 import androidx.navigation.Navigation
@@ -69,6 +70,14 @@ class MainActivity: AppCompatActivity() {
         val navController = Navigation.findNavController(this, R.id.fragmentMain)
         setupActionBarWithNavController(navController)
         NavigationUI.setupWithNavController(bottomNavigationViewMain, navController)
+    }
+
+    fun hideNavigation(value: Boolean) {
+        if (value) {
+            bottomNavigationViewMain.visibility = View.GONE
+        } else {
+            bottomNavigationViewMain.visibility = View.VISIBLE
+        }
     }
 
 }
