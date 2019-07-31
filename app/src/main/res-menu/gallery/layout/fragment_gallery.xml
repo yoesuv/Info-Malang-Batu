@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/tools">
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -13,20 +14,24 @@
         android:layout_height="match_parent">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayoutGallery"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            bind:showView="@{safeUnbox(gallery.isLoading)}">
+                android:id="@+id/swipeRefreshLayoutGallery"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:showView="@{safeUnbox(gallery.isLoading)}">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewGallery"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                    android:id="@+id/recyclerViewGallery"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="3"
+                    tools:listitem="@layout/item_gallery"
+                    tools:itemCount="20"/>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <RelativeLayout
-            bind:hideView="@{safeUnbox(gallery.isLoading)}"
+            tools:hideView="@{safeUnbox(gallery.isLoading)}"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

@@ -15,7 +15,6 @@
         android:clickable="true"
         android:focusable="true"
         android:background="@android:color/transparent"
-        android:foreground="?attr/selectableItemBackground"
         android:paddingLeft="@dimen/_10sdp"
         android:paddingRight="@dimen/_10sdp">
 
@@ -25,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:textStyle="bold"
+            android:textSize="@dimen/default_other_text_size"
             android:text="@{changelog.version}"
             tools:text="@string/app_name"/>
 
@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewItemChangeLogVersion"
             android:text="@{changelog.description}"
+            android:textSize="@dimen/default_other_text_size"
             tools:text="@string/app_name"/>
 
         <include

@@ -4,17 +4,17 @@ import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.view.WindowManager
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.ActivityMainBinding
 import com.yoesuv.infomalangbatu.main.viewmodels.MainViewModel
-import com.yoesuv.infomalangbatu.menu.gallery.views.FragmentGallery
-import com.yoesuv.infomalangbatu.menu.listplace.views.FragmentListPlace
-import com.yoesuv.infomalangbatu.menu.maps.views.FragmentMaps
-import com.yoesuv.infomalangbatu.menu.other.views.FragmentOther
 import com.yoesuv.infomalangbatu.utils.AppHelper
-import com.yoesuv.infomalangbatu.utils.BottomNavigationViewHelper
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity: AppCompatActivity() {
 
@@ -33,9 +33,8 @@ class MainActivity: AppCompatActivity() {
         binding.main = viewModel
 
         setupToolbar()
-        setupBottomNavigation()
-
-        supportFragmentManager.beginTransaction().replace(R.id.containerMain, FragmentListPlace.getInstance()).commit()
+        binding.bottomNavigationViewMain.itemIconTintList = null
+        setupNavigation()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -46,30 +45,38 @@ class MainActivity: AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if ((BACK_PRESSED+2000L) > System.currentTimeMillis()) {
-            super.onBackPressed()
+        if (Navigation.findNavController(this, R.id.fragmentMain).currentDestination?.id == R.id.fragmentList) {
+            if ((BACK_PRESSED+2000L) > System.currentTimeMillis()) {
+                super.onBackPressed()
+            } else {
+                AppHelper.displayToastNormal(this, getString(R.string.confirm_close))
+            }
+            BACK_PRESSED = System.currentTimeMillis()
         } else {
-            AppHelper.displayToastNormal(this, getString(R.string.confirm_close))
+            super.onBackPressed()
         }
-        BACK_PRESSED = System.currentTimeMillis()
     }
 
-    private fun setupToolbar(){
+    override fun onSupportNavigateUp(): Boolean {
+        return Navigation.findNavController(this, R.id.fragmentMain).navigateUp()
+    }
+
+    private fun setupToolbar() {
         setSupportActionBar(binding.toolbarMain)
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
-    private fun setupBottomNavigation(){
-        binding.bottomNavigationViewMain.itemIconTintList = null
-        BottomNavigationViewHelper.disableShiftMode(binding.bottomNavigationViewMain)
-        binding.bottomNavigationViewMain.setOnNavigationItemSelectedListener {
-            when {
-                it.itemId==R.id.menuList -> supportFragmentManager.beginTransaction().replace(R.id.containerMain, FragmentListPlace.getInstance()).commit()
-                it.itemId==R.id.menuGallery -> supportFragmentManager.beginTransaction().replace(R.id.containerMain, FragmentGallery.getInstance()).commit()
-                it.itemId==R.id.menuMap -> supportFragmentManager.beginTransaction().replace(R.id.containerMain, FragmentMaps.getInstance()).commit()
-                else -> supportFragmentManager.beginTransaction().replace(R.id.containerMain, FragmentOther.getInstance()).commit()
-            }
-            return@setOnNavigationItemSelectedListener true
+    private fun setupNavigation() {
+        val navController = Navigation.findNavController(this, R.id.fragmentMain)
+        setupActionBarWithNavController(navController)
+        NavigationUI.setupWithNavController(bottomNavigationViewMain, navController)
+    }
+
+    fun hideNavigation(value: Boolean) {
+        if (value) {
+            bottomNavigationViewMain.visibility = View.GONE
+        } else {
+            bottomNavigationViewMain.visibility = View.VISIBLE
         }
     }
 

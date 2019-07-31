@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/app_navigation"
+        app:startDestination="@id/fragmentList">
+
+    <!-- fragment list place -->
+    <fragment
+            android:id="@+id/fragmentList"
+            android:label="@string/menu_list"
+            android:name="com.yoesuv.infomalangbatu.menu.listplace.views.FragmentListPlace"
+            tools:layout="@layout/fragment_listplace">
+
+        <action android:id="@+id/action_to_list_place_detail"
+                app:destination="@id/fragmentDetailList"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+
+    </fragment>
+
+    <fragment
+            android:id="@+id/fragmentDetailList"
+            android:label="@string/menu_list"
+            android:name="com.yoesuv.infomalangbatu.menu.listplace.views.FragmentDetailListPlace"
+            tools:layout="@layout/fragment_detail_listplace">
+
+        <argument
+                android:name="data_detail_list_place"
+                app:argType="com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel"
+                app:nullable="true"
+                android:defaultValue="@null"/>
+
+    </fragment>
+
+    <!-- fragment gallery -->
+    <fragment
+            android:id="@+id/fragmentGallery"
+            android:label="@string/menu_gallery"
+            android:name="com.yoesuv.infomalangbatu.menu.gallery.views.FragmentGallery"
+            tools:layout="@layout/fragment_gallery">
+
+        <action android:id="@+id/action_to_gallery_detail"
+                app:destination="@id/fragmentDetailGallery"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+
+    </fragment>
+
+    <fragment
+            android:id="@+id/fragmentDetailGallery"
+            android:label="@string/menu_gallery"
+            android:name="com.yoesuv.infomalangbatu.menu.gallery.views.FragmentDetailGallery"
+            tools:layout="@layout/fragment_detail_gallery">
+
+        <argument
+                android:name="data_detail_gallery"
+                app:argType="com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel"
+                app:nullable="true"
+                android:defaultValue="@null"/>
+
+    </fragment>
+
+    <!-- fragment map -->
+    <fragment
+            android:id="@+id/fragmentMap"
+            android:label="@string/menu_maps"
+            android:name="com.yoesuv.infomalangbatu.menu.maps.views.FragmentMaps"/>
+
+    <fragment
+            android:id="@+id/fragmentOther"
+            android:label="@string/menu_other"
+            android:name="com.yoesuv.infomalangbatu.menu.other.views.FragmentOther"
+            tools:layout="@layout/fragment_other"/>
+
+</navigation>

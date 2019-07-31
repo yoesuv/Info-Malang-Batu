@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="item_list_place_image_height">@dimen/_90sdp</dimen>
+</resources>

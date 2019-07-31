@@ -1,10 +1,12 @@
 package com.yoesuv.infomalangbatu.menu.listplace.models
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+@Keep
 @Parcelize
 data class PlaceModel(@SerializedName("nama") @Expose val name:String?,
                       @SerializedName("lokasi") @Expose val location:String?,

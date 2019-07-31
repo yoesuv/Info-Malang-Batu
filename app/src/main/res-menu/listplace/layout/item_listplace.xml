@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -12,12 +11,10 @@
     <com.yoesuv.infomalangbatu.widgets.ForegroundRelativeLayout
         android:id="@+id/layoutMainItemListPlace"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_150sdp"
+        android:layout_height="@dimen/item_list_place_image_height"
         android:clickable="true"
         android:focusable="true"
-        android:background="@android:color/transparent"
-        android:foreground="?attr/selectableItemBackground"
-        android:onClick="@{itemListPlace::itemClick}">
+        android:background="@android:color/transparent">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -27,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/placeholder_image"
+                tools:srcCompat="@tools:sample/backgrounds/scenic"
                 tools:loadImage="@{itemListPlace.imageUrl}"/>
 
             <View

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="detailListPlace"
+                type="com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentDetailListPlaceViewModel"/>
+    </data>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_detail_image_height"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/backgrounds/scenic"
+                tools:loadImage="@{detailListPlace.imageUrl}"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewDetailListPlaceName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:text="@{detailListPlace.title}"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold"
+                tools:text="@string/app_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewDetailListPlaceDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:textSize="@dimen/_12ssp"
+                android:text="@{detailListPlace.description}"
+                tools:text="@string/app_name"/>
+
+    </LinearLayout>
+
+</layout>

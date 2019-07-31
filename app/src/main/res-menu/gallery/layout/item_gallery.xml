@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -14,16 +13,14 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:background="@android:color/transparent"
-        android:foreground="?attr/selectableItemBackground"
-        android:onClick="@{itemGallery::itemClick}">
+        android:background="@android:color/transparent">
 
         <com.yoesuv.infomalangbatu.widgets.SquareImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/placeholder_image"
-            bind:loadImage="@{itemGallery.image}"/>
+            tools:srcCompat="@tools:sample/backgrounds/scenic"
+            tools:loadImage="@{itemGallery.image}"/>
 
     </com.yoesuv.infomalangbatu.widgets.ForegroundRelativeLayout>
 
