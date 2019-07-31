@@ -1,28 +1,30 @@
 package com.yoesuv.infomalangbatu.menu.gallery.views
 
+import android.content.res.Configuration
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentGalleryBinding
 import com.yoesuv.infomalangbatu.menu.gallery.adapters.GalleryAdapter
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.gallery.viewmodels.FragmentGalleryViewModel
 
-class FragmentGallery: androidx.fragment.app.Fragment() {
+class FragmentGallery: Fragment() {
 
     private lateinit var viewModel: FragmentGalleryViewModel
     private lateinit var binding: FragmentGalleryBinding
     private lateinit var adapter: GalleryAdapter
+
+    private var spanCount = 3
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false)
@@ -44,7 +46,12 @@ class FragmentGallery: androidx.fragment.app.Fragment() {
     }
 
     private fun setupRecycler(){
-        val layoutManager = GridLayoutManager(context, 3)
+        if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            spanCount = 3
+        } else {
+            spanCount = 5
+        }
+        val layoutManager = GridLayoutManager(context, spanCount)
         binding.recyclerViewGallery.layoutManager = layoutManager
         adapter = GalleryAdapter {
             onItemGalleryClick(it)
