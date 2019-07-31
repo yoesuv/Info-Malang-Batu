@@ -21,6 +21,14 @@
     <string name="info_app_version">Versi %1$s</string>
 
     <!-- CHANGELOG -->
+    <string name="ver_10">Versi 2.2.0</string>
+    <string name="ver_10_info">
+        <![CDATA[
+            • dukungan untuk tablet<br/>
+            • optimasi aplikasi<br/>
+            • pembaruan library
+        ]]>
+    </string>
     <string name="ver_9">Versi 2.1.0</string>
     <string name="ver_9_info">
         <![CDATA[
