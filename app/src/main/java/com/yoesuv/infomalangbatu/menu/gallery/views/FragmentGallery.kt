@@ -48,11 +48,7 @@ class FragmentGallery: Fragment() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            layoutManager.spanCount = 3
-        } else {
-            layoutManager.spanCount = 5
-        }
+        activity?.recreate()
     }
 
     private fun setupRecycler(){

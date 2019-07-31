@@ -1,5 +1,6 @@
 package com.yoesuv.infomalangbatu.menu.listplace.views
 
+import android.content.res.Configuration
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
@@ -41,7 +42,6 @@ class FragmentListPlace: Fragment() {
         viewModel.error.observe(this, Observer {
             it?.printStackTrace()
         })
-
         setHasOptionsMenu(true)
     }
 
@@ -59,6 +59,11 @@ class FragmentListPlace: Fragment() {
         }
         item?.isChecked = true
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        activity?.recreate()
     }
 
     private fun setupRecycler(){
@@ -89,7 +94,6 @@ class FragmentListPlace: Fragment() {
         val action = FragmentListPlaceDirections.actionToListPlaceDetail()
         action.dataDetailListPlace = placeModel
         findNavController().navigate(action)
-
     }
 
 }
