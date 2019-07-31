@@ -36,7 +36,8 @@
             android:value="655bd918bd372babeb0c6904b2ab35d1187a0d5a" />
 
         <activity
-            android:name=".main.views.MainActivity">
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:name=".main.views.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
