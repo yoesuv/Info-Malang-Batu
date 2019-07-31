@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuInflater
@@ -241,6 +242,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     }
 
     override fun onDirectionSuccess(direction: Direction?, rawBody: String?) {
+        Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # onDirectionSuccess $rawBody")
         if (progressDialog.isShowing) {
             progressDialog.dismiss()
         }
@@ -259,6 +261,8 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
             } else {
                 AppHelper.displayToastError(context!!, context?.getString(R.string.error_direction_not_success)!!)
             }
+        } else {
+            AppHelper.displayToastError(context!!, context?.getString(R.string.error_direction_not_success)!!)
         }
     }
 
