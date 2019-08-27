@@ -33,8 +33,28 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
                 val placeRoom = PlaceRoom(placeModel.name, placeModel.location, placeModel.description, placeModel.thumbnail, placeModel.image)
                 DatabaseInsertPlace(context, placeRoom).execute()
             }
+            initDataGallery(context)
+        },{ code, message ->
+
+        },{
+
+        })
+    }
+
+    private fun initDataGallery(context: Context) {
+        appRepository.getListGallery({
+            initDataMapPins(context)
+        },{ code, message ->
+
+        },{
+
+        })
+    }
+
+    private fun initDataMapPins(context: Context) {
+        appRepository.getListMapPins({
             openApplication(context)
-        },{code, message ->
+        },{ code, message ->
 
         },{
 
