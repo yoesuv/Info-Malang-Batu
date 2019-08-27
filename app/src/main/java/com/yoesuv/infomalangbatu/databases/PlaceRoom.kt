@@ -4,12 +4,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-class PlaceRoom {
+class PlaceRoom (
+    var name: String?,
+    var location: String?,
+    var description: String?,
+    var thumbnail: String?,
+    var image: String?
+) {
     @PrimaryKey(autoGenerate = true)
     var id:Int? = null
-    var name: String? = null
-    var location: String? = null
-    var description: String? = null
-    var thumbnail: String? = null
-    var image: String? = null
 }

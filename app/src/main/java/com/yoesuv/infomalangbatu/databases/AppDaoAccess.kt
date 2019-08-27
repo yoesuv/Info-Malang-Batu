@@ -1,7 +1,6 @@
 package com.yoesuv.infomalangbatu.databases
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 
@@ -14,7 +13,7 @@ interface AppDaoAccess {
     @Query("SELECT * FROM PlaceRoom")
     fun selectAll(): MutableList<PlaceRoom>
 
-    @Delete
-    fun deletePlace(placeRoom: PlaceRoom)
+    @Query("DELETE FROM PlaceRoom")
+    fun deleteAllPlace()
 
 }

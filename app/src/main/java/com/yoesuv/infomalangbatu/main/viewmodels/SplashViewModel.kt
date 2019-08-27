@@ -9,13 +9,11 @@ import androidx.lifecycle.viewModelScope
 
 import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.R
-import com.yoesuv.infomalangbatu.networks.ServiceFactory
-
-import kotlinx.coroutines.launch
+import com.yoesuv.infomalangbatu.networks.AppRepository
 
 class SplashViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val restApi = ServiceFactory.create()
+    private val appRepository = AppRepository(viewModelScope)
 
     var version: ObservableField<String> = ObservableField()
 
@@ -24,19 +22,12 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun initDataBase(context: Context) {
-        viewModelScope.launch {
-            try {
-                val result = restApi.getListPlace()
-                if (result.isSuccessful) {
+        appRepository.getListPlace(context, {
 
-                } else {
+        },{code, message ->
 
-                }
-            } catch (error: Exception) {
+        },{
 
-            } finally {
-
-            }
-        }
+        })
     }
 }
