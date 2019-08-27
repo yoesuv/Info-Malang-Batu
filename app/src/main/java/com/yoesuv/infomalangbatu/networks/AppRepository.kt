@@ -9,7 +9,7 @@ class AppRepository(private val coroutineScope: CoroutineScope) {
 
     private val restApi = ServiceFactory.create()
 
-    fun getListPlace(context: Context, onSuccess:(MutableList<PlaceModel>?) -> Unit, onUnSuccess:(Int, String) -> Unit, onError:(Throwable) -> Unit) {
+    fun getListPlace(onSuccess:(MutableList<PlaceModel>?) -> Unit, onUnSuccess:(Int, String) -> Unit, onError:(Throwable) -> Unit) {
         coroutineScope.launch {
             val result = restApi.getListPlace()
             try {

@@ -35,7 +35,7 @@ class FragmentListPlace: Fragment() {
         setupRecycler()
         setupSwipeRefresh()
 
-        viewModel.getListPlace()
+        viewModel.getListPlace(context!!)
         viewModel.listPlaceResponse.observe(this, Observer {
             onListDataChange(it)
         })
@@ -52,7 +52,7 @@ class FragmentListPlace: Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.listSemua -> viewModel.getListPlace()
+            R.id.listSemua -> viewModel.getListPlace(context!!)
             R.id.listKabMalang -> viewModel.getListPlaceKabMalang()
             R.id.listKotaBatu -> viewModel.getListPlaceKotaBatu()
             R.id.listKotaMalang -> viewModel.getListPlaceKotaMalang()
@@ -80,7 +80,7 @@ class FragmentListPlace: Fragment() {
         binding.swipeRefreshLayoutListPlace.setOnRefreshListener {
             binding.swipeRefreshLayoutListPlace.isRefreshing = false
             activity?.invalidateOptionsMenu()
-            viewModel.getListPlace()
+            viewModel.getListPlace(context!!)
         }
     }
 
