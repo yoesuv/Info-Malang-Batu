@@ -3,30 +3,30 @@ package com.yoesuv.infomalangbatu.networks
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
-import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.Response
 
 /**
- *  Created by yusuf on 4/30/18.
+ *  Updated by yusuf on 8/27/19.
  */
 interface RestApi {
 
     @GET("List_place_malang_batu.json")
-    fun getListPlace(): Observable<MutableList<PlaceModel>>
+    suspend fun getListPlace(): Response<MutableList<PlaceModel>>
 
     @GET("List_place_kab_malang.json")
-    fun getListPlaceKabMalang(): Observable<MutableList<PlaceModel>>
+    suspend fun getListPlaceKabMalang(): Response<MutableList<PlaceModel>>
 
     @GET("List_place_kota_batu.json")
-    fun getListPlaceKotaBatu(): Observable<MutableList<PlaceModel>>
+    suspend fun getListPlaceKotaBatu(): Response<MutableList<PlaceModel>>
 
     @GET("List_place_kota_malang.json")
-    fun getListPlaceKotaMalang(): Observable<MutableList<PlaceModel>>
+    suspend fun getListPlaceKotaMalang(): Response<MutableList<PlaceModel>>
 
     @GET("Gallery_Malang_Batu.json")
-    fun getGallery(): Observable<MutableList<GalleryModel>>
+    suspend fun getGallery(): Response<MutableList<GalleryModel>>
 
     @GET("Maps_Malang_Batu.json ")
-    fun getMapPins(): Observable<MutableList<PinModel>>
+    suspend fun getMapPins(): Response<MutableList<PinModel>>
 
 }
