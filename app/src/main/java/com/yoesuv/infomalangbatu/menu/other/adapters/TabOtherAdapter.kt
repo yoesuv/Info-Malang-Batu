@@ -8,7 +8,7 @@ import com.yoesuv.infomalangbatu.menu.other.views.ChildFragmentInfo
 import com.yoesuv.infomalangbatu.menu.other.views.ChildFragmentLibraries
 import com.yoesuv.infomalangbatu.menu.other.views.ChildFragmentThanks
 
-class TabOtherAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
+class TabOtherAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
         return when (position) {

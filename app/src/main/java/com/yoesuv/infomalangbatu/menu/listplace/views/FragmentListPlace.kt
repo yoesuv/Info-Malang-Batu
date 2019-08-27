@@ -45,19 +45,19 @@ class FragmentListPlace: Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_list_place, menu)
+        inflater.inflate(R.menu.menu_list_place, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.listSemua -> viewModel.getListPlace()
             R.id.listKabMalang -> viewModel.getListPlaceKabMalang()
             R.id.listKotaBatu -> viewModel.getListPlaceKotaBatu()
             R.id.listKotaMalang -> viewModel.getListPlaceKotaMalang()
         }
-        item?.isChecked = true
+        item.isChecked = true
         return super.onOptionsItemSelected(item)
     }
 

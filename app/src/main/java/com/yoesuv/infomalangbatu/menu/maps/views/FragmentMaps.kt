@@ -29,29 +29,21 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import com.tbruyelle.rxpermissions2.RxPermissions
 import com.yoesuv.infomalangbatu.App
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.menu.maps.adapters.MyCustomInfoWindowAdapter
 import com.yoesuv.infomalangbatu.menu.maps.models.MarkerTag
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
-import com.yoesuv.infomalangbatu.networks.ServiceFactory
 import com.yoesuv.infomalangbatu.utils.AppHelper
 import com.yoesuv.infomalangbatu.utils.BounceAnimation
 import com.yoesuv.infomalangbatu.widgets.AppDialog
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
 class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback {
 
     companion object {
         const val REQUEST_FEATURE_LOCATION_PERMISSION_CODE:Int = 12
     }
-
-    private val restApi = ServiceFactory.create()
-    private val compositeDisposable = CompositeDisposable()
 
     private var markerLocation: Marker? = null
     private var mGoogleMap: GoogleMap? = null
@@ -79,7 +71,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
 
     override fun onDestroy() {
         super.onDestroy()
-        compositeDisposable.clear()
         if (myLocationCallback!=null) {
             LocationServices.getFusedLocationProviderClient(context!!).removeLocationUpdates(myLocationCallback)
         }
@@ -96,13 +87,14 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_maps, menu)
+        inflater.inflate(R.menu.menu_maps, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId==R.id.menuMapRefresh){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId==R.id.menuMapRefresh){
             getMapPins(mGoogleMap)
         }
         return super.onOptionsItemSelected(item)
@@ -112,16 +104,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         googleMap?.clear()
         googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(-7.982914, 112.630875)))
         googleMap?.animateCamera(CameraUpdateFactory.zoomTo(9F))
-        compositeDisposable.add(
-                restApi.getMapPins()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            setupPin(googleMap, it)
-                        },{
-                            AppHelper.displayToastError(context?.applicationContext!!,getString(R.string.error_get_data_map_pins))
-                        })
-        )
     }
 
     private fun setupPin(googleMap: GoogleMap?, listPin: MutableList<PinModel>){
@@ -155,18 +137,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     }
 
     private fun requestPermission(googleMap: GoogleMap?){
-        val rxPermission = RxPermissions(activity as Activity)
-        compositeDisposable.add(
-                rxPermission.request(android.Manifest.permission.ACCESS_FINE_LOCATION,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION)
-                .subscribe{ result: Boolean ->
-                    if (result) {
-                        enableUserLocation(googleMap)
-                    } else {
-                        AppHelper.displayToastError(context?.applicationContext!!, getString(R.string.access_location_denied))
-                    }
-                }
-        )
+
     }
 
 
