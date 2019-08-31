@@ -7,9 +7,13 @@ import android.content.Intent
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.Room
+import androidx.room.RoomDatabase
 
 import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.R
+import com.yoesuv.infomalangbatu.data.AppConstants
+import com.yoesuv.infomalangbatu.databases.PlaceDatabase
 import com.yoesuv.infomalangbatu.databases.PlaceRoom
 import com.yoesuv.infomalangbatu.databases.place.DatabaseDeleteAllPlace
 import com.yoesuv.infomalangbatu.databases.place.DatabaseInsertPlace
@@ -19,6 +23,7 @@ import com.yoesuv.infomalangbatu.networks.AppRepository
 class SplashViewModel(application: Application) : AndroidViewModel(application) {
 
     private val appRepository = AppRepository(viewModelScope)
+    private lateinit var placeDatabase: PlaceDatabase
 
     var version: ObservableField<String> = ObservableField()
 
@@ -27,11 +32,12 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun initDataBase(context: Context) {
+        placeDatabase = Room.databaseBuilder(context, PlaceDatabase::class.java, AppConstants.DATABASE_NAME).build()
         appRepository.getListPlace({
-            DatabaseDeleteAllPlace(context).execute()
+            DatabaseDeleteAllPlace(placeDatabase).execute()
             for (placeModel in it!!) {
                 val placeRoom = PlaceRoom(placeModel.name, placeModel.location, placeModel.description, placeModel.thumbnail, placeModel.image)
-                DatabaseInsertPlace(context, placeRoom).execute()
+                DatabaseInsertPlace(placeDatabase, placeRoom).execute()
             }
             initDataGallery(context)
         },{ code, message ->
