@@ -1,12 +1,11 @@
-package com.yoesuv.infomalangbatu.databases
+package com.yoesuv.infomalangbatu.databases.place
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.yoesuv.infomalangbatu.databases.place.PlaceRoom
 
 @Dao
-interface AppDaoAccess {
+interface PlaceDaoAccess {
 
     @Insert
     fun insertPlace(placeRoom: PlaceRoom)
