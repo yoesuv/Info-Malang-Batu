@@ -4,8 +4,6 @@ import android.content.Context
 import android.os.AsyncTask
 import androidx.room.Room
 import com.yoesuv.infomalangbatu.data.AppConstants
-import com.yoesuv.infomalangbatu.databases.PlaceDatabase
-import com.yoesuv.infomalangbatu.databases.PlaceRoom
 
 class DatabaseListPlace(context: Context) :  AsyncTask<Void, Void, MutableList<PlaceRoom>>() {
 

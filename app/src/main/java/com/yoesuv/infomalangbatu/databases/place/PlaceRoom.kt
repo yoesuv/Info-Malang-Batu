@@ -1,4 +1,4 @@
-package com.yoesuv.infomalangbatu.databases
+package com.yoesuv.infomalangbatu.databases.place
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
