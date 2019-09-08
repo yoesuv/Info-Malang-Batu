@@ -1,12 +1,12 @@
 package com.yoesuv.infomalangbatu.main.views
 
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.view.WindowManager
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -29,7 +29,7 @@ class MainActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         binding.main = viewModel
 
         setupToolbar()

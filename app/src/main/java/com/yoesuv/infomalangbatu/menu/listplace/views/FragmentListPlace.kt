@@ -2,13 +2,13 @@ package com.yoesuv.infomalangbatu.menu.listplace.views
 
 import android.content.res.Configuration
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentListplaceBinding
@@ -29,7 +29,7 @@ class FragmentListPlace: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(FragmentListPlaceViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FragmentListPlaceViewModel::class.java)
         binding.listplace = viewModel
 
         setupRecycler()

@@ -2,7 +2,6 @@ package com.yoesuv.infomalangbatu.menu.gallery.views
 
 import android.content.res.Configuration
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.core.content.ContextCompat
@@ -11,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentGalleryBinding
@@ -34,7 +34,7 @@ class FragmentGallery: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(FragmentGalleryViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FragmentGalleryViewModel::class.java)
         binding.gallery = viewModel
 
         setupRecycler()
