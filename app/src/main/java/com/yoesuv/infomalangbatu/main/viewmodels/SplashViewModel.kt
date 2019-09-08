@@ -1,5 +1,6 @@
 package com.yoesuv.infomalangbatu.main.viewmodels
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -26,12 +27,12 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
 
     var version: ObservableField<String> = ObservableField()
 
-    fun setVersion(context: Context) {
-        version.set(context.getString(R.string.info_app_version, BuildConfig.VERSION_NAME))
+    fun setupProperties(activity: Activity) {
+        version.set(activity.getString(R.string.info_app_version, BuildConfig.VERSION_NAME))
+        placeDatabase = Room.databaseBuilder(activity, PlaceDatabase::class.java, AppConstants.DATABASE_NAME).build()
     }
 
-    fun initDataBase(context: Context) {
-        placeDatabase = Room.databaseBuilder(context, PlaceDatabase::class.java, AppConstants.DATABASE_NAME).build()
+    fun initDataBase(activity: Activity) {
         appRepository.getListPlace({
             DatabaseDeleteAllPlace(placeDatabase).execute()
             for (placeModel in it!!) {
@@ -44,7 +45,7 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
                 )
                 DatabaseInsertPlace(placeDatabase, placeRoom).execute()
             }
-            initDataGallery(context)
+            initDataGallery(activity)
         },{ code, message ->
 
         },{
@@ -52,9 +53,9 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
         })
     }
 
-    private fun initDataGallery(context: Context) {
+    private fun initDataGallery(activity: Activity) {
         appRepository.getListGallery({
-            initDataMapPins(context)
+            initDataMapPins(activity)
         },{ code, message ->
 
         },{
@@ -62,9 +63,9 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
         })
     }
 
-    private fun initDataMapPins(context: Context) {
+    private fun initDataMapPins(activity: Activity) {
         appRepository.getListMapPins({
-            openApplication(context)
+            openApplication(activity)
         },{ code, message ->
 
         },{
@@ -72,10 +73,11 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
         })
     }
 
-    private fun openApplication(context: Context) {
-        val intent = Intent(context, MainActivity::class.java)
+    private fun openApplication(activity: Activity) {
+        val intent = Intent(activity, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        context.startActivity(intent)
+        activity.startActivity(intent)
+        activity.finish()
     }
 }

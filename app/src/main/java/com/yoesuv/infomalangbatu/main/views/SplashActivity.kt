@@ -20,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(SplashViewModel::class.java)
         binding.splash = viewModel
 
-        viewModel.setVersion(this)
+        viewModel.setupProperties(this)
         viewModel.initDataBase(this)
     }
 
