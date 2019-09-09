@@ -17,4 +17,7 @@ interface AppDaoAccess {
     @Query("DELETE FROM PlaceRoom")
     fun deleteAllPlace()
 
+    @Query("DELETE FROM GaleriRoom")
+    fun deleteAllGallery()
+
 }

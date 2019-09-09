@@ -13,6 +13,7 @@ import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databases.AppDatabase
+import com.yoesuv.infomalangbatu.databases.gallery.DatabaseDeleteAllGaleri
 import com.yoesuv.infomalangbatu.databases.place.PlaceRoom
 import com.yoesuv.infomalangbatu.databases.place.DatabaseDeleteAllPlace
 import com.yoesuv.infomalangbatu.databases.place.DatabaseInsertPlace
@@ -28,7 +29,9 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
 
     fun setupProperties(activity: Activity) {
         version.set(activity.getString(R.string.info_app_version, BuildConfig.VERSION_NAME))
-        appDatabase = Room.databaseBuilder(activity, AppDatabase::class.java, AppConstants.DATABASE_NAME).build()
+        appDatabase = Room.databaseBuilder(activity, AppDatabase::class.java, AppConstants.DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     fun initDataBase(activity: Activity) {
@@ -54,6 +57,7 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
 
     private fun initDataGallery(activity: Activity) {
         appRepository.getListGallery({
+            DatabaseDeleteAllGaleri(appDatabase).execute()
             initDataMapPins(activity)
         },{ code, message ->
 
