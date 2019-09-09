@@ -40,10 +40,11 @@ class FragmentGallery: Fragment() {
         setupRecycler()
         setupSwipeRefresh()
 
-        viewModel.getGallery()
+        viewModel.setupProperties(context)
         viewModel.listGalleryResponse.observe(this, Observer {
             onListDataChanged(it)
         })
+        viewModel.getListGallery()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -69,7 +70,7 @@ class FragmentGallery: Fragment() {
         binding.swipeRefreshLayoutGallery.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary))
         binding.swipeRefreshLayoutGallery.setOnRefreshListener {
             binding.swipeRefreshLayoutGallery.isRefreshing = false
-            viewModel.getGallery()
+            viewModel.getListGallery()
         }
     }
 

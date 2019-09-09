@@ -14,6 +14,8 @@ import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databases.AppDatabase
 import com.yoesuv.infomalangbatu.databases.gallery.DatabaseDeleteAllGaleri
+import com.yoesuv.infomalangbatu.databases.gallery.DatabaseInsertGaleri
+import com.yoesuv.infomalangbatu.databases.gallery.GaleriRoom
 import com.yoesuv.infomalangbatu.databases.place.PlaceRoom
 import com.yoesuv.infomalangbatu.databases.place.DatabaseDeleteAllPlace
 import com.yoesuv.infomalangbatu.databases.place.DatabaseInsertPlace
@@ -58,6 +60,14 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     private fun initDataGallery(activity: Activity) {
         appRepository.getListGallery({
             DatabaseDeleteAllGaleri(appDatabase).execute()
+            for (galleryModel in it!!) {
+                val galeriRoom = GaleriRoom(
+                    galleryModel.caption,
+                    galleryModel.thumbnail,
+                    galleryModel.image
+                )
+                DatabaseInsertGaleri(appDatabase, galeriRoom).execute()
+            }
             initDataMapPins(activity)
         },{ code, message ->
 
