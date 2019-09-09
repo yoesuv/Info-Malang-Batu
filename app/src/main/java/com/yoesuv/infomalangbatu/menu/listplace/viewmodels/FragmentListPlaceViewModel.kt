@@ -7,7 +7,7 @@ import androidx.databinding.ObservableField
 import androidx.room.Room
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databases.place.DatabaseListPlace
-import com.yoesuv.infomalangbatu.databases.place.AppDatabase
+import com.yoesuv.infomalangbatu.databases.AppDatabase
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 
 class FragmentListPlaceViewModel: ViewModel() {

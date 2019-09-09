@@ -1,6 +1,7 @@
 package com.yoesuv.infomalangbatu.databases.place
 
 import android.os.AsyncTask
+import com.yoesuv.infomalangbatu.databases.AppDatabase
 
 class DatabaseDeleteAllPlace(private val appDatabase: AppDatabase) : AsyncTask<Void, Void, Void>() {
 
