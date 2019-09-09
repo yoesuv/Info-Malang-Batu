@@ -2,7 +2,6 @@ package com.yoesuv.infomalangbatu.main.viewmodels
 
 import android.app.Activity
 import android.app.Application
-import android.content.Context
 import android.content.Intent
 
 import androidx.databinding.ObservableField
@@ -13,7 +12,7 @@ import androidx.room.Room
 import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
-import com.yoesuv.infomalangbatu.databases.place.PlaceDatabase
+import com.yoesuv.infomalangbatu.databases.place.AppDatabase
 import com.yoesuv.infomalangbatu.databases.place.PlaceRoom
 import com.yoesuv.infomalangbatu.databases.place.DatabaseDeleteAllPlace
 import com.yoesuv.infomalangbatu.databases.place.DatabaseInsertPlace
@@ -23,18 +22,18 @@ import com.yoesuv.infomalangbatu.networks.AppRepository
 class SplashViewModel(application: Application) : AndroidViewModel(application) {
 
     private val appRepository = AppRepository(viewModelScope)
-    private lateinit var placeDatabase: PlaceDatabase
+    private lateinit var appDatabase: AppDatabase
 
     var version: ObservableField<String> = ObservableField()
 
     fun setupProperties(activity: Activity) {
         version.set(activity.getString(R.string.info_app_version, BuildConfig.VERSION_NAME))
-        placeDatabase = Room.databaseBuilder(activity, PlaceDatabase::class.java, AppConstants.DATABASE_NAME).build()
+        appDatabase = Room.databaseBuilder(activity, AppDatabase::class.java, AppConstants.DATABASE_NAME).build()
     }
 
     fun initDataBase(activity: Activity) {
         appRepository.getListPlace({
-            DatabaseDeleteAllPlace(placeDatabase).execute()
+            DatabaseDeleteAllPlace(appDatabase).execute()
             for (placeModel in it!!) {
                 val placeRoom = PlaceRoom(
                     placeModel.name,
@@ -43,7 +42,7 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
                     placeModel.thumbnail,
                     placeModel.image
                 )
-                DatabaseInsertPlace(placeDatabase, placeRoom).execute()
+                DatabaseInsertPlace(appDatabase, placeRoom).execute()
             }
             initDataGallery(activity)
         },{ code, message ->

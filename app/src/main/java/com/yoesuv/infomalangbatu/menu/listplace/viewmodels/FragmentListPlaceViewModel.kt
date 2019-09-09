@@ -7,7 +7,7 @@ import androidx.databinding.ObservableField
 import androidx.room.Room
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databases.place.DatabaseListPlace
-import com.yoesuv.infomalangbatu.databases.place.PlaceDatabase
+import com.yoesuv.infomalangbatu.databases.place.AppDatabase
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 
 class FragmentListPlaceViewModel: ViewModel() {
@@ -18,15 +18,15 @@ class FragmentListPlaceViewModel: ViewModel() {
     var listPlaceResponse: MutableLiveData<MutableList<PlaceModel>> = MutableLiveData()
     var error: MutableLiveData<Throwable> = MutableLiveData()
 
-    private lateinit var placeDatabase: PlaceDatabase
+    private lateinit var appDatabase: AppDatabase
 
     fun setupProperties(context: Context?) {
-        placeDatabase = Room.databaseBuilder(context!!, PlaceDatabase::class.java, AppConstants.DATABASE_NAME).build()
+        appDatabase = Room.databaseBuilder(context!!, AppDatabase::class.java, AppConstants.DATABASE_NAME).build()
     }
 
     fun getListPlace(){
         listPlaceModel.clear()
-        val listPlace = DatabaseListPlace(placeDatabase).execute().get()
+        val listPlace = DatabaseListPlace(appDatabase).execute().get()
         for (placeRoom in listPlace) {
             val placeModel = PlaceModel(placeRoom.name, placeRoom.location, "", placeRoom.description, placeRoom.thumbnail, placeRoom.image)
             listPlaceModel.add(placeModel)
