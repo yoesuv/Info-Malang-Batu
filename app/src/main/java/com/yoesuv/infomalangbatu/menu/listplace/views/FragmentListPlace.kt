@@ -10,6 +10,7 @@ import android.view.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.yoesuv.infomalangbatu.R
+import com.yoesuv.infomalangbatu.data.PlaceLocation
 import com.yoesuv.infomalangbatu.databinding.FragmentListplaceBinding
 import com.yoesuv.infomalangbatu.menu.listplace.adapters.ListPlaceAdapter
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
@@ -34,7 +35,7 @@ class FragmentListPlace: Fragment() {
         setupRecycler()
 
         viewModel.setupProperties(context)
-        viewModel.getListPlace()
+        viewModel.getListPlace(PlaceLocation.ALL)
         viewModel.listPlaceResponse.observe(this, Observer {
             onListDataChange(it)
         })
@@ -51,10 +52,10 @@ class FragmentListPlace: Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.listSemua -> viewModel.getListPlace()
-            R.id.listKabMalang -> viewModel.getListPlaceKabMalang()
-            R.id.listKotaBatu -> viewModel.getListPlaceKotaBatu()
-            R.id.listKotaMalang -> viewModel.getListPlaceKotaMalang()
+            R.id.listSemua -> viewModel.getListPlace(PlaceLocation.ALL)
+            R.id.listKabMalang -> viewModel.getListPlace(PlaceLocation.KAB_MALANG)
+            R.id.listKotaBatu -> viewModel.getListPlace(PlaceLocation.KOTA_BATU)
+            R.id.listKotaMalang -> viewModel.getListPlace(PlaceLocation.KOTA_MALANG)
         }
         item.isChecked = true
         return super.onOptionsItemSelected(item)
@@ -63,6 +64,11 @@ class FragmentListPlace: Fragment() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         activity?.recreate()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getListPlace(PlaceLocation.ALL)
     }
 
     private fun setupRecycler(){
@@ -77,6 +83,7 @@ class FragmentListPlace: Fragment() {
     private fun onListDataChange(listPlace: MutableList<PlaceModel>?){
         if(listPlace?.isNotEmpty()!!){
             adapter.submitList(listPlace)
+            adapter.notifyDataSetChanged()
         }
     }
 

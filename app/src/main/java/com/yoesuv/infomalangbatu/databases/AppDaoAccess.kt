@@ -17,6 +17,9 @@ interface AppDaoAccess {
     @Query("SELECT * FROM PlaceRoom")
     fun selectAll(): MutableList<PlaceRoom>
 
+    @Query("SELECT * FROM PlaceRoom WHERE location= :location")
+    fun selectPlaceByLocation(location: String?): MutableList<PlaceRoom>
+
     @Query("DELETE FROM PlaceRoom")
     fun deleteAllPlace()
 
