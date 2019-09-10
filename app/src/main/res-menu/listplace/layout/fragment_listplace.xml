@@ -15,8 +15,7 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayoutListPlace"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:showView="@{safeUnbox(listplace.isLoading)}">
+            android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewListPlace"
@@ -25,20 +24,6 @@
                 tools:listitem="@layout/item_listplace"/>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        <RelativeLayout
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:hideView="@{safeUnbox(listplace.isLoading)}">
-
-            <ProgressBar
-                android:id="@+id/progressBarListPlace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_48sdp" />
-
-        </RelativeLayout>
 
     </RelativeLayout>
 
