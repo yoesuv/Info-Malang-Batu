@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.ChildFragmentLibrariesBinding
 import com.yoesuv.infomalangbatu.menu.other.adapters.LibrariesAdapter
@@ -29,7 +30,7 @@ class ChildFragmentLibraries: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.child_fragment_libraries, container, false)
-        viewModel = ChildFragmentLibrariesViewModel()
+        viewModel = ViewModelProvider(this).get(ChildFragmentLibrariesViewModel::class.java)
         binding.libraries = viewModel
 
         setupRecycler()
