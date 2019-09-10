@@ -3,7 +3,6 @@ package com.yoesuv.infomalangbatu.menu.gallery.viewmodels
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.databinding.ObservableField
 import androidx.room.Room
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databases.AppDatabase
@@ -12,10 +11,8 @@ import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 
 class FragmentGalleryViewModel: ViewModel() {
 
-    var isLoading: ObservableField<Boolean> = ObservableField()
-    var listGalleryModel: MutableList<GalleryModel> = mutableListOf()
+    private var listGalleryModel: MutableList<GalleryModel> = mutableListOf()
     var listGalleryResponse: MutableLiveData<MutableList<GalleryModel>> = MutableLiveData()
-    var error: MutableLiveData<Throwable> = MutableLiveData()
 
     private lateinit var appDatabase: AppDatabase
 
