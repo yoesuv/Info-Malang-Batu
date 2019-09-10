@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.lifecycle.Observer
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +35,6 @@ class FragmentGallery: Fragment() {
         binding.gallery = viewModel
 
         setupRecycler()
-        setupSwipeRefresh()
 
         viewModel.setupProperties(context)
         viewModel.listGalleryResponse.observe(this, Observer {
@@ -58,14 +56,6 @@ class FragmentGallery: Fragment() {
             onItemGalleryClick(it)
         }
         binding.recyclerViewGallery.adapter = adapter
-    }
-
-    private fun setupSwipeRefresh(){
-        binding.swipeRefreshLayoutGallery.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary))
-        binding.swipeRefreshLayoutGallery.setOnRefreshListener {
-            binding.swipeRefreshLayoutGallery.isRefreshing = false
-            viewModel.getListGallery()
-        }
     }
 
     private fun onListDataChanged(listData: MutableList<GalleryModel>?){

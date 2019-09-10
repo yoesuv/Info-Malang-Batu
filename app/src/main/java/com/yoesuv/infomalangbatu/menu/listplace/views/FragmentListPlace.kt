@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import androidx.lifecycle.ViewModelProvider
@@ -33,7 +32,6 @@ class FragmentListPlace: Fragment() {
         binding.listplace = viewModel
 
         setupRecycler()
-        setupSwipeRefresh()
 
         viewModel.setupProperties(context)
         viewModel.getListPlace()
@@ -74,15 +72,6 @@ class FragmentListPlace: Fragment() {
             onItemClick(it)
         }
         binding.recyclerViewListPlace.adapter = adapter
-    }
-
-    private fun setupSwipeRefresh(){
-        binding.swipeRefreshLayoutListPlace.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary))
-        binding.swipeRefreshLayoutListPlace.setOnRefreshListener {
-            binding.swipeRefreshLayoutListPlace.isRefreshing = false
-            activity?.invalidateOptionsMenu()
-            viewModel.getListPlace()
-        }
     }
 
     private fun onListDataChange(listPlace: MutableList<PlaceModel>?){

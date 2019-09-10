@@ -13,21 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipeRefreshLayoutGallery"
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewGallery"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewGallery"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3"
-                    tools:listitem="@layout/item_gallery"
-                    tools:itemCount="20"/>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:listitem="@layout/item_gallery"
+                tools:itemCount="20"/>
 
     </RelativeLayout>
 
