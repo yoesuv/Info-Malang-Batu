@@ -23,8 +23,6 @@ class FragmentGallery: Fragment() {
     private lateinit var viewModel: FragmentGalleryViewModel
     private lateinit var binding: FragmentGalleryBinding
     private lateinit var adapter: GalleryAdapter
-
-    private var spanCount = 3
     private lateinit var layoutManager: GridLayoutManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -53,11 +51,7 @@ class FragmentGallery: Fragment() {
     }
 
     private fun setupRecycler(){
-        if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            spanCount = 3
-        } else {
-            spanCount = 5
-        }
+        val spanCount = resources.getInteger(R.integer.spanCount)
         layoutManager = GridLayoutManager(context, spanCount)
         binding.recyclerViewGallery.layoutManager = layoutManager
         adapter = GalleryAdapter {

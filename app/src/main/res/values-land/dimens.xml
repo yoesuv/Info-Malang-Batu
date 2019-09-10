@@ -1,3 +1,4 @@
 <resources>
+    <integer name="spanCount">5</integer>
     <dimen name="item_list_place_image_height">@dimen/_110sdp</dimen>
 </resources>
