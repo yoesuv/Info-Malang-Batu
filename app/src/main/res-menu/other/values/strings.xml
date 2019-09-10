@@ -21,6 +21,13 @@
     <string name="info_app_version">Versi %1$s</string>
 
     <!-- CHANGELOG -->
+    <string name="ver_11">Versi 2.3.0</string>
+    <string name="ver_11_info">
+        <![CDATA[
+            • set data lokal<br/>
+            • pembaruan library
+        ]]>
+    </string>
     <string name="ver_10">Versi 2.2.0</string>
     <string name="ver_10_info">
         <![CDATA[

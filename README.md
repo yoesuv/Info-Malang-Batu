@@ -1,7 +1,7 @@
 # Info Malang Batu #
 [![](https://travis-ci.org/yoesuv/Info-Malang-Batu.svg)](https://travis-ci.org/yoesuv/Info-Malang-Batu)
-* version name 2.2.0
-* version code 10
+* version name 2.3.0
+* version code 11
 * Build with Kotlin, Use MVVM Pattern
 * [AndroidX](https://developer.android.com/jetpack/androidx/)
 * [Architecture Component](https://developer.android.com/topic/libraries/architecture/)
@@ -18,11 +18,7 @@
 * [Fabric](https://www.fabric.io)
 * [Glide](https://github.com/bumptech/glide)
 * [Icons8 Icon](https://icons8.com/)
-* [NavigationTabStrip](https://github.com/Devlight/NavigationTabStrip)
 * [Retrofit](https://github.com/square/retrofit)
-* [RxAndroid](https://github.com/ReactiveX/RxAndroid)
-* [RxJava](https://github.com/ReactiveX/RxJava)
-* [RxPermission](https://github.com/tbruyelle/RxPermissions)
 * [SDP](https://github.com/intuit/sdp)
 * [SSP](https://github.com/intuit/ssp)
 * [Toasty](https://github.com/GrenderG/Toasty)
