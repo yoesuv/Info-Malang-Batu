@@ -1,7 +1,5 @@
 package com.yoesuv.infomalangbatu.data
 
-import com.yoesuv.infomalangbatu.BuildConfig
-
 object AppConstants {
 
     const val TAG_DEBUG = "result_debug"
@@ -13,6 +11,6 @@ object AppConstants {
     const val PREFERENCE_LATITUDE = "preference_latitude"
     const val PREFERENCE_LONGITUDE = "preference_longitude"
 
-    const val DATABASE_NAME = "info_malang_batu_database_{${BuildConfig.VERSION_NAME}}"
+    const val DATABASE_NAME = "db_info_malang_batu"
 
 }
