@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
-import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuInflater
@@ -222,7 +221,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
                 }
             }
         } else {
-            Log.d("result_debug","FragmentMaps # location permission disabled")
             requestPermissionLocation()
         }
     }
