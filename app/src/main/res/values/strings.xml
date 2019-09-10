@@ -9,4 +9,8 @@
 
     <string name="confirm_close">Tekan Lagi untuk Menutup Aplikasi</string>
 
+    <string name="toast_error_get_list_place">Gagal Mendapatkan Data Tempat</string>
+    <string name="toast_error_get_list_gallery">Gagal Mendapatkan Data Galeri</string>
+    <string name="toast_error_get_list_map_pins">Gagal Mendapatkan Data Pin Lokasi</string>
+
 </resources>

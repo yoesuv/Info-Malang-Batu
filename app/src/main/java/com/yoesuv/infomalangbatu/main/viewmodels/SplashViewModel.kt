@@ -24,6 +24,7 @@ import com.yoesuv.infomalangbatu.databases.place.DatabaseDeleteAllPlace
 import com.yoesuv.infomalangbatu.databases.place.DatabaseInsertPlace
 import com.yoesuv.infomalangbatu.main.views.MainActivity
 import com.yoesuv.infomalangbatu.networks.AppRepository
+import com.yoesuv.infomalangbatu.utils.AppHelper
 
 class SplashViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -54,9 +55,11 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
             }
             initDataGallery(activity)
         },{ code, message ->
-
+            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_place))
+            activity.finish()
         },{
-
+            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_place))
+            activity.finish()
         })
     }
 
@@ -73,9 +76,11 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
             }
             initDataMapPins(activity)
         },{ code, message ->
-
+            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_gallery))
+            activity.finish()
         },{
-
+            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_gallery))
+            activity.finish()
         })
     }
 
@@ -93,9 +98,11 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
             }
             openApplication(activity)
         },{ code, message ->
-
+            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_map_pins))
+            activity.finish()
         },{
-
+            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_map_pins))
+            activity.finish()
         })
     }
 
