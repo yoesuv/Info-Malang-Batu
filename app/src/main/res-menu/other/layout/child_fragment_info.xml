@@ -139,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/link_github"
                     android:textSize="@dimen/default_other_text_size"
-                    android:textColor="@color/default_text_color"
+                    android:textColor="@drawable/text_color_github"
                     android:drawablePadding="10dp"
                     android:drawableLeft="@drawable/ic_github"
                     android:drawableStart="@drawable/ic_github"/>

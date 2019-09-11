@@ -1,14 +1,17 @@
 package com.yoesuv.infomalangbatu.utils
 
+import android.Manifest
 import android.app.Activity
 import com.yoesuv.infomalangbatu.R
 import android.content.Context
 import android.content.IntentSender
+import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Build
 import android.text.Html
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.ResolvableApiException
@@ -55,6 +58,11 @@ object AppHelper {
         }
     }
 
+    fun isPermissionLocationEnabled(context: Context?): Boolean {
+        val permission = ContextCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION)
+        return permission == PackageManager.PERMISSION_GRANTED
+    }
+
     fun displayLocationSettingsRequest(activity: Activity){
         val googleApiClient = GoogleApiClient.Builder(activity.applicationContext).addApi(LocationServices.API).build()
         googleApiClient.connect()
@@ -70,7 +78,7 @@ object AppHelper {
         result.addOnCompleteListener { task ->
             try {
                 val response: LocationSettingsResponse? = task.getResult(ApiException::class.java)
-            }catch (ex: ApiException) {
+            } catch (ex: ApiException) {
                 if(ex.statusCode== LocationSettingsStatusCodes.RESOLUTION_REQUIRED){
                     val resolvableApiException = ex as ResolvableApiException
                     try{

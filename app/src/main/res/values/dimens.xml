@@ -1,5 +1,5 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
+    <integer name="spanCount">3</integer>
     <dimen name="toolbar_title_size">@dimen/_16ssp</dimen>
     <dimen name="activity_detail_image_height">@dimen/_200sdp</dimen>
     <dimen name="fragment_other_global_margin">@dimen/_10sdp</dimen>

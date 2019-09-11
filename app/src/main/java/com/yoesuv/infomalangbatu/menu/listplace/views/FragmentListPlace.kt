@@ -2,15 +2,15 @@ package com.yoesuv.infomalangbatu.menu.listplace.views
 
 import android.content.res.Configuration
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.yoesuv.infomalangbatu.R
+import com.yoesuv.infomalangbatu.data.PlaceLocation
 import com.yoesuv.infomalangbatu.databinding.FragmentListplaceBinding
 import com.yoesuv.infomalangbatu.menu.listplace.adapters.ListPlaceAdapter
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
@@ -29,13 +29,13 @@ class FragmentListPlace: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(FragmentListPlaceViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FragmentListPlaceViewModel::class.java)
         binding.listplace = viewModel
 
         setupRecycler()
-        setupSwipeRefresh()
 
-        viewModel.getListPlace()
+        viewModel.setupProperties(context)
+        viewModel.getListPlace(PlaceLocation.ALL)
         viewModel.listPlaceResponse.observe(this, Observer {
             onListDataChange(it)
         })
@@ -45,25 +45,30 @@ class FragmentListPlace: Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_list_place, menu)
+        inflater.inflate(R.menu.menu_list_place, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.listSemua -> viewModel.getListPlace()
-            R.id.listKabMalang -> viewModel.getListPlaceKabMalang()
-            R.id.listKotaBatu -> viewModel.getListPlaceKotaBatu()
-            R.id.listKotaMalang -> viewModel.getListPlaceKotaMalang()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.listSemua -> viewModel.getListPlace(PlaceLocation.ALL)
+            R.id.listKabMalang -> viewModel.getListPlace(PlaceLocation.KAB_MALANG)
+            R.id.listKotaBatu -> viewModel.getListPlace(PlaceLocation.KOTA_BATU)
+            R.id.listKotaMalang -> viewModel.getListPlace(PlaceLocation.KOTA_MALANG)
         }
-        item?.isChecked = true
+        item.isChecked = true
         return super.onOptionsItemSelected(item)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         activity?.recreate()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getListPlace(PlaceLocation.ALL)
     }
 
     private fun setupRecycler(){
@@ -75,18 +80,10 @@ class FragmentListPlace: Fragment() {
         binding.recyclerViewListPlace.adapter = adapter
     }
 
-    private fun setupSwipeRefresh(){
-        binding.swipeRefreshLayoutListPlace.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary))
-        binding.swipeRefreshLayoutListPlace.setOnRefreshListener {
-            binding.swipeRefreshLayoutListPlace.isRefreshing = false
-            activity?.invalidateOptionsMenu()
-            viewModel.getListPlace()
-        }
-    }
-
     private fun onListDataChange(listPlace: MutableList<PlaceModel>?){
         if(listPlace?.isNotEmpty()!!){
             adapter.submitList(listPlace)
+            adapter.notifyDataSetChanged()
         }
     }
 

@@ -2,15 +2,14 @@ package com.yoesuv.infomalangbatu.menu.gallery.views
 
 import android.content.res.Configuration
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentGalleryBinding
@@ -23,8 +22,6 @@ class FragmentGallery: Fragment() {
     private lateinit var viewModel: FragmentGalleryViewModel
     private lateinit var binding: FragmentGalleryBinding
     private lateinit var adapter: GalleryAdapter
-
-    private var spanCount = 3
     private lateinit var layoutManager: GridLayoutManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,16 +31,16 @@ class FragmentGallery: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(FragmentGalleryViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FragmentGalleryViewModel::class.java)
         binding.gallery = viewModel
 
         setupRecycler()
-        setupSwipeRefresh()
 
-        viewModel.getGallery()
+        viewModel.setupProperties(context)
         viewModel.listGalleryResponse.observe(this, Observer {
             onListDataChanged(it)
         })
+        viewModel.getListGallery()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -52,25 +49,13 @@ class FragmentGallery: Fragment() {
     }
 
     private fun setupRecycler(){
-        if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            spanCount = 3
-        } else {
-            spanCount = 5
-        }
+        val spanCount = resources.getInteger(R.integer.spanCount)
         layoutManager = GridLayoutManager(context, spanCount)
         binding.recyclerViewGallery.layoutManager = layoutManager
         adapter = GalleryAdapter {
             onItemGalleryClick(it)
         }
         binding.recyclerViewGallery.adapter = adapter
-    }
-
-    private fun setupSwipeRefresh(){
-        binding.swipeRefreshLayoutGallery.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary))
-        binding.swipeRefreshLayoutGallery.setOnRefreshListener {
-            binding.swipeRefreshLayoutGallery.isRefreshing = false
-            viewModel.getGallery()
-        }
     }
 
     private fun onListDataChanged(listData: MutableList<GalleryModel>?){

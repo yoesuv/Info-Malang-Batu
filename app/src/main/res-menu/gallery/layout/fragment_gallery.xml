@@ -13,36 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipeRefreshLayoutGallery"
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewGallery"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:showView="@{safeUnbox(gallery.isLoading)}">
-
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewGallery"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3"
-                    tools:listitem="@layout/item_gallery"
-                    tools:itemCount="20"/>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        <RelativeLayout
-            tools:hideView="@{safeUnbox(gallery.isLoading)}"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ProgressBar
-                android:id="@+id/progressBarListPlace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_48sdp" />
-
-        </RelativeLayout>
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:listitem="@layout/item_gallery"
+                tools:itemCount="20"/>
 
     </RelativeLayout>
 

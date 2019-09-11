@@ -1,42 +1,33 @@
 package com.yoesuv.infomalangbatu.menu.gallery.viewmodels
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.databinding.ObservableField
+import androidx.room.Room
+import com.yoesuv.infomalangbatu.data.AppConstants
+import com.yoesuv.infomalangbatu.databases.AppDatabase
+import com.yoesuv.infomalangbatu.databases.gallery.DatabaseListGaleri
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
-import com.yoesuv.infomalangbatu.networks.ServiceFactory
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
 class FragmentGalleryViewModel: ViewModel() {
 
-    private val restApi = ServiceFactory.create()
-    private val compositeDisposable = CompositeDisposable()
-    var isLoading: ObservableField<Boolean> = ObservableField()
-
+    private var listGalleryModel: MutableList<GalleryModel> = mutableListOf()
     var listGalleryResponse: MutableLiveData<MutableList<GalleryModel>> = MutableLiveData()
-    var error: MutableLiveData<Throwable> = MutableLiveData()
 
-    fun getGallery(){
-        isLoading.set(true)
-        compositeDisposable.add(
-                restApi.getGallery()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            isLoading.set(false)
-                            listGalleryResponse.value = it
-                        },{
-                            isLoading.set(false)
-                            error.value = it
-                        })
-        )
+    private lateinit var appDatabase: AppDatabase
+
+    fun setupProperties(context: Context?){
+        appDatabase = Room.databaseBuilder(context!!, AppDatabase::class.java, AppConstants.DATABASE_NAME).build()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
+    fun getListGallery() {
+        listGalleryModel.clear()
+        val listGallery = DatabaseListGaleri(appDatabase).execute().get()
+        for (galleryRoom in listGallery) {
+            val galleryModel = GalleryModel(galleryRoom.caption, galleryRoom.thumbnail, galleryRoom.image)
+            listGalleryModel.add(galleryModel)
+        }
+        listGalleryResponse.postValue(listGalleryModel)
     }
 
 }

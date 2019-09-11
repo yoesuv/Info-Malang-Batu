@@ -1,91 +1,51 @@
 package com.yoesuv.infomalangbatu.menu.listplace.viewmodels
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.databinding.ObservableField
+import androidx.room.Room
+import com.yoesuv.infomalangbatu.data.AppConstants
+import com.yoesuv.infomalangbatu.data.PlaceLocation
+import com.yoesuv.infomalangbatu.databases.place.DatabaseListPlace
+import com.yoesuv.infomalangbatu.databases.AppDatabase
+import com.yoesuv.infomalangbatu.databases.place.DatabaseListPlaceByLocation
+import com.yoesuv.infomalangbatu.databases.place.PlaceRoom
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
-import com.yoesuv.infomalangbatu.networks.ServiceFactory
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
 class FragmentListPlaceViewModel: ViewModel() {
 
-    private val restApi = ServiceFactory.create()
-    private val compositeDisposable = CompositeDisposable()
-
-    var isLoading: ObservableField<Boolean> = ObservableField()
+    private var listPlaceModel: MutableList<PlaceModel> = mutableListOf()
+    private var listPlaceRoom: MutableList<PlaceRoom> = mutableListOf()
 
     var listPlaceResponse: MutableLiveData<MutableList<PlaceModel>> = MutableLiveData()
     var error: MutableLiveData<Throwable> = MutableLiveData()
 
-    fun getListPlace(){
-        isLoading.set(true)
-        compositeDisposable.add(
-                restApi.getListPlace()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            isLoading.set(false)
-                            listPlaceResponse.value = it
-                        },{
-                            isLoading.set(false)
-                            error.value = it
-                        })
-        )
+    private lateinit var appDatabase: AppDatabase
+
+    fun setupProperties(context: Context?) {
+        appDatabase = Room.databaseBuilder(context!!, AppDatabase::class.java, AppConstants.DATABASE_NAME).build()
     }
 
-    fun getListPlaceKabMalang(){
-        isLoading.set(true)
-        compositeDisposable.add(
-                restApi.getListPlaceKabMalang()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            isLoading.set(false)
-                            listPlaceResponse.value = it
-                        },{
-                            isLoading.set(false)
-                            error.value = it
-                        })
-        )
-    }
+    fun getListPlace(placeLocation: PlaceLocation){
 
-    fun getListPlaceKotaBatu(){
-        isLoading.set(true)
-        compositeDisposable.add(
-                restApi.getListPlaceKotaBatu()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            isLoading.set(false)
-                            listPlaceResponse.value = it
-                        },{
-                            isLoading.set(false)
-                            error.value = it
-                        })
-        )
-    }
+        listPlaceModel.clear()
+        listPlaceRoom.clear()
 
-    fun getListPlaceKotaMalang(){
-        isLoading.set(true)
-        compositeDisposable.add(
-                restApi.getListPlaceKotaMalang()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            isLoading.set(false)
-                            listPlaceResponse.value = it
-                        },{
-                            isLoading.set(false)
-                            error.value = it
-                        })
-        )
-    }
+        if (placeLocation == PlaceLocation.KOTA_MALANG) {
+            listPlaceRoom = DatabaseListPlaceByLocation(appDatabase, placeLocation.toString()).execute().get()
+        } else if (placeLocation == PlaceLocation.KAB_MALANG) {
+            listPlaceRoom = DatabaseListPlaceByLocation(appDatabase, placeLocation.toString()).execute().get()
+        } else if (placeLocation == PlaceLocation.KOTA_BATU) {
+            listPlaceRoom = DatabaseListPlaceByLocation(appDatabase, placeLocation.toString()).execute().get()
+        } else {
+            listPlaceRoom = DatabaseListPlace(appDatabase).execute().get()
+        }
 
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
+        for (placeRoom in listPlaceRoom) {
+            val placeModel = PlaceModel(placeRoom.name, placeRoom.location, "", placeRoom.description, placeRoom.thumbnail, placeRoom.image)
+            listPlaceModel.add(placeModel)
+        }
+        listPlaceResponse.postValue(listPlaceModel)
     }
 
 }

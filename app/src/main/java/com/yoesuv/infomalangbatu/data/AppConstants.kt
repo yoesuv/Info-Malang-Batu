@@ -11,4 +11,6 @@ object AppConstants {
     const val PREFERENCE_LATITUDE = "preference_latitude"
     const val PREFERENCE_LONGITUDE = "preference_longitude"
 
+    const val DATABASE_NAME = "db_info_malang_batu"
+
 }

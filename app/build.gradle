@@ -33,14 +33,14 @@ android {
         }
     }
     compileSdkVersion 29
-    buildToolsVersion '29.0.1'
+    buildToolsVersion '29.0.2'
     defaultConfig {
         applicationId "com.yoesuv.infomalangbatu"
         minSdkVersion 16
         targetSdkVersion 29
         multiDexEnabled true
-        versionCode 10
-        versionName "2.2.0"
+        versionCode 11
+        versionName "2.3.0"
         setProperty("archivesBaseName", applicationId+"-v"+versionCode+"("+versionName+")")
         resValue "string", "MAPS_API_KEY", "AIzaSyB21TKg6wQRlNtu3b4-Y1XS9k_LmdJ7Kog"
         resValue "string", "DIRECTION_API_KEY", "AIzaSyAe8YMnV8J3om1ht5EIiOqV_ESejniRq6U"
@@ -94,8 +94,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.vectordrawable:vectordrawable-animated:1.0.0'
-    implementation 'androidx.media:media:1.0.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
@@ -106,24 +104,26 @@ dependencies {
 
     implementation "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$project.retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$project.httpLoggingVersion"
-    implementation "io.reactivex.rxjava2:rxjava:$project.rxJavaVersion"
-    implementation "io.reactivex.rxjava2:rxandroid:$project.rxAndroidVersion"
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.intuit.ssp:ssp-android:$project.sspVersion"
     implementation "com.intuit.sdp:sdp-android:$project.sdpVersion"
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
+
+    implementation "androidx.lifecycle:lifecycle-extensions:$project.lifecycleVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$project.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$project.lifecycleVersion"
+
     implementation "com.github.bumptech.glide:glide:$project.glideVersion"
     kapt "com.github.bumptech.glide:compiler:$project.glideVersion"
-    implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:$project.navigationTabStripVersion"
     implementation "com.github.GrenderG:Toasty:$project.toastyVersion"
-    implementation "com.tbruyelle.rxpermissions2:rxpermissions:$project.rxPermissionVersion"
     implementation "com.akexorcist:googledirectionlibrary:$project.googleDirectionLibraryVersion"
     implementation 'com.android.support:multidex:1.0.3'
     implementation "androidx.navigation:navigation-fragment-ktx:$project.navigationLibraryVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$project.navigationLibraryVersion"
+
+    implementation "android.arch.persistence.room:runtime:$roomVersion"
+    kapt "android.arch.persistence.room:compiler:$roomVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'

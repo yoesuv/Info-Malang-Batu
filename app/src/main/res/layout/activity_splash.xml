@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="splash"
+                type="com.yoesuv.infomalangbatu.main.viewmodels.SplashViewModel" />
+    </data>
+
+    <RelativeLayout
+            android:background="@drawable/bg_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+            <com.yoesuv.infomalangbatu.widgets.TextViewPacifico
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_18ssp"
+                    android:textColor="@android:color/white"
+                    android:text="@string/app_name"/>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewSplashVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_8sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@android:color/white"
+                android:text="@{splash.version}"
+                tools:text="@string/info_app_version"/>
+
+    </RelativeLayout>
+
+</layout>

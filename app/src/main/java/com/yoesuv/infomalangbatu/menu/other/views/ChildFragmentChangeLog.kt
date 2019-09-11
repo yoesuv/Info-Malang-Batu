@@ -1,7 +1,6 @@
 package com.yoesuv.infomalangbatu.menu.other.views
 
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.ChildFragmentChangelogBinding
 import com.yoesuv.infomalangbatu.menu.other.adapters.ChangeLogAdapter
@@ -30,7 +30,7 @@ class ChildFragmentChangeLog: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.child_fragment_changelog, container, false)
-        viewModel = ViewModelProviders.of(this).get(ChildFragmentChangelogViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ChildFragmentChangelogViewModel::class.java)
         binding.changelog = viewModel
 
         setupRecycler()

@@ -1,19 +1,21 @@
 package com.yoesuv.infomalangbatu.menu.maps.views
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
-import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.room.Room
 import com.akexorcist.googledirection.DirectionCallback
 import com.akexorcist.googledirection.GoogleDirection
 import com.akexorcist.googledirection.constant.AvoidType
@@ -29,29 +31,24 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import com.tbruyelle.rxpermissions2.RxPermissions
 import com.yoesuv.infomalangbatu.App
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
+import com.yoesuv.infomalangbatu.databases.AppDatabase
+import com.yoesuv.infomalangbatu.databases.map.DatabaseListMapPins
 import com.yoesuv.infomalangbatu.menu.maps.adapters.MyCustomInfoWindowAdapter
 import com.yoesuv.infomalangbatu.menu.maps.models.MarkerTag
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
-import com.yoesuv.infomalangbatu.networks.ServiceFactory
 import com.yoesuv.infomalangbatu.utils.AppHelper
 import com.yoesuv.infomalangbatu.utils.BounceAnimation
 import com.yoesuv.infomalangbatu.widgets.AppDialog
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
 class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback {
 
     companion object {
         const val REQUEST_FEATURE_LOCATION_PERMISSION_CODE:Int = 12
+        const val REQUEST_LOCATION_PERMISSION_CODE:Int = 14
     }
-
-    private val restApi = ServiceFactory.create()
-    private val compositeDisposable = CompositeDisposable()
 
     private var markerLocation: Marker? = null
     private var mGoogleMap: GoogleMap? = null
@@ -63,8 +60,16 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     private val colors = arrayListOf("#7F2196f3","#7F4CAF50","#7FF44336")
     private lateinit var progressDialog: AppDialog
 
+    private lateinit var appDatabase: AppDatabase
+    private var listPinModel: MutableList<PinModel> = arrayListOf()
+
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
+
+        appDatabase = Room.databaseBuilder(context!!, AppDatabase::class.java, AppConstants.DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
+
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context!!)
         setHasOptionsMenu(true)
         progressDialog = AppDialog(context!!)
@@ -79,7 +84,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
 
     override fun onDestroy() {
         super.onDestroy()
-        compositeDisposable.clear()
         if (myLocationCallback!=null) {
             LocationServices.getFusedLocationProviderClient(context!!).removeLocationUpdates(myLocationCallback)
         }
@@ -89,39 +93,53 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode== REQUEST_FEATURE_LOCATION_PERMISSION_CODE) {
             if (resultCode==Activity.RESULT_OK) {
-                requestPermission(mGoogleMap)
+                requestPermissionLocation()
             } else if (resultCode==Activity.RESULT_CANCELED) {
                 AppHelper.displayToastError(context!!, getString(R.string.location_setting_off))
             }
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_maps, menu)
+        inflater.inflate(R.menu.menu_maps, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId==R.id.menuMapRefresh){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId==R.id.menuMapRefresh){
             getMapPins(mGoogleMap)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_LOCATION_PERMISSION_CODE) {
+            if (grantResults[0].equals(PackageManager.PERMISSION_GRANTED)) {
+                enableUserLocation(mGoogleMap)
+            } else {
+                AppHelper.displayToastError(context?.applicationContext!!, getString(R.string.access_location_denied))
+            }
+        }
     }
 
     private fun getMapPins(googleMap: GoogleMap?){
         googleMap?.clear()
         googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(-7.982914, 112.630875)))
         googleMap?.animateCamera(CameraUpdateFactory.zoomTo(9F))
-        compositeDisposable.add(
-                restApi.getMapPins()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            setupPin(googleMap, it)
-                        },{
-                            AppHelper.displayToastError(context?.applicationContext!!,getString(R.string.error_get_data_map_pins))
-                        })
-        )
+
+        listPinModel.clear()
+        val listPin = DatabaseListMapPins(appDatabase).execute().get()
+        for (mapPinsRoom in listPin) {
+            val pinModel = PinModel(
+                mapPinsRoom.name,
+                mapPinsRoom.location,
+                mapPinsRoom.latitude,
+                mapPinsRoom.longitude
+            )
+            listPinModel.add(pinModel)
+        }
+        setupPin(googleMap, listPinModel)
     }
 
     private fun setupPin(googleMap: GoogleMap?, listPin: MutableList<PinModel>){
@@ -154,21 +172,9 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         }
     }
 
-    private fun requestPermission(googleMap: GoogleMap?){
-        val rxPermission = RxPermissions(activity as Activity)
-        compositeDisposable.add(
-                rxPermission.request(android.Manifest.permission.ACCESS_FINE_LOCATION,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION)
-                .subscribe{ result: Boolean ->
-                    if (result) {
-                        enableUserLocation(googleMap)
-                    } else {
-                        AppHelper.displayToastError(context?.applicationContext!!, getString(R.string.access_location_denied))
-                    }
-                }
-        )
+    private fun requestPermissionLocation(){
+        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION_CODE)
     }
-
 
     @SuppressLint("MissingPermission")
     private fun enableUserLocation(googleMap: GoogleMap?){
@@ -186,34 +192,37 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     }
 
     private fun getDirection(marker: Marker?){
-        val tag: MarkerTag = marker?.tag as MarkerTag
-        if (tag.type==0) {
-            if (!progressDialog.isShowing) {
-                progressDialog.show()
-            }
+        if (AppHelper.isPermissionLocationEnabled(context)) {
+            val tag: MarkerTag = marker?.tag as MarkerTag
+            if (tag.type == 0) {
+                if (!progressDialog.isShowing) {
+                    progressDialog.show()
+                }
 
-            val latitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LATITUDE)
-            val longitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LONGITUDE)
-            origin = LatLng(latitude?.toDouble()!!, longitude?.toDouble()!!)
-            destination = LatLng(tag.latitude, tag.longitude)
+                val latitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LATITUDE)
+                val longitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LONGITUDE)
+                origin = LatLng(latitude?.toDouble()!!, longitude?.toDouble()!!)
+                destination = LatLng(tag.latitude, tag.longitude)
 
-            if (latitude != "") {
-                if (longitude != "") {
-                    GoogleDirection.withServerKey(context?.getString(R.string.DIRECTION_API_KEY))
+                if (latitude != "") {
+                    if (longitude != "") {
+                        GoogleDirection.withServerKey(context?.getString(R.string.DIRECTION_API_KEY))
                             .from(origin)
                             .to(destination)
                             .alternativeRoute(true)
                             .transportMode(TransportMode.DRIVING)
                             .avoid(AvoidType.TOLLS)
                             .execute(this)
+                    } else {
+                        AppHelper.displayToastError(context!!, getString(R.string.error_get_user_location))
+                    }
                 } else {
                     AppHelper.displayToastError(context!!, getString(R.string.error_get_user_location))
                 }
-            } else {
-                AppHelper.displayToastError(context!!, getString(R.string.error_get_user_location))
             }
+        } else {
+            requestPermissionLocation()
         }
-
     }
 
     private fun setCameraWithCoordinationBounds(route: Route){
@@ -231,7 +240,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         setMarkerAnimation(googleMap)
 
         if (AppHelper.checkLocationSetting(context!!)) {
-            requestPermission(googleMap)
+            requestPermissionLocation()
         } else {
             AppHelper.displayLocationSettingsRequest(activity as Activity)
         }
@@ -242,7 +251,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     }
 
     override fun onDirectionSuccess(direction: Direction?, rawBody: String?) {
-        Log.d(AppConstants.TAG_DEBUG,"FragmentMaps # onDirectionSuccess $rawBody")
         if (progressDialog.isShowing) {
             progressDialog.dismiss()
         }
