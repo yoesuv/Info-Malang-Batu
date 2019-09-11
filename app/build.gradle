@@ -33,7 +33,7 @@ android {
         }
     }
     compileSdkVersion 29
-    buildToolsVersion '29.0.1'
+    buildToolsVersion '29.0.2'
     defaultConfig {
         applicationId "com.yoesuv.infomalangbatu"
         minSdkVersion 16
@@ -94,8 +94,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.vectordrawable:vectordrawable-animated:1.0.0'
-    implementation 'androidx.media:media:1.0.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
@@ -118,7 +116,6 @@ dependencies {
 
     implementation "com.github.bumptech.glide:glide:$project.glideVersion"
     kapt "com.github.bumptech.glide:compiler:$project.glideVersion"
-    implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:$project.navigationTabStripVersion"
     implementation "com.github.GrenderG:Toasty:$project.toastyVersion"
     implementation "com.akexorcist:googledirectionlibrary:$project.googleDirectionLibraryVersion"
     implementation 'com.android.support:multidex:1.0.3'

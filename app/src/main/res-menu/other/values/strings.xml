@@ -5,6 +5,12 @@
     <string name="changelog">Versi Rilis</string>
     <string name="thanks_to">Terima kasih</string>
     <string name="library">Pustaka</string>
+    <string-array name="array_tab_other">
+        <item>@string/informasi</item>
+        <item>@string/changelog</item>
+        <item>@string/thanks_to</item>
+        <item>@string/library</item>
+    </string-array>
 
     <!-- INFORMASI -->
     <string name="my_name">Yusuf Saifudin</string>
