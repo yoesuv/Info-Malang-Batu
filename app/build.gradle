@@ -84,6 +84,14 @@ android {
     lintOptions {
         abortOnError false
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 androidExtensions {
@@ -93,13 +101,13 @@ androidExtensions {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
-    implementation 'com.google.firebase:firebase-perf:18.0.1'
-    implementation 'com.google.firebase:firebase-core:17.0.1'
+    implementation 'com.google.firebase:firebase-perf:19.0.1'
+    implementation 'com.google.firebase:firebase-core:17.2.1'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     implementation "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
@@ -121,6 +129,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation "androidx.navigation:navigation-fragment-ktx:$project.navigationLibraryVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$project.navigationLibraryVersion"
+    implementation "androidx.fragment:fragment-ktx:1.2.0-rc01"
 
     implementation "android.arch.persistence.room:runtime:$roomVersion"
     kapt "android.arch.persistence.room:compiler:$roomVersion"
