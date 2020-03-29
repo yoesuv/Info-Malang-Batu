@@ -12,13 +12,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'io.fabric'
 apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'androidx.navigation.safeargs'
 
 repositories {
-    maven { url 'https://maven.fabric.io/public' }
     google()
     mavenCentral()
 }
@@ -107,7 +105,6 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:$playserviceslocation_version"
     implementation "com.google.firebase:firebase-perf:$firebaseperf_version"
     implementation "com.google.firebase:firebase-core:$firebasecore_version"
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     implementation "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
