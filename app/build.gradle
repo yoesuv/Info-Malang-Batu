@@ -127,8 +127,8 @@ dependencies {
     implementation "com.github.GrenderG:Toasty:$project.toastyVersion"
     implementation "com.akexorcist:googledirectionlibrary:$project.googleDirectionLibraryVersion"
     implementation 'com.android.support:multidex:1.0.3'
-    implementation "androidx.navigation:navigation-fragment-ktx:$project.navigationLibraryVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$project.navigationLibraryVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
     implementation "androidx.fragment:fragment-ktx:1.2.0-rc01"
 
     implementation "android.arch.persistence.room:runtime:$roomVersion"
