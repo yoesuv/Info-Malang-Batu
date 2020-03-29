@@ -1,7 +1,5 @@
-# Info Malang Batu #
+# Info Malang Batu 2.3.1 #
 [![](https://travis-ci.org/yoesuv/Info-Malang-Batu.svg)](https://travis-ci.org/yoesuv/Info-Malang-Batu)
-* version name 2.3.0
-* version code 11
 * Build with Kotlin, Use MVVM Pattern
 * Local Database with [Room](https://developer.android.com/topic/libraries/architecture/room)
 * [AndroidX](https://developer.android.com/jetpack/androidx/)
@@ -17,7 +15,6 @@
 ### List Libraries Used in this Project ###
 * [Android GoogleDirectionLibrary](https://github.com/akexorcist/Android-GoogleDirectionLibrary)
 * [Dexcount Gradle Plugin](https://github.com/KeepSafe/dexcount-gradle-plugin)
-* [Fabric](https://www.fabric.io)
 * [Glide](https://github.com/bumptech/glide)
 * [Icons8 Icon](https://icons8.com/)
 * [Retrofit](https://github.com/square/retrofit)
