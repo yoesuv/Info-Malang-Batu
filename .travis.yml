@@ -18,6 +18,9 @@ jdk:
 notifications:
   email: false
 
+before_install:
+  -cp .apiKey.properties.copy apiKey.properties
+
 script:
   - ./gradlew clean
   - ./gradlew assembleProductionDebug
