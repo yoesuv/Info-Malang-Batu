@@ -1,3 +1,7 @@
+def apiKeyPropertiesFile = rootProject.file("apiKey.properties")
+def apiKeyProperties = new Properties()
+apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
+
 buildscript {
     repositories {
         mavenCentral()
@@ -40,8 +44,8 @@ android {
         versionCode 11
         versionName "2.3.0"
         setProperty("archivesBaseName", applicationId+"-v"+versionCode+"("+versionName+")")
-        resValue "string", "MAPS_API_KEY", "AIzaSyB21TKg6wQRlNtu3b4-Y1XS9k_LmdJ7Kog"
-        resValue "string", "DIRECTION_API_KEY", "AIzaSyAe8YMnV8J3om1ht5EIiOqV_ESejniRq6U"
+        resValue "string", "MAPS_API_KEY", apiKeyProperties['MAPS_API_KEY']
+        resValue "string", "DIRECTION_API_KEY", apiKeyProperties['DIRECTION_API_KEY']
     }
     buildTypes {
         release {
