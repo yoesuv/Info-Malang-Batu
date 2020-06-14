@@ -7,6 +7,13 @@
 
 [![](https://i.imgur.com/vbFJRFm.png)](https://play.google.com/store/apps/details?id=com.yoesuv.infomalangbatu)
 
+#### How to run/build this project ####
+create file apiKey.properties in root project, then set values
+```
+MAPS_API_KEY = your_maps_api_key
+DIRECTION_API_KEY = your_direction_api_key
+```
+
 ### Screenshot ###
 | ![](https://i.imgur.com/jXstCHr.jpg) | ![](https://i.imgur.com/TPG9BVX.jpg) | ![](https://i.imgur.com/A9qR7nl.jpg) | ![](https://i.imgur.com/fIsPL17.jpg) |
 | :---: | :---: | :---: | :---: |
