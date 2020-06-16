@@ -19,7 +19,7 @@ notifications:
   email: false
 
 before_install:
-  -cp .apiKey.properties.copy apiKey.properties
+  -openssl aes-256-cbc -K $encrypted_4c721a8ffc8b_key -iv $encrypted_4c721a8ffc8b_iv -in apiKey.properties.enc -out apiKey.properties -d
 
 script:
   - ./gradlew clean
