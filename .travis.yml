@@ -13,8 +13,10 @@ jdk:
 - oraclejdk8
 notifications:
   email: false
-before_install:
-- "-openssl aes-256-cbc -K $encrypted_4c721a8ffc8b_key -iv $encrypted_4c721a8ffc8b_iv
-  -in apiKey.properties.enc -out apiKey.properties -d"
 script:
 - "./gradlew clean build"
+env:
+  global:
+    secure: I7QSve9hCI3VpLEeC80wSyg+2TT3KzFXYD2a0sBCR4cAJIu8urAnO+fi4RDL/hX1045yVcVv6sbegdRv8Gu/JHnmUwlmaJkuzDOa9luQopPrsYLMUK5jhyfM0WGrDZ1W2evwESsdYQmDuqCD1ltK2DuqIssYiXXndQ0N+8oRWMJE4b5gcZQF/22bla7LI5tCZSIB2zv1m48BM0EHikwWWTnH3DWOfncJOIZV6S/nYtyITBNVWJlXmqmxO9qcVUAqmGgkWPalKREs5QQfOioLstF/PsVl2Tf1Wy4TIxbVIJgjf1FJoKD8xGiz2E3rzgsX1LUPeZYx0Y8LZYep1GcSdAa1cyQJczRq3I6TzzX+iLKWlEbAN/UDP/GIMK33TMIYz1pPO1A5aDMvB1H/egJST+txOgF6ahOHk6mlgbqxHkIBc0CzfCN5PFKzMLSPlRlAK1mW2KTvsTvfinTOr376HXUf9pR6R1N4JDlYvohWnwEZoK9jZyxjbEc+qCy1gH5Eh4X/zKtT179Eykr2WOSvvGL7SKr66X6IrPlNW4TIZ4dbaz6qNADgBiv1xzanitgTlzdPFerwFouGC3aGnYOVIK1SAgM93A29BFNyE0fYP47vvH1uJEiWzrkexnIOhr+OjcgeFI39LKuY1JEpBhAdovMGUuLZwNdsDIVOSQ2TOqQ=
+before_install:
+  - openssl aes-256-cbc -k "$apiKey.properties_password" -in apiKey.properties.enc -out apiKey.properties -d
