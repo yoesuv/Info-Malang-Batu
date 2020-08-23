@@ -102,13 +102,13 @@ androidExtensions {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "com.google.android.material:material:$material_version"
-    implementation "com.google.android.gms:play-services-maps:$playservicesmaps_version"
-    implementation "com.google.android.gms:play-services-location:$playserviceslocation_version"
-    implementation "com.google.firebase:firebase-perf:$firebaseperf_version"
-    implementation "com.google.firebase:firebase-core:$firebasecore_version"
+    testImplementation 'junit:junit:4.13'
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "com.google.android.gms:play-services-maps:$playServicesMapsVersion"
+    implementation "com.google.android.gms:play-services-location:$playServicesLocationVersion"
+    implementation "com.google.firebase:firebase-perf:$firebasePerfVersion"
+    implementation "com.google.firebase:firebase-core:$firebaseCoreVersion"
 
     implementation "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
@@ -130,8 +130,9 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
     implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
 
-    implementation "android.arch.persistence.room:runtime:$roomVersion"
-    kapt "android.arch.persistence.room:compiler:$roomVersion"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'
