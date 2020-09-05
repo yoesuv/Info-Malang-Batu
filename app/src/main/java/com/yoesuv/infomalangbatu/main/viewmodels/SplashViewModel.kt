@@ -13,8 +13,6 @@ import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databases.AppDatabase
 import com.yoesuv.infomalangbatu.databases.gallery.GaleriRoom
-import com.yoesuv.infomalangbatu.databases.map.DatabaseDeleteAllMapPins
-import com.yoesuv.infomalangbatu.databases.map.DatabaseInsertMapPins
 import com.yoesuv.infomalangbatu.databases.map.MapPinsRoom
 import com.yoesuv.infomalangbatu.databases.place.PlaceRoom
 import com.yoesuv.infomalangbatu.databases.place.DatabaseDeleteAllPlace
@@ -87,8 +85,10 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun initDataMapPins(activity: Activity) {
+        viewModelScope.launch {
+            appDatabase.mapPinDaoAccess().deleteAllDbMapPins()
+        }
         appRepository.getListMapPins({
-            DatabaseDeleteAllMapPins(appDatabase).execute()
             for (pinModel in it!!) {
                 val mapPinRoom = MapPinsRoom(
                     pinModel.name,
@@ -96,7 +96,9 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
                     pinModel.latitude,
                     pinModel.longitude
                 )
-                DatabaseInsertMapPins(appDatabase, mapPinRoom).execute()
+                viewModelScope.launch {
+                    appDatabase.mapPinDaoAccess().insertDbMapPins(mapPinRoom)
+                }
             }
             openApplication(activity)
         },{ code, message ->

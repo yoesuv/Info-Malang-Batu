@@ -22,14 +22,4 @@ interface AppDaoAccess {
     @Query("DELETE FROM PlaceRoom")
     fun deleteAllPlace()
 
-    /* map pins */
-    @Insert
-    fun insertMapPins(mapPinsRoom: MapPinsRoom)
-
-    @Query("SELECT * FROM MapPinsRoom")
-    fun selectAllMapPins(): MutableList<MapPinsRoom>
-
-    @Query("DELETE FROM MapPinsRoom")
-    fun deleteAllMapPins()
-
 }

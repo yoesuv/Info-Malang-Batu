@@ -10,4 +10,5 @@ import com.yoesuv.infomalangbatu.databases.map.MapPinsRoom
 abstract class AppDatabase : RoomDatabase() {
     abstract fun appDaoAccess() : AppDaoAccess
     abstract fun galleryDaoAccess(): GalleryDaoAccess
+    abstract fun mapPinDaoAccess(): MapPinDaoAccess
 }
