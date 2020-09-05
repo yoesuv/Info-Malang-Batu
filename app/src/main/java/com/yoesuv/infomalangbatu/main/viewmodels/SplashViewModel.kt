@@ -15,8 +15,6 @@ import com.yoesuv.infomalangbatu.databases.AppDatabase
 import com.yoesuv.infomalangbatu.databases.gallery.GaleriRoom
 import com.yoesuv.infomalangbatu.databases.map.MapPinsRoom
 import com.yoesuv.infomalangbatu.databases.place.PlaceRoom
-import com.yoesuv.infomalangbatu.databases.place.DatabaseDeleteAllPlace
-import com.yoesuv.infomalangbatu.databases.place.DatabaseInsertPlace
 import com.yoesuv.infomalangbatu.main.views.MainActivity
 import com.yoesuv.infomalangbatu.networks.AppRepository
 import com.yoesuv.infomalangbatu.utils.AppHelper
@@ -37,8 +35,10 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun initDataBase(activity: Activity) {
+        viewModelScope.launch {
+            appDatabase.placeDaoAccess().deleteAllPlace()
+        }
         appRepository.getListPlace({
-            DatabaseDeleteAllPlace(appDatabase).execute()
             for (placeModel in it!!) {
                 val placeRoom = PlaceRoom(
                     placeModel.name,
@@ -47,7 +47,9 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
                     placeModel.thumbnail,
                     placeModel.image
                 )
-                DatabaseInsertPlace(appDatabase, placeRoom).execute()
+                viewModelScope.launch {
+                    appDatabase.placeDaoAccess().insertPlace(placeRoom)
+                }
             }
             initDataGallery(activity)
         },{ code, message ->
