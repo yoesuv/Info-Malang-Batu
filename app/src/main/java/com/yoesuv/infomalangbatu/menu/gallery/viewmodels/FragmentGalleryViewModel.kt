@@ -3,11 +3,12 @@ package com.yoesuv.infomalangbatu.menu.gallery.viewmodels
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databases.AppDatabase
-import com.yoesuv.infomalangbatu.databases.gallery.DatabaseListGaleri
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
+import kotlinx.coroutines.launch
 
 class FragmentGalleryViewModel: ViewModel() {
 
@@ -21,13 +22,14 @@ class FragmentGalleryViewModel: ViewModel() {
     }
 
     fun getListGallery() {
-        listGalleryModel.clear()
-        val listGallery = DatabaseListGaleri(appDatabase).execute().get()
-        for (galleryRoom in listGallery) {
-            val galleryModel = GalleryModel(galleryRoom.caption, galleryRoom.thumbnail, galleryRoom.image)
-            listGalleryModel.add(galleryModel)
+        viewModelScope.launch {
+            listGalleryModel.clear()
+            appDatabase.galleryDaoAccess().selectAllDbGallery().forEach {
+                val galleryModel = GalleryModel(it.caption, it.thumbnail, it.image)
+                listGalleryModel.add(galleryModel)
+            }
+            listGalleryResponse.postValue(listGalleryModel)
         }
-        listGalleryResponse.postValue(listGalleryModel)
     }
 
 }

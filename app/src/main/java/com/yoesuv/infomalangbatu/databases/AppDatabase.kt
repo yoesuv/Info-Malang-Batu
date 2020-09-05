@@ -9,4 +9,5 @@ import com.yoesuv.infomalangbatu.databases.map.MapPinsRoom
 @Database(entities = [PlaceRoom::class , GaleriRoom::class, MapPinsRoom::class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun appDaoAccess() : AppDaoAccess
+    abstract fun galleryDaoAccess(): GalleryDaoAccess
 }

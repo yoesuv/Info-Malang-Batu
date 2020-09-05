@@ -3,7 +3,6 @@ package com.yoesuv.infomalangbatu.databases
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.yoesuv.infomalangbatu.databases.gallery.GaleriRoom
 import com.yoesuv.infomalangbatu.databases.map.MapPinsRoom
 import com.yoesuv.infomalangbatu.databases.place.PlaceRoom
 
@@ -22,16 +21,6 @@ interface AppDaoAccess {
 
     @Query("DELETE FROM PlaceRoom")
     fun deleteAllPlace()
-
-    /* gallery */
-    @Insert
-    fun insertGallery(galeriRoom: GaleriRoom)
-
-    @Query("SELECT * FROM GaleriRoom")
-    fun selectAllGallery(): MutableList<GaleriRoom>
-
-    @Query("DELETE FROM GaleriRoom")
-    fun deleteAllGallery()
 
     /* map pins */
     @Insert

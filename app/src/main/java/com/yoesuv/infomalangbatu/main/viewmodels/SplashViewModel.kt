@@ -8,13 +8,10 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
-
 import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databases.AppDatabase
-import com.yoesuv.infomalangbatu.databases.gallery.DatabaseDeleteAllGaleri
-import com.yoesuv.infomalangbatu.databases.gallery.DatabaseInsertGaleri
 import com.yoesuv.infomalangbatu.databases.gallery.GaleriRoom
 import com.yoesuv.infomalangbatu.databases.map.DatabaseDeleteAllMapPins
 import com.yoesuv.infomalangbatu.databases.map.DatabaseInsertMapPins
@@ -25,6 +22,7 @@ import com.yoesuv.infomalangbatu.databases.place.DatabaseInsertPlace
 import com.yoesuv.infomalangbatu.main.views.MainActivity
 import com.yoesuv.infomalangbatu.networks.AppRepository
 import com.yoesuv.infomalangbatu.utils.AppHelper
+import kotlinx.coroutines.launch
 
 class SplashViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -64,15 +62,19 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun initDataGallery(activity: Activity) {
+        viewModelScope.launch {
+            appDatabase.galleryDaoAccess().deleteAllDbGallery()
+        }
         appRepository.getListGallery({
-            DatabaseDeleteAllGaleri(appDatabase).execute()
             for (galleryModel in it!!) {
                 val galeriRoom = GaleriRoom(
                     galleryModel.caption,
                     galleryModel.thumbnail,
                     galleryModel.image
                 )
-                DatabaseInsertGaleri(appDatabase, galeriRoom).execute()
+                viewModelScope.launch {
+                    appDatabase.galleryDaoAccess().insertDbGallery(galeriRoom)
+                }
             }
             initDataMapPins(activity)
         },{ code, message ->
