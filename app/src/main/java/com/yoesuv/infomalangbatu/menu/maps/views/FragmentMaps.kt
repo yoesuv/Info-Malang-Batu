@@ -35,13 +35,14 @@ import com.yoesuv.infomalangbatu.App
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databases.AppDatabase
-import com.yoesuv.infomalangbatu.databases.map.DatabaseListMapPins
 import com.yoesuv.infomalangbatu.menu.maps.adapters.MyCustomInfoWindowAdapter
 import com.yoesuv.infomalangbatu.menu.maps.models.MarkerTag
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.utils.AppHelper
 import com.yoesuv.infomalangbatu.utils.BounceAnimation
 import com.yoesuv.infomalangbatu.widgets.AppDialog
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 
 class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback {
 
@@ -128,18 +129,19 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(-7.982914, 112.630875)))
         googleMap?.animateCamera(CameraUpdateFactory.zoomTo(9F))
 
-        listPinModel.clear()
-        val listPin = DatabaseListMapPins(appDatabase).execute().get()
-        for (mapPinsRoom in listPin) {
-            val pinModel = PinModel(
-                mapPinsRoom.name,
-                mapPinsRoom.location,
-                mapPinsRoom.latitude,
-                mapPinsRoom.longitude
-            )
-            listPinModel.add(pinModel)
+        runBlocking {
+            listPinModel.clear()
+            appDatabase.mapPinDaoAccess().selectAllDbMapPins().forEach { mapPinsRoom ->
+                val pinModel = PinModel(
+                    mapPinsRoom.name,
+                    mapPinsRoom.location,
+                    mapPinsRoom.latitude,
+                    mapPinsRoom.longitude
+                )
+                listPinModel.add(pinModel)
+            }
+            setupPin(googleMap, listPinModel)
         }
-        setupPin(googleMap, listPinModel)
     }
 
     private fun setupPin(googleMap: GoogleMap?, listPin: MutableList<PinModel>){

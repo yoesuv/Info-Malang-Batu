@@ -17,6 +17,7 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
+import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.menu.maps.views.FragmentMaps
 import es.dmoral.toasty.Toasty
@@ -24,6 +25,12 @@ import es.dmoral.toasty.Toasty
 /**
  *  Created by yusuf on 5/1/18.
  */
+
+fun logDebug(message: String) {
+    if (BuildConfig.DEBUG) {
+        Log.d(AppConstants.TAG_DEBUG, message)
+    }
+}
 
 object AppHelper {
 
