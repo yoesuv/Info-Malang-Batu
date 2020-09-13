@@ -14,6 +14,7 @@ jdk:
 notifications:
   email: false
 script:
+- yes | sdkmanager --licenses
 - "./gradlew clean build"
 before_install:
 - openssl aes-256-cbc -K $encrypted_4c721a8ffc8b_key -iv $encrypted_4c721a8ffc8b_iv
