@@ -3,7 +3,6 @@ package com.yoesuv.infomalangbatu.main.viewmodels
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
-
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -35,79 +34,45 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun initDataBase(activity: Activity) {
-        viewModelScope.launch {
-            appDatabase.placeDaoAccess().deleteAllPlace()
-        }
-        appRepository.getListPlace({
-            for (placeModel in it!!) {
-                val placeRoom = PlaceRoom(
-                    placeModel.name,
-                    placeModel.location,
-                    placeModel.description,
-                    placeModel.thumbnail,
-                    placeModel.image
-                )
-                viewModelScope.launch {
+        appRepository.getAppData({ places, galleries, pins ->
+            viewModelScope.launch {
+                appDatabase.placeDaoAccess().deleteAllPlace()
+                appDatabase.galleryDaoAccess().deleteAllDbGallery()
+                appDatabase.mapPinDaoAccess().deleteAllDbMapPins()
+
+                places?.forEach { placeModel ->
+                    val placeRoom = PlaceRoom(
+                        placeModel.name,
+                        placeModel.location,
+                        placeModel.description,
+                        placeModel.thumbnail,
+                        placeModel.image
+                    )
                     appDatabase.placeDaoAccess().insertPlace(placeRoom)
                 }
-            }
-            initDataGallery(activity)
-        },{ code, message ->
-            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_place))
-            activity.finish()
-        },{
-            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_place))
-            activity.finish()
-        })
-    }
 
-    private fun initDataGallery(activity: Activity) {
-        viewModelScope.launch {
-            appDatabase.galleryDaoAccess().deleteAllDbGallery()
-        }
-        appRepository.getListGallery({
-            for (galleryModel in it!!) {
-                val galeriRoom = GaleriRoom(
-                    galleryModel.caption,
-                    galleryModel.thumbnail,
-                    galleryModel.image
-                )
-                viewModelScope.launch {
+                galleries?.forEach {galleryModel ->
+                    val galeriRoom = GaleriRoom(
+                        galleryModel.caption,
+                        galleryModel.thumbnail,
+                        galleryModel.image
+                    )
                     appDatabase.galleryDaoAccess().insertDbGallery(galeriRoom)
                 }
-            }
-            initDataMapPins(activity)
-        },{ code, message ->
-            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_gallery))
-            activity.finish()
-        },{
-            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_gallery))
-            activity.finish()
-        })
-    }
 
-    private fun initDataMapPins(activity: Activity) {
-        viewModelScope.launch {
-            appDatabase.mapPinDaoAccess().deleteAllDbMapPins()
-        }
-        appRepository.getListMapPins({
-            for (pinModel in it!!) {
-                val mapPinRoom = MapPinsRoom(
-                    pinModel.name,
-                    pinModel.location,
-                    pinModel.latitude,
-                    pinModel.longitude
-                )
-                viewModelScope.launch {
+                pins?.forEach { pinModel ->
+                    val mapPinRoom = MapPinsRoom(
+                        pinModel.name,
+                        pinModel.location,
+                        pinModel.latitude,
+                        pinModel.longitude
+                    )
                     appDatabase.mapPinDaoAccess().insertDbMapPins(mapPinRoom)
                 }
+                openApplication(activity)
             }
-            openApplication(activity)
-        },{ code, message ->
-            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_map_pins))
-            activity.finish()
-        },{
-            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_map_pins))
+        }, {
+            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_place))
             activity.finish()
         })
     }
