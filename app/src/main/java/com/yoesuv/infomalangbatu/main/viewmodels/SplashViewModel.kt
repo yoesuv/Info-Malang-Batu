@@ -15,6 +15,9 @@ import com.yoesuv.infomalangbatu.databases.gallery.GaleriRoom
 import com.yoesuv.infomalangbatu.databases.map.MapPinsRoom
 import com.yoesuv.infomalangbatu.databases.place.PlaceRoom
 import com.yoesuv.infomalangbatu.main.views.MainActivity
+import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
+import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
+import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.networks.AppRepository
 import com.yoesuv.infomalangbatu.utils.AppHelper
 import kotlinx.coroutines.launch
@@ -36,45 +39,54 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     fun initDataBase(activity: Activity) {
         appRepository.getAppData({ places, galleries, pins ->
             viewModelScope.launch {
-                appDatabase.placeDaoAccess().deleteAllPlace()
-                appDatabase.galleryDaoAccess().deleteAllDbGallery()
-                appDatabase.mapPinDaoAccess().deleteAllDbMapPins()
-
-                places?.forEach { placeModel ->
-                    val placeRoom = PlaceRoom(
-                        placeModel.name,
-                        placeModel.location,
-                        placeModel.description,
-                        placeModel.thumbnail,
-                        placeModel.image
-                    )
-                    appDatabase.placeDaoAccess().insertPlace(placeRoom)
-                }
-
-                galleries?.forEach {galleryModel ->
-                    val galeriRoom = GaleriRoom(
-                        galleryModel.caption,
-                        galleryModel.thumbnail,
-                        galleryModel.image
-                    )
-                    appDatabase.galleryDaoAccess().insertDbGallery(galeriRoom)
-                }
-
-                pins?.forEach { pinModel ->
-                    val mapPinRoom = MapPinsRoom(
-                        pinModel.name,
-                        pinModel.location,
-                        pinModel.latitude,
-                        pinModel.longitude
-                    )
-                    appDatabase.mapPinDaoAccess().insertDbMapPins(mapPinRoom)
-                }
+                setupPlaces(places)
+                setupGalleries(galleries)
+                setupMapPins(pins)
                 openApplication(activity)
             }
         }, {
             AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_place))
             activity.finish()
         })
+    }
+
+    private suspend fun setupPlaces(places: MutableList<PlaceModel>?) {
+        appDatabase.placeDaoAccess().deleteAllPlace()
+        places?.forEach { placeModel ->
+            val placeRoom = PlaceRoom(
+                placeModel.name,
+                placeModel.location,
+                placeModel.description,
+                placeModel.thumbnail,
+                placeModel.image
+            )
+            appDatabase.placeDaoAccess().insertPlace(placeRoom)
+        }
+    }
+
+    private suspend fun setupGalleries(galleries: MutableList<GalleryModel>?) {
+        appDatabase.galleryDaoAccess().deleteAllDbGallery()
+        galleries?.forEach {galleryModel ->
+            val galeriRoom = GaleriRoom(
+                galleryModel.caption,
+                galleryModel.thumbnail,
+                galleryModel.image
+            )
+            appDatabase.galleryDaoAccess().insertDbGallery(galeriRoom)
+        }
+    }
+
+    private suspend fun setupMapPins(pins: MutableList<PinModel>?) {
+        appDatabase.mapPinDaoAccess().deleteAllDbMapPins()
+        pins?.forEach { pinModel ->
+            val mapPinRoom = MapPinsRoom(
+                pinModel.name,
+                pinModel.location,
+                pinModel.latitude,
+                pinModel.longitude
+            )
+            appDatabase.mapPinDaoAccess().insertDbMapPins(mapPinRoom)
+        }
     }
 
     private fun openApplication(activity: Activity) {
