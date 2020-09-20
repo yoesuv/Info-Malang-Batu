@@ -18,7 +18,6 @@ class FragmentListPlaceViewModel: ViewModel() {
     private var listPlaceRoom: MutableList<PlaceRoom> = mutableListOf()
 
     var listPlaceResponse: MutableLiveData<MutableList<PlaceModel>> = MutableLiveData()
-    var error: MutableLiveData<Throwable> = MutableLiveData()
 
     private lateinit var appDatabase: AppDatabase
 
