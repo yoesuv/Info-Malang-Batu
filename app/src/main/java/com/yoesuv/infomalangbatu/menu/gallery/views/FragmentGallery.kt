@@ -1,10 +1,8 @@
 package com.yoesuv.infomalangbatu.menu.gallery.views
 
 import android.content.res.Configuration
-import androidx.lifecycle.Observer
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +20,6 @@ class FragmentGallery: Fragment() {
     private lateinit var viewModel: FragmentGalleryViewModel
     private lateinit var binding: FragmentGalleryBinding
     private lateinit var adapter: GalleryAdapter
-    private lateinit var layoutManager: GridLayoutManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false)
@@ -37,7 +34,7 @@ class FragmentGallery: Fragment() {
         setupRecycler()
 
         viewModel.setupProperties(context)
-        viewModel.listGalleryResponse.observe(this, Observer {
+        viewModel.listGalleryResponse.observe(viewLifecycleOwner, {
             onListDataChanged(it)
         })
         viewModel.getListGallery()
@@ -49,9 +46,6 @@ class FragmentGallery: Fragment() {
     }
 
     private fun setupRecycler(){
-        val spanCount = resources.getInteger(R.integer.spanCount)
-        layoutManager = GridLayoutManager(context, spanCount)
-        binding.recyclerViewGallery.layoutManager = layoutManager
         adapter = GalleryAdapter {
             onItemGalleryClick(it)
         }
