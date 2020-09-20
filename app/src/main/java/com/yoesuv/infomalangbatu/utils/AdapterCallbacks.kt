@@ -3,6 +3,7 @@ package com.yoesuv.infomalangbatu.utils
 import androidx.recyclerview.widget.DiffUtil
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
+import com.yoesuv.infomalangbatu.menu.other.models.LibraryModel
 
 object AdapterCallbacks {
 
@@ -23,6 +24,16 @@ object AdapterCallbacks {
 
         override fun areItemsTheSame(oldItem: GalleryModel, newItem: GalleryModel): Boolean {
             return oldItem.caption == newItem.caption
+        }
+    }
+
+    val libraryCallback = object : DiffUtil.ItemCallback<LibraryModel>() {
+        override fun areContentsTheSame(oldItem: LibraryModel, newItem: LibraryModel): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areItemsTheSame(oldItem: LibraryModel, newItem: LibraryModel): Boolean {
+            return oldItem.title == newItem.title
         }
     }
 

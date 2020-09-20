@@ -38,7 +38,7 @@
             android:fontFamily="monospace"
             android:text="@{library.license}"
             android:textSize="@dimen/default_text_license_size"
-            tools:text="@tools:sample/lorem/random"/>
+            tools:text="@tools:sample/lorem"/>
 
         <include
             android:id="@+id/dividerItemLibraries"
