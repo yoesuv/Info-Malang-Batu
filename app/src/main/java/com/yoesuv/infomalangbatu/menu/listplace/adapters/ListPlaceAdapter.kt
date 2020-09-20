@@ -1,49 +1,22 @@
 package com.yoesuv.infomalangbatu.menu.listplace.adapters
 
-import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.yoesuv.infomalangbatu.R
-import com.yoesuv.infomalangbatu.databinding.ItemListplaceBinding
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
-import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.ItemListPlaceViewModel
+import com.yoesuv.infomalangbatu.utils.AdapterCallbacks
 
-class ListPlaceAdapter(val onItemClick:(PlaceModel) -> Unit): ListAdapter<PlaceModel, ListPlaceAdapter.ListPlaceViewHolder>(DiffCallback) {
+class ListPlaceAdapter(val onItemClick:(PlaceModel) -> Unit): ListAdapter<PlaceModel, ListPlaceViewHolder>(AdapterCallbacks.listPlaceCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListPlaceViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding: ItemListplaceBinding = DataBindingUtil.inflate(inflater, R.layout.item_listplace, parent, false)
-        return ListPlaceViewHolder(binding)
+        return ListPlaceViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ListPlaceViewHolder, position: Int) {
-        val fixPosition = holder.adapterPosition
-        holder.setupData(getItem(fixPosition))
+        val placeModel = getItem(holder.adapterPosition)
+        holder.bind(placeModel)
         holder.itemView.setOnClickListener {
-            onItemClick(getItem(fixPosition))
+            onItemClick(placeModel)
         }
-    }
-
-    companion object DiffCallback: DiffUtil.ItemCallback<PlaceModel>() {
-        override fun areContentsTheSame(oldItem: PlaceModel, newItem: PlaceModel): Boolean {
-            return oldItem == newItem
-        }
-
-        override fun areItemsTheSame(oldItem: PlaceModel, newItem: PlaceModel): Boolean {
-            return oldItem.name == newItem.name
-        }
-    }
-
-    class ListPlaceViewHolder(val binding: ItemListplaceBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        fun setupData(placeModel: PlaceModel){
-            val viewModel = ItemListPlaceViewModel(placeModel)
-            binding.itemListPlace = viewModel
-        }
-
     }
 
 }
