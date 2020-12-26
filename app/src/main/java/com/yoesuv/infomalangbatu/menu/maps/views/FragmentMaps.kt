@@ -41,7 +41,6 @@ import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.utils.AppHelper
 import com.yoesuv.infomalangbatu.utils.BounceAnimation
 import com.yoesuv.infomalangbatu.widgets.AppDialog
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 
 class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback {
@@ -67,13 +66,13 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
 
-        appDatabase = Room.databaseBuilder(context!!, AppDatabase::class.java, AppConstants.DATABASE_NAME)
+        appDatabase = Room.databaseBuilder(requireContext(), AppDatabase::class.java, AppConstants.DATABASE_NAME)
             .fallbackToDestructiveMigration()
             .build()
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context!!)
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
         setHasOptionsMenu(true)
-        progressDialog = AppDialog(context!!)
+        progressDialog = AppDialog(requireContext())
         progressDialog.setCancelable(false)
         progressDialog.setCanceledOnTouchOutside(false)
     }
@@ -86,7 +85,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     override fun onDestroy() {
         super.onDestroy()
         if (myLocationCallback!=null) {
-            LocationServices.getFusedLocationProviderClient(context!!).removeLocationUpdates(myLocationCallback)
+            LocationServices.getFusedLocationProviderClient(requireContext()).removeLocationUpdates(myLocationCallback)
         }
     }
 
@@ -96,7 +95,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
             if (resultCode==Activity.RESULT_OK) {
                 requestPermissionLocation()
             } else if (resultCode==Activity.RESULT_CANCELED) {
-                AppHelper.displayToastError(context!!, getString(R.string.location_setting_off))
+                AppHelper.displayToastError(requireContext(), getString(R.string.location_setting_off))
             }
         }
     }
@@ -119,7 +118,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
             if (grantResults[0].equals(PackageManager.PERMISSION_GRANTED)) {
                 enableUserLocation(mGoogleMap)
             } else {
-                AppHelper.displayToastError(context?.applicationContext!!, getString(R.string.access_location_denied))
+                AppHelper.displayToastError(requireContext(), getString(R.string.access_location_denied))
             }
         }
     }
@@ -216,10 +215,10 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
                             .avoid(AvoidType.TOLLS)
                             .execute(this)
                     } else {
-                        AppHelper.displayToastError(context!!, getString(R.string.error_get_user_location))
+                        AppHelper.displayToastError(requireContext(), getString(R.string.error_get_user_location))
                     }
                 } else {
-                    AppHelper.displayToastError(context!!, getString(R.string.error_get_user_location))
+                    AppHelper.displayToastError(requireContext(), getString(R.string.error_get_user_location))
                 }
             }
         } else {
@@ -241,7 +240,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         getMapPins(googleMap)
         setMarkerAnimation(googleMap)
 
-        if (AppHelper.checkLocationSetting(context!!)) {
+        if (AppHelper.checkLocationSetting(requireContext())) {
             requestPermissionLocation()
         } else {
             AppHelper.displayLocationSettingsRequest(activity as Activity)
@@ -269,10 +268,10 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
                     mGoogleMap?.addPolyline(DirectionConverter.createPolyline(context, directionPositionList, 5, Color.parseColor(color)))
                 }
             } else {
-                AppHelper.displayToastError(context!!, context?.getString(R.string.error_direction_not_success)!!)
+                AppHelper.displayToastError(requireContext(), context?.getString(R.string.error_direction_not_success)!!)
             }
         } else {
-            AppHelper.displayToastError(context!!, context?.getString(R.string.error_direction_not_success)!!)
+            AppHelper.displayToastError(requireContext(), context?.getString(R.string.error_direction_not_success)!!)
         }
     }
 
@@ -280,7 +279,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         if (progressDialog.isShowing) {
             progressDialog.dismiss()
         }
-        AppHelper.displayToastError(context!!, context?.getString(R.string.error_direction_not_success)!!)
+        AppHelper.displayToastError(requireContext(), context?.getString(R.string.error_direction_not_success)!!)
         t?.printStackTrace()
     }
 }
