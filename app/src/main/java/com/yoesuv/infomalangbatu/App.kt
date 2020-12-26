@@ -3,6 +3,7 @@ package com.yoesuv.infomalangbatu
 import android.content.Context
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.yoesuv.infomalangbatu.utils.PreferencesHelper
 
 class App: MultiDexApplication() {
@@ -19,6 +20,11 @@ class App: MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         prefHelper = PreferencesHelper(this)
+        setupFirebaseCrashlytics()
+    }
+
+    private fun setupFirebaseCrashlytics() {
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
     }
 
 }

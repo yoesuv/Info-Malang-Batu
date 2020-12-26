@@ -16,6 +16,7 @@ buildscript {
         classpath 'com.google.firebase:perf-plugin:1.3.1'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:$dexCountVersion"
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
     }
 }
 
