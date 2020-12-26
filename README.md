@@ -1,5 +1,7 @@
-# Info Malang Batu 2.3.1 #
+# Info Malang Batu #
 [![](https://travis-ci.org/yoesuv/Info-Malang-Batu.svg)](https://travis-ci.org/yoesuv/Info-Malang-Batu)
+![](https://img.shields.io/github/languages/top/yoesuv/Info-Malang-Batu)
+![](https://img.shields.io/github/v/release/yoesuv/Info-Malang-Batu?sort=semver)  
 * Build with Kotlin, Use MVVM Pattern
 * Local Database with [Room](https://developer.android.com/topic/libraries/architecture/room)
 * [AndroidX](https://developer.android.com/jetpack/androidx/)
