@@ -1,11 +1,8 @@
 package com.yoesuv.infomalangbatu.menu.listplace.views
 
 import android.content.res.Configuration
-import androidx.lifecycle.Observer
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -23,7 +20,7 @@ class FragmentListPlace: Fragment() {
     private lateinit var adapter: ListPlaceAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_listplace, container, false)
+        binding = FragmentListplaceBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -36,11 +33,8 @@ class FragmentListPlace: Fragment() {
 
         viewModel.setupProperties(context)
         viewModel.getListPlace(PlaceLocation.ALL)
-        viewModel.listPlaceResponse.observe(this, Observer {
+        viewModel.listPlaceResponse.observe(viewLifecycleOwner, {
             onListDataChange(it)
-        })
-        viewModel.error.observe(this, Observer {
-            it?.printStackTrace()
         })
         setHasOptionsMenu(true)
     }
@@ -72,8 +66,6 @@ class FragmentListPlace: Fragment() {
     }
 
     private fun setupRecycler(){
-        val layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewListPlace.layoutManager = layoutManager
         adapter = ListPlaceAdapter {
             onItemClick(it)
         }

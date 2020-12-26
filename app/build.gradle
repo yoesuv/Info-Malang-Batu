@@ -1,27 +1,15 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.6'
-    }
-}
+def apiKeyPropertiesFile = rootProject.file("apiKey.properties")
+def apiKeyProperties = new Properties()
+apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'io.fabric'
 apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'androidx.navigation.safeargs'
-
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-    google()
-    mavenCentral()
-}
 
 android {
     signingConfigs {
@@ -32,18 +20,18 @@ android {
             storePassword STORE_PASSWORD
         }
     }
-    compileSdkVersion 29
-    buildToolsVersion '29.0.2'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.2'
     defaultConfig {
         applicationId "com.yoesuv.infomalangbatu"
         minSdkVersion 16
-        targetSdkVersion 29
+        targetSdkVersion 30
         multiDexEnabled true
-        versionCode 11
-        versionName "2.3.0"
+        versionCode 12
+        versionName "2.3.1"
         setProperty("archivesBaseName", applicationId+"-v"+versionCode+"("+versionName+")")
-        resValue "string", "MAPS_API_KEY", "AIzaSyB21TKg6wQRlNtu3b4-Y1XS9k_LmdJ7Kog"
-        resValue "string", "DIRECTION_API_KEY", "AIzaSyAe8YMnV8J3om1ht5EIiOqV_ESejniRq6U"
+        resValue "string", "MAPS_API_KEY", apiKeyProperties['MAPS_API_KEY']
+        resValue "string", "DIRECTION_API_KEY", apiKeyProperties['DIRECTION_API_KEY']
     }
     buildTypes {
         release {
@@ -78,8 +66,8 @@ android {
             buildConfigField "String", "BASE_URL", "\"https://info-malang-batu.firebaseapp.com/\""
         }
     }
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
     }
     lintOptions {
         abortOnError false
@@ -88,7 +76,6 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
-
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -100,39 +87,40 @@ androidExtensions {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
-    implementation 'com.google.firebase:firebase-perf:19.0.1'
-    implementation 'com.google.firebase:firebase-core:17.2.1'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    testImplementation 'junit:junit:4.13'
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "com.google.android.gms:play-services-maps:$playServicesMapsVersion"
+    implementation "com.google.android.gms:play-services-location:$playServicesLocationVersion"
 
-    implementation "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$project.httpLoggingVersion"
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-perf'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.intuit.ssp:ssp-android:$project.sspVersion"
-    implementation "com.intuit.sdp:sdp-android:$project.sdpVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$httpLoggingVersion"
 
-    implementation "androidx.lifecycle:lifecycle-extensions:$project.lifecycleVersion"
-    kapt "androidx.lifecycle:lifecycle-compiler:$project.lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$project.lifecycleVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "com.intuit.ssp:ssp-android:$sspVersion"
+    implementation "com.intuit.sdp:sdp-android:$sdpVersion"
 
-    implementation "com.github.bumptech.glide:glide:$project.glideVersion"
-    kapt "com.github.bumptech.glide:compiler:$project.glideVersion"
-    implementation "com.github.GrenderG:Toasty:$project.toastyVersion"
-    implementation "com.akexorcist:googledirectionlibrary:$project.googleDirectionLibraryVersion"
-    implementation 'com.android.support:multidex:1.0.3'
-    implementation "androidx.navigation:navigation-fragment-ktx:$project.navigationLibraryVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$project.navigationLibraryVersion"
-    implementation "androidx.fragment:fragment-ktx:1.2.0-rc01"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
 
-    implementation "android.arch.persistence.room:runtime:$roomVersion"
-    kapt "android.arch.persistence.room:compiler:$roomVersion"
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation "com.github.GrenderG:Toasty:$toastyVersion"
+    implementation "com.akexorcist:googledirectionlibrary:$googleDirectionLibraryVersion"
+    implementation "com.android.support:multidex:$multidexVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
+
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'

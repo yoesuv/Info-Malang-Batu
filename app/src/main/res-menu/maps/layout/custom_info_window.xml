@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.yoesuv.infomalangbatu.widgets.ForegroundRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     android:padding="@dimen/_3sdp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewMapLocationName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

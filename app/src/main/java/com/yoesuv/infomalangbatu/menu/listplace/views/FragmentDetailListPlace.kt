@@ -6,17 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentDetailListplaceBinding
 import com.yoesuv.infomalangbatu.main.views.MainActivity
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentDetailListPlaceViewModel
+import com.yoesuv.infomalangbatu.utils.bindings.ViewModelFragmentFactory
 
 class FragmentDetailListPlace: Fragment() {
 
     private lateinit var binding: FragmentDetailListplaceBinding
-    private lateinit var viewModel: FragmentDetailListPlaceViewModel
+    private val viewModel: FragmentDetailListPlaceViewModel by viewModels { ViewModelFragmentFactory(placeModel as Any) }
 
     private val args: FragmentDetailListPlaceArgs by navArgs()
     private var placeModel: PlaceModel? = null
@@ -30,7 +32,6 @@ class FragmentDetailListPlace: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).hideNavigation(true)
-        viewModel = FragmentDetailListPlaceViewModel(activity!!.application, placeModel)
         binding.detailListPlace = viewModel
     }
 

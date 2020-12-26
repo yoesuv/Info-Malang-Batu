@@ -3,9 +3,8 @@ package com.yoesuv.infomalangbatu
 import android.content.Context
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.yoesuv.infomalangbatu.utils.PreferencesHelper
-import io.fabric.sdk.android.Fabric
 
 class App: MultiDexApplication() {
 
@@ -21,9 +20,11 @@ class App: MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         prefHelper = PreferencesHelper(this)
-        if (BuildConfig.FLAVOR.equals("production", true)) {
-            Fabric.with(this, Crashlytics())
-        }
+        setupFirebaseCrashlytics()
+    }
+
+    private fun setupFirebaseCrashlytics() {
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
     }
 
 }

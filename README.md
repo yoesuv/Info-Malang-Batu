@@ -1,7 +1,5 @@
-# Info Malang Batu #
+# Info Malang Batu 2.3.1 #
 [![](https://travis-ci.org/yoesuv/Info-Malang-Batu.svg)](https://travis-ci.org/yoesuv/Info-Malang-Batu)
-* version name 2.3.0
-* version code 11
 * Build with Kotlin, Use MVVM Pattern
 * Local Database with [Room](https://developer.android.com/topic/libraries/architecture/room)
 * [AndroidX](https://developer.android.com/jetpack/androidx/)
@@ -9,15 +7,21 @@
 
 [![](https://i.imgur.com/vbFJRFm.png)](https://play.google.com/store/apps/details?id=com.yoesuv.infomalangbatu)
 
+#### How to run/build this project ####
+create file ```apiKey.properties``` in root project, then set values
+```
+MAPS_API_KEY = your_maps_api_key
+DIRECTION_API_KEY = your_direction_api_key
+```
+
 ### Screenshot ###
 | ![](https://i.imgur.com/jXstCHr.jpg) | ![](https://i.imgur.com/TPG9BVX.jpg) | ![](https://i.imgur.com/A9qR7nl.jpg) | ![](https://i.imgur.com/fIsPL17.jpg) |
 | :---: | :---: | :---: | :---: |
-| ![](https://i.imgur.com/0t6ZfY5.jpg) | ![](https://i.imgur.com/01o9hm1.jpg) | ![](https://i.imgur.com/5qhNc8o.jpg) | ![](https://i.imgur.com/VooSD35.jpg) |
+| ![](https://i.imgur.com/0t6ZfY5.jpg) | ![](https://i.imgur.com/01o9hm1.jpg) | ![](https://i.imgur.com/c4w19t9.jpg) | ![](https://i.imgur.com/6kbuSR0.jpg) |
 
 ### List Libraries Used in this Project ###
 * [Android GoogleDirectionLibrary](https://github.com/akexorcist/Android-GoogleDirectionLibrary)
 * [Dexcount Gradle Plugin](https://github.com/KeepSafe/dexcount-gradle-plugin)
-* [Fabric](https://www.fabric.io)
 * [Glide](https://github.com/bumptech/glide)
 * [Icons8 Icon](https://icons8.com/)
 * [Retrofit](https://github.com/square/retrofit)
