@@ -8,7 +8,7 @@
 [![](https://i.imgur.com/vbFJRFm.png)](https://play.google.com/store/apps/details?id=com.yoesuv.infomalangbatu)
 
 #### How to run/build this project ####
-create file apiKey.properties in root project, then set values
+create file ```apiKey.properties``` in root project, then set values
 ```
 MAPS_API_KEY = your_maps_api_key
 DIRECTION_API_KEY = your_direction_api_key
@@ -17,7 +17,7 @@ DIRECTION_API_KEY = your_direction_api_key
 ### Screenshot ###
 | ![](https://i.imgur.com/jXstCHr.jpg) | ![](https://i.imgur.com/TPG9BVX.jpg) | ![](https://i.imgur.com/A9qR7nl.jpg) | ![](https://i.imgur.com/fIsPL17.jpg) |
 | :---: | :---: | :---: | :---: |
-| ![](https://i.imgur.com/0t6ZfY5.jpg) | ![](https://i.imgur.com/01o9hm1.jpg) | ![](https://i.imgur.com/5qhNc8o.jpg) | ![](https://i.imgur.com/VooSD35.jpg) |
+| ![](https://i.imgur.com/0t6ZfY5.jpg) | ![](https://i.imgur.com/01o9hm1.jpg) | ![](https://i.imgur.com/c4w19t9.jpg) | ![](https://i.imgur.com/6kbuSR0.jpg) |
 
 ### List Libraries Used in this Project ###
 * [Android GoogleDirectionLibrary](https://github.com/akexorcist/Android-GoogleDirectionLibrary)
