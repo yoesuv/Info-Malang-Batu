@@ -15,7 +15,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.room.Room
 import com.akexorcist.googledirection.DirectionCallback
 import com.akexorcist.googledirection.GoogleDirection
 import com.akexorcist.googledirection.constant.AvoidType
@@ -60,15 +59,13 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     private val colors = arrayListOf("#7F2196f3","#7F4CAF50","#7FF44336")
     private lateinit var progressDialog: AppDialog
 
-    private lateinit var appDatabase: AppDatabase
+    private var appDatabase: AppDatabase? = null
     private var listPinModel: MutableList<PinModel> = arrayListOf()
 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
 
-        appDatabase = Room.databaseBuilder(requireContext(), AppDatabase::class.java, AppConstants.DATABASE_NAME)
-            .fallbackToDestructiveMigration()
-            .build()
+        appDatabase = AppDatabase.getInstance(requireContext())
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
         setHasOptionsMenu(true)
@@ -130,7 +127,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
 
         runBlocking {
             listPinModel.clear()
-            appDatabase.mapPinDaoAccess().selectAllDbMapPins().forEach { mapPinsRoom ->
+            appDatabase?.mapPinDaoAccess()?.selectAllDbMapPins()?.forEach { mapPinsRoom ->
                 val pinModel = PinModel(
                     mapPinsRoom.name,
                     mapPinsRoom.location,

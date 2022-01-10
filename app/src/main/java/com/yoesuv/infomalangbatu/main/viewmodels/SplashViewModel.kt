@@ -6,10 +6,8 @@ import android.content.Intent
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.R
-import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databases.AppDatabase
 import com.yoesuv.infomalangbatu.databases.gallery.GaleriRoom
 import com.yoesuv.infomalangbatu.databases.map.MapPinsRoom
@@ -25,15 +23,12 @@ import kotlinx.coroutines.launch
 class SplashViewModel(application: Application) : AndroidViewModel(application) {
 
     private val appRepository = AppRepository(viewModelScope)
-    private lateinit var appDatabase: AppDatabase
+    private val appDatabase = AppDatabase.getInstance(application.applicationContext)
 
     var version: ObservableField<String> = ObservableField()
 
     fun setupProperties(activity: Activity) {
         version.set(activity.getString(R.string.info_app_version, BuildConfig.VERSION_NAME))
-        appDatabase = Room.databaseBuilder(activity, AppDatabase::class.java, AppConstants.DATABASE_NAME)
-            .fallbackToDestructiveMigration()
-            .build()
     }
 
     fun initDataBase(activity: Activity) {
@@ -51,7 +46,7 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private suspend fun setupPlaces(places: MutableList<PlaceModel>?) {
-        appDatabase.placeDaoAccess().deleteAllPlace()
+        appDatabase?.placeDaoAccess()?.deleteAllPlace()
         places?.forEach { placeModel ->
             val placeRoom = PlaceRoom(
                 placeModel.name,
@@ -60,24 +55,24 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
                 placeModel.thumbnail,
                 placeModel.image
             )
-            appDatabase.placeDaoAccess().insertPlace(placeRoom)
+            appDatabase?.placeDaoAccess()?.insertPlace(placeRoom)
         }
     }
 
     private suspend fun setupGalleries(galleries: MutableList<GalleryModel>?) {
-        appDatabase.galleryDaoAccess().deleteAllDbGallery()
+        appDatabase?.galleryDaoAccess()?.deleteAllDbGallery()
         galleries?.forEach {galleryModel ->
             val galeriRoom = GaleriRoom(
                 galleryModel.caption,
                 galleryModel.thumbnail,
                 galleryModel.image
             )
-            appDatabase.galleryDaoAccess().insertDbGallery(galeriRoom)
+            appDatabase?.galleryDaoAccess()?.insertDbGallery(galeriRoom)
         }
     }
 
     private suspend fun setupMapPins(pins: MutableList<PinModel>?) {
-        appDatabase.mapPinDaoAccess().deleteAllDbMapPins()
+        appDatabase?.mapPinDaoAccess()?.deleteAllDbMapPins()
         pins?.forEach { pinModel ->
             val mapPinRoom = MapPinsRoom(
                 pinModel.name,
@@ -85,7 +80,7 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
                 pinModel.latitude,
                 pinModel.longitude
             )
-            appDatabase.mapPinDaoAccess().insertDbMapPins(mapPinRoom)
+            appDatabase?.mapPinDaoAccess()?.insertDbMapPins(mapPinRoom)
         }
     }
 

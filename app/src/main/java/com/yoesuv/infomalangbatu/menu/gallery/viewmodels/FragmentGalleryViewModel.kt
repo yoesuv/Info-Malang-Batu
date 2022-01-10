@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
-import com.yoesuv.infomalangbatu.data.AppConstants
 import com.yoesuv.infomalangbatu.databases.AppDatabase
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import kotlinx.coroutines.launch
@@ -15,16 +13,16 @@ class FragmentGalleryViewModel: ViewModel() {
     private var listGalleryModel: MutableList<GalleryModel> = mutableListOf()
     var listGalleryResponse: MutableLiveData<MutableList<GalleryModel>> = MutableLiveData()
 
-    private lateinit var appDatabase: AppDatabase
+    private var appDatabase: AppDatabase? = null
 
     fun setupProperties(context: Context?){
-        appDatabase = Room.databaseBuilder(context!!, AppDatabase::class.java, AppConstants.DATABASE_NAME).build()
+        appDatabase = AppDatabase.getInstance(context!!)
     }
 
     fun getListGallery() {
         viewModelScope.launch {
             listGalleryModel.clear()
-            appDatabase.galleryDaoAccess().selectAllDbGallery().forEach {
+            appDatabase?.galleryDaoAccess()?.selectAllDbGallery()?.forEach {
                 val galleryModel = GalleryModel(it.caption, it.thumbnail, it.image)
                 listGalleryModel.add(galleryModel)
             }
