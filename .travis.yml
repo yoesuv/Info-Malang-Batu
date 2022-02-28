@@ -17,11 +17,22 @@ android:
   - 'google-gdk-license-.+'
 jdk:
 - oraclejdk11
+env:
+  global:
+    - TARGET_VERSION=30
+    - ANDROID_BUILD_TOOLS_VERSION=30.0.2
+    - ANDROID_HOME=~/android-sdk
 notifications:
   email: false
 script:
 - "./gradlew clean bundleProductionRelease"
 before_install:
-- chmod +x gradlew
+- touch $HOME/.android/repositories.cfg
+- wget "https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip" -O commandlinetools.zip
+- unzip commandlinetools.zip -d $ANDROID_HOME/
+- yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager "platforms;android-${TARGET_VERSION}" --sdk_root=$ANDROID_HOME
+- yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" --sdk_root=$ANDROID_HOME
 - openssl aes-256-cbc -K $encrypted_4c721a8ffc8b_key -iv $encrypted_4c721a8ffc8b_iv
   -in apiKey.properties.enc -out apiKey.properties -d
+before_script:
+  - chmod +x gradlew
