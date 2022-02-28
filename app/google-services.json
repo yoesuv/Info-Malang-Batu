@@ -29,24 +29,24 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCZ1kvobjgNGeFzmU4zsDD-ADzqZseh0tM"
+          "current_key": "AIzaSyCJTkgz598VlzKuI1Zra289mY-fypyjzVQ"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "958039428037-g5cojmbkngms591qt8c3lnldd9rs3pe1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "958039428037-bj562v52o5b2qd492qevbbd9m6dhdaec.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.yoesuv.Info-Malang-Batu"
+              }
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
