@@ -1,5 +1,5 @@
 # Info Malang Batu #
-[![](https://travis-ci.org/yoesuv/Info-Malang-Batu.svg)](https://travis-ci.org/yoesuv/Info-Malang-Batu)
+[![](https://travis-ci.org/yoesuv/Info-Malang-Batu.svg)](https://app.travis-ci.com/github/yoesuv/Info-Malang-Batu)
 ![](https://img.shields.io/github/languages/top/yoesuv/Info-Malang-Batu)
 ![](https://img.shields.io/github/v/release/yoesuv/Info-Malang-Batu?sort=semver)  
 * Build with Kotlin, Use MVVM Pattern

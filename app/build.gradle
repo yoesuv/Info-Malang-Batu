@@ -19,15 +19,15 @@ android {
             storePassword STORE_PASSWORD
         }
     }
-    compileSdkVersion 30
-    buildToolsVersion '30.0.3'
+    compileSdkVersion 32
+    //buildToolsVersion '30.0.3'
     defaultConfig {
         applicationId "com.yoesuv.infomalangbatu"
-        minSdkVersion 16
-        targetSdkVersion 30
+        minSdkVersion 21
+        targetSdkVersion 32
         multiDexEnabled true
-        versionCode 12
-        versionName "2.3.1"
+        versionCode 13
+        versionName "2.3.2"
         setProperty("archivesBaseName", applicationId+"-v"+versionCode+"("+versionName+")")
         resValue "string", "MAPS_API_KEY", apiKeyProperties['MAPS_API_KEY']
         resValue "string", "DIRECTION_API_KEY", apiKeyProperties['DIRECTION_API_KEY']
