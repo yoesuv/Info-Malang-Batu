@@ -13,12 +13,12 @@ class MyCustomInfoWindowAdapter(activity: FragmentActivity?): GoogleMap.InfoWind
 
     private val mContents: View = LayoutInflater.from(activity?.applicationContext).inflate(R.layout.custom_info_window, null)
 
-    override fun getInfoContents(marker: Marker?): View {
+    override fun getInfoContents(marker: Marker): View {
         return mContents
     }
 
 
-    override fun getInfoWindow(marker: Marker?): View {
+    override fun getInfoWindow(marker: Marker): View {
         val tag: MarkerTag = marker?.tag as MarkerTag
         if (tag.type==0) {
             mContents.textViewMapLocationName.text = tag.title

@@ -41,6 +41,7 @@ import com.yoesuv.infomalangbatu.utils.AppHelper
 import com.yoesuv.infomalangbatu.utils.BounceAnimation
 import com.yoesuv.infomalangbatu.widgets.AppDialog
 import kotlinx.coroutines.runBlocking
+import kotlin.math.roundToInt
 
 class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback {
 
@@ -82,7 +83,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     override fun onDestroy() {
         super.onDestroy()
         if (myLocationCallback!=null) {
-            LocationServices.getFusedLocationProviderClient(requireContext()).removeLocationUpdates(myLocationCallback)
+            LocationServices.getFusedLocationProviderClient(requireContext()).removeLocationUpdates(myLocationCallback!!)
         }
     }
 
@@ -112,7 +113,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_LOCATION_PERMISSION_CODE) {
-            if (grantResults[0].equals(PackageManager.PERMISSION_GRANTED)) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 enableUserLocation(mGoogleMap)
             } else {
                 AppHelper.displayToastError(requireContext(), getString(R.string.access_location_denied))
@@ -180,13 +181,13 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         googleMap?.isMyLocationEnabled = true
         googleMap?.uiSettings?.isMyLocationButtonEnabled = true
         googleMap?.uiSettings?.isZoomControlsEnabled = true
-        val paddingBottom = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 108F, resources.displayMetrics))
+        val paddingBottom = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 108F, resources.displayMetrics).roundToInt()
         googleMap?.setPadding(0, 0, 0, paddingBottom)
         val locationRequest: LocationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = 2000
         locationRequest.fastestInterval = 1000
-        mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback, Looper.myLooper())
+        mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback!!, Looper.myLooper()!!)
     }
 
     private fun getDirection(marker: Marker?){
@@ -231,9 +232,9 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
 
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
+    override fun onMapReady(googleMap: GoogleMap) {
         mGoogleMap = googleMap
-        googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.style_map))
+        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.style_map))
         getMapPins(googleMap)
         setMarkerAnimation(googleMap)
 
@@ -243,7 +244,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
             AppHelper.displayLocationSettingsRequest(activity as Activity)
         }
 
-        googleMap?.setOnInfoWindowClickListener { marker ->
+        googleMap.setOnInfoWindowClickListener { marker ->
             getDirection(marker)
         }
     }
