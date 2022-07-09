@@ -19,11 +19,11 @@ android {
             storePassword STORE_PASSWORD
         }
     }
-    compileSdkVersion 32
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.yoesuv.infomalangbatu"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 33
         multiDexEnabled true
         versionCode 13
         versionName "2.3.2"
