@@ -13,7 +13,7 @@ import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentDetailListPla
 class ViewModelFragmentFactory(private val params: Any): ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass == FragmentDetailGalleryViewModel::class.java) {
             return FragmentDetailGalleryViewModel(params as GalleryModel) as T
         } else if (modelClass == FragmentDetailListPlaceViewModel::class.java) {
