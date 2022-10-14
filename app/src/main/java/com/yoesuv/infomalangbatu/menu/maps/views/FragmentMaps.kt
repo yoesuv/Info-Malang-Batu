@@ -1,10 +1,6 @@
 package com.yoesuv.infomalangbatu.menu.maps.views
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -45,11 +41,6 @@ import kotlin.math.roundToInt
 
 class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback {
 
-    companion object {
-        const val REQUEST_FEATURE_LOCATION_PERMISSION_CODE:Int = 12
-        const val REQUEST_LOCATION_PERMISSION_CODE:Int = 14
-    }
-
     private var markerLocation: Marker? = null
     private var mGoogleMap: GoogleMap? = null
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null
@@ -87,17 +78,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode== REQUEST_FEATURE_LOCATION_PERMISSION_CODE) {
-            if (resultCode==Activity.RESULT_OK) {
-                requestPermissionLocation()
-            } else if (resultCode==Activity.RESULT_CANCELED) {
-                AppHelper.displayToastError(requireContext(), getString(R.string.location_setting_off))
-            }
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_maps, menu)
@@ -108,17 +88,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
             getMapPins(mGoogleMap)
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_LOCATION_PERMISSION_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                enableUserLocation(mGoogleMap)
-            } else {
-                AppHelper.displayToastError(requireContext(), getString(R.string.access_location_denied))
-            }
-        }
     }
 
     private fun getMapPins(googleMap: GoogleMap?){
@@ -171,10 +140,6 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         }
     }
 
-    private fun requestPermissionLocation(){
-        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION_CODE)
-    }
-
     @SuppressLint("MissingPermission")
     private fun enableUserLocation(googleMap: GoogleMap?){
         myLocationCallback = MyLocationCallback(googleMap)
@@ -191,7 +156,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     }
 
     private fun getDirection(marker: Marker?){
-        if (AppHelper.isPermissionLocationEnabled(context)) {
+        if (AppHelper.isPermissionLocationEnabled(requireContext())) {
             val tag: MarkerTag = marker?.tag as MarkerTag
             if (tag.type == 0) {
                 if (!progressDialog.isShowing) {
@@ -220,7 +185,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
                 }
             }
         } else {
-            requestPermissionLocation()
+            //requestPermissionLocation()
         }
     }
 
@@ -239,9 +204,9 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         setMarkerAnimation(googleMap)
 
         if (AppHelper.checkLocationSetting(requireContext())) {
-            requestPermissionLocation()
+            //
         } else {
-            AppHelper.displayLocationSettingsRequest(activity as Activity)
+            //AppHelper.displayLocationSettingsRequest(activity as Activity)
         }
 
         googleMap.setOnInfoWindowClickListener { marker ->
