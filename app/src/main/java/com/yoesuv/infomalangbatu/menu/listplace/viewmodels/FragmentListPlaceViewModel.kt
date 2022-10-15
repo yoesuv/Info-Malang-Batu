@@ -49,7 +49,6 @@ class FragmentListPlaceViewModel: ViewModel() {
                 listPlaceModel.add(placeModel)
             }
             listPlaceResponse.postValue(listPlaceModel)
-
         }
     }
 

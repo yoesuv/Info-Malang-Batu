@@ -19,23 +19,23 @@ class FragmentListPlace: Fragment() {
     private lateinit var binding: FragmentListplaceBinding
     private lateinit var adapter: ListPlaceAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentListplaceBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[FragmentListPlaceViewModel::class.java]
+        binding.listplace = viewModel
+
+        setupRecycler()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FragmentListPlaceViewModel::class.java)
-        binding.listplace = viewModel
-
-        setupRecycler()
-
         viewModel.setupProperties(context)
         viewModel.getListPlace(PlaceLocation.ALL)
-        viewModel.listPlaceResponse.observe(viewLifecycleOwner, {
+        viewModel.listPlaceResponse.observe(viewLifecycleOwner) {
             onListDataChange(it)
-        })
+        }
         setHasOptionsMenu(true)
     }
 
