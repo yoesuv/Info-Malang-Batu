@@ -23,6 +23,7 @@ import com.akexorcist.googledirection.util.DirectionConverter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -46,7 +47,7 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
     private var markerLocation: Marker? = null
     private var mGoogleMap: GoogleMap? = null
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null
-    private var myLocationCallback: MyLocationCallback? = null
+    private lateinit var myLocationCallback: MyLocationCallback
 
     private var origin: LatLng? = null
     private var destination: LatLng? = null
@@ -82,10 +83,7 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
 
     override fun onDestroy() {
         super.onDestroy()
-        if (myLocationCallback != null) {
-            LocationServices.getFusedLocationProviderClient(requireContext())
-                .removeLocationUpdates(myLocationCallback!!)
-        }
+        LocationServices.getFusedLocationProviderClient(requireContext()).removeLocationUpdates(myLocationCallback)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -152,7 +150,7 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
 
     @SuppressLint("MissingPermission")
     private fun enableUserLocation(googleMap: GoogleMap?) {
-        myLocationCallback = MyLocationCallback(googleMap)
+        myLocationCallback = MyLocationCallback()
         googleMap?.isMyLocationEnabled = true
         googleMap?.uiSettings?.isMyLocationButtonEnabled = true
         googleMap?.uiSettings?.isZoomControlsEnabled = true
@@ -160,10 +158,10 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 108F, resources.displayMetrics).roundToInt()
         googleMap?.setPadding(0, 0, 0, paddingBottom)
         val locationRequest: LocationRequest = LocationRequest.create()
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.priority = Priority.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = 2000
         locationRequest.fastestInterval = 1000
-        mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback!!, Looper.myLooper()!!)
+        mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback, Looper.myLooper()!!)
     }
 
     private fun getDirection(marker: Marker?) {
@@ -252,21 +250,18 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
                     )
                 }
             } else {
-                AppHelper.displayToastError(
-                    requireContext(),
-                    context?.getString(R.string.error_direction_not_success)!!
-                )
+                AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
             }
         } else {
-            AppHelper.displayToastError(requireContext(), context?.getString(R.string.error_direction_not_success)!!)
+            AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
         }
     }
 
     override fun onDirectionFailure(t: Throwable?) {
+        t?.printStackTrace()
         if (progressDialog.isShowing) {
             progressDialog.dismiss()
         }
-        AppHelper.displayToastError(requireContext(), context?.getString(R.string.error_direction_not_success)!!)
-        t?.printStackTrace()
+        AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
     }
 }
