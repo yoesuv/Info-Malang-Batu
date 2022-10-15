@@ -21,22 +21,22 @@ class FragmentGallery: Fragment() {
     private lateinit var binding: FragmentGalleryBinding
     private lateinit var adapter: GalleryAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FragmentGalleryViewModel::class.java)
+        viewModel = ViewModelProvider(this)[FragmentGalleryViewModel::class.java]
         binding.gallery = viewModel
 
         setupRecycler()
 
         viewModel.setupProperties(context)
-        viewModel.listGalleryResponse.observe(viewLifecycleOwner, {
+        viewModel.listGalleryResponse.observe(viewLifecycleOwner) {
             onListDataChanged(it)
-        })
+        }
         viewModel.getListGallery()
     }
 
@@ -52,8 +52,8 @@ class FragmentGallery: Fragment() {
         binding.recyclerViewGallery.adapter = adapter
     }
 
-    private fun onListDataChanged(listData: MutableList<GalleryModel>?){
-        if (listData?.isNotEmpty()!!){
+    private fun onListDataChanged(listData: MutableList<GalleryModel>){
+        if (listData.isNotEmpty()){
             adapter.submitList(listData)
         }
     }
