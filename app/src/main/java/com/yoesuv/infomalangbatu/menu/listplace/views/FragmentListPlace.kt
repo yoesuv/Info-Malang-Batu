@@ -4,6 +4,9 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.yoesuv.infomalangbatu.R
@@ -13,46 +16,32 @@ import com.yoesuv.infomalangbatu.menu.listplace.adapters.ListPlaceAdapter
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentListPlaceViewModel
 
-class FragmentListPlace: Fragment() {
+class FragmentListPlace: Fragment(), MenuProvider {
 
     private lateinit var viewModel: FragmentListPlaceViewModel
     private lateinit var binding: FragmentListplaceBinding
     private lateinit var adapter: ListPlaceAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentListplaceBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[FragmentListPlaceViewModel::class.java]
+        binding.listplace = viewModel
+
+        setupRecycler()
+
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FragmentListPlaceViewModel::class.java)
-        binding.listplace = viewModel
-
-        setupRecycler()
-
         viewModel.setupProperties(context)
         viewModel.getListPlace(PlaceLocation.ALL)
-        viewModel.listPlaceResponse.observe(viewLifecycleOwner, {
+        viewModel.listPlaceResponse.observe(viewLifecycleOwner) {
             onListDataChange(it)
-        })
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_list_place, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.listSemua -> viewModel.getListPlace(PlaceLocation.ALL)
-            R.id.listKabMalang -> viewModel.getListPlace(PlaceLocation.KAB_MALANG)
-            R.id.listKotaBatu -> viewModel.getListPlace(PlaceLocation.KOTA_BATU)
-            R.id.listKotaMalang -> viewModel.getListPlace(PlaceLocation.KOTA_MALANG)
         }
-        item.isChecked = true
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -70,6 +59,21 @@ class FragmentListPlace: Fragment() {
             onItemClick(it)
         }
         binding.recyclerViewListPlace.adapter = adapter
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_list_place, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        when (menuItem.itemId) {
+            R.id.listSemua -> viewModel.getListPlace(PlaceLocation.ALL)
+            R.id.listKabMalang -> viewModel.getListPlace(PlaceLocation.KAB_MALANG)
+            R.id.listKotaBatu -> viewModel.getListPlace(PlaceLocation.KOTA_BATU)
+            R.id.listKotaMalang -> viewModel.getListPlace(PlaceLocation.KOTA_MALANG)
+        }
+        menuItem.isChecked = true
+        return false
     }
 
     private fun onListDataChange(listPlace: MutableList<PlaceModel>?){

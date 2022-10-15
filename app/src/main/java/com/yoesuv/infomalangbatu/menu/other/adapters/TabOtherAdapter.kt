@@ -10,9 +10,10 @@ import com.yoesuv.infomalangbatu.menu.other.views.ChildFragmentInfo
 import com.yoesuv.infomalangbatu.menu.other.views.ChildFragmentLibraries
 import com.yoesuv.infomalangbatu.menu.other.views.ChildFragmentThanks
 
-class TabOtherAdapter(context: Context?, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class TabOtherAdapter(context: Context, fm: FragmentManager) :
+    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private val arrayTitle = context?.resources?.getStringArray(R.array.array_tab_other)
+    private val arrayTitle = context.resources.getStringArray(R.array.array_tab_other)
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
@@ -25,10 +26,10 @@ class TabOtherAdapter(context: Context?, fm: FragmentManager) : FragmentPagerAda
     }
 
     override fun getCount(): Int {
-        return arrayTitle!!.size
+        return arrayTitle.size
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return arrayTitle?.get(position)
+        return arrayTitle[position]
     }
 }

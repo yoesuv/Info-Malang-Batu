@@ -22,7 +22,6 @@
         android:layout_height="@dimen/icon_info_window_size"
         android:layout_marginLeft="@dimen/_4sdp"
         android:layout_marginRight="@dimen/_4sdp"
-        android:layout_toRightOf="@id/textViewMapLocationName"
         android:layout_toEndOf="@id/textViewMapLocationName"
         app:srcCompat="@drawable/ic_direction" />
 

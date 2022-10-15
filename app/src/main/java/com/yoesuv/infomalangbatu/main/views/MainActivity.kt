@@ -14,7 +14,6 @@ import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.ActivityMainBinding
 import com.yoesuv.infomalangbatu.main.viewmodels.MainViewModel
 import com.yoesuv.infomalangbatu.utils.AppHelper
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity: AppCompatActivity() {
 
@@ -69,14 +68,14 @@ class MainActivity: AppCompatActivity() {
     private fun setupNavigation() {
         val navController = Navigation.findNavController(this, R.id.fragmentMain)
         setupActionBarWithNavController(navController)
-        NavigationUI.setupWithNavController(bottomNavigationViewMain, navController)
+        NavigationUI.setupWithNavController(binding.bottomNavigationViewMain, navController)
     }
 
     fun hideNavigation(value: Boolean) {
         if (value) {
-            bottomNavigationViewMain.visibility = View.GONE
+            binding.bottomNavigationViewMain.visibility = View.GONE
         } else {
-            bottomNavigationViewMain.visibility = View.VISIBLE
+            binding.bottomNavigationViewMain.visibility = View.VISIBLE
         }
     }
 
