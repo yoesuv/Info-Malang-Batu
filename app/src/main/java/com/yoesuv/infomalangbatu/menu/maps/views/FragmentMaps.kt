@@ -8,11 +8,11 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.util.TypedValue
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import com.akexorcist.googledirection.DirectionCallback
 import com.akexorcist.googledirection.GoogleDirection
 import com.akexorcist.googledirection.constant.AvoidType
@@ -42,7 +42,7 @@ import com.yoesuv.infomalangbatu.widgets.AppDialog
 import kotlinx.coroutines.runBlocking
 import kotlin.math.roundToInt
 
-class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback {
+class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback, MenuProvider {
 
     private var markerLocation: Marker? = null
     private var mGoogleMap: GoogleMap? = null
@@ -70,7 +70,6 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         appDatabase = AppDatabase.getInstance(requireContext())
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        setHasOptionsMenu(true)
         progressDialog = AppDialog(requireContext())
         progressDialog.setCancelable(false)
         progressDialog.setCanceledOnTouchOutside(false)
@@ -78,6 +77,8 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         getMapAsync(this)
     }
 
@@ -86,16 +87,74 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         LocationServices.getFusedLocationProviderClient(requireContext()).removeLocationUpdates(myLocationCallback)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_maps, menu)
+    override fun onMapReady(googleMap: GoogleMap) {
+        mGoogleMap = googleMap
+        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.style_map))
+        getMapPins(googleMap)
+        setMarkerAnimation(googleMap)
+
+        if (AppHelper.checkLocationSetting(requireContext())) {
+            requestPermissionLocation.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+
+        googleMap.setOnInfoWindowClickListener { marker ->
+            getDirection(marker)
+        }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menuMapRefresh) {
+    override fun onDirectionSuccess(direction: Direction?, rawBody: String?) {
+        if (progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
+        if (direction?.isOK!!) {
+            if (direction.routeList.size > 0) {
+                mGoogleMap?.clear()
+                mGoogleMap?.addMarker(
+                    MarkerOptions().position(origin!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_origin))
+                )?.tag = MarkerTag("Origin", 3, 0.0, 0.0)
+                mGoogleMap?.addMarker(
+                    MarkerOptions().position(destination!!)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin))
+                )?.tag = MarkerTag("Destination", 3, 0.0, 0.0)
+                setCameraWithCoordinationBounds(direction.routeList[0])
+                for (i: Int in 0 until direction.routeList.size) {
+                    val color = colors[i % colors.size]
+                    val route = direction.routeList[i]
+                    val directionPositionList = route.legList[0].directionPoint
+                    mGoogleMap?.addPolyline(
+                        DirectionConverter.createPolyline(
+                            context,
+                            directionPositionList,
+                            5,
+                            Color.parseColor(color)
+                        )
+                    )
+                }
+            } else {
+                AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
+            }
+        } else {
+            AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
+        }
+    }
+
+    override fun onDirectionFailure(t: Throwable?) {
+        t?.printStackTrace()
+        if (progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
+        AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_maps, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        if (menuItem.itemId == R.id.menuMapRefresh) {
             getMapPins(mGoogleMap)
         }
-        return super.onOptionsItemSelected(item)
+        return false
     }
 
     private fun getMapPins(googleMap: GoogleMap?) {
@@ -204,64 +263,5 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         val bounds = LatLngBounds(southwest, northeast)
         mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
 
-    }
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        mGoogleMap = googleMap
-        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.style_map))
-        getMapPins(googleMap)
-        setMarkerAnimation(googleMap)
-
-        if (AppHelper.checkLocationSetting(requireContext())) {
-            requestPermissionLocation.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-        }
-
-        googleMap.setOnInfoWindowClickListener { marker ->
-            getDirection(marker)
-        }
-    }
-
-    override fun onDirectionSuccess(direction: Direction?, rawBody: String?) {
-        if (progressDialog.isShowing) {
-            progressDialog.dismiss()
-        }
-        if (direction?.isOK!!) {
-            if (direction.routeList.size > 0) {
-                mGoogleMap?.clear()
-                mGoogleMap?.addMarker(
-                    MarkerOptions().position(origin!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_origin))
-                )?.tag = MarkerTag("Origin", 3, 0.0, 0.0)
-                mGoogleMap?.addMarker(
-                    MarkerOptions().position(destination!!)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin))
-                )?.tag = MarkerTag("Destination", 3, 0.0, 0.0)
-                setCameraWithCoordinationBounds(direction.routeList[0])
-                for (i: Int in 0 until direction.routeList.size) {
-                    val color = colors[i % colors.size]
-                    val route = direction.routeList[i]
-                    val directionPositionList = route.legList[0].directionPoint
-                    mGoogleMap?.addPolyline(
-                        DirectionConverter.createPolyline(
-                            context,
-                            directionPositionList,
-                            5,
-                            Color.parseColor(color)
-                        )
-                    )
-                }
-            } else {
-                AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
-            }
-        } else {
-            AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
-        }
-    }
-
-    override fun onDirectionFailure(t: Throwable?) {
-        t?.printStackTrace()
-        if (progressDialog.isShowing) {
-            progressDialog.dismiss()
-        }
-        AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
     }
 }
