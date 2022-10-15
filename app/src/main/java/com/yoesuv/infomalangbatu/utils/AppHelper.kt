@@ -8,6 +8,7 @@ import android.os.Build
 import android.text.Html
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.data.AppConstants
@@ -27,6 +28,10 @@ object AppHelper {
 
     fun displayToastError(context: Context, message: String){
         Toasty.error(context, message, Toast.LENGTH_SHORT, true).show()
+    }
+
+    fun displayToastError(context: Context, @StringRes message: Int){
+        Toasty.error(context, context.getString(message), Toast.LENGTH_SHORT, true).show()
     }
 
     fun displayToastNormal(context: Context, message: String){

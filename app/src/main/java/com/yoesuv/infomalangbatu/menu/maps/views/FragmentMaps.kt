@@ -1,5 +1,6 @@
 package com.yoesuv.infomalangbatu.menu.maps.views
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import com.akexorcist.googledirection.DirectionCallback
 import com.akexorcist.googledirection.GoogleDirection
 import com.akexorcist.googledirection.constant.AvoidType
@@ -39,7 +41,7 @@ import com.yoesuv.infomalangbatu.widgets.AppDialog
 import kotlinx.coroutines.runBlocking
 import kotlin.math.roundToInt
 
-class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback {
+class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback {
 
     private var markerLocation: Marker? = null
     private var mGoogleMap: GoogleMap? = null
@@ -48,11 +50,18 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
 
     private var origin: LatLng? = null
     private var destination: LatLng? = null
-    private val colors = arrayListOf("#7F2196f3","#7F4CAF50","#7FF44336")
+    private val colors = arrayListOf("#7F2196f3", "#7F4CAF50", "#7FF44336")
     private lateinit var progressDialog: AppDialog
 
     private var appDatabase: AppDatabase? = null
     private var listPinModel: MutableList<PinModel> = arrayListOf()
+
+    private val requestPermissionLocation =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                enableUserLocation(mGoogleMap)
+            }
+        }
 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
@@ -73,8 +82,9 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
 
     override fun onDestroy() {
         super.onDestroy()
-        if (myLocationCallback!=null) {
-            LocationServices.getFusedLocationProviderClient(requireContext()).removeLocationUpdates(myLocationCallback!!)
+        if (myLocationCallback != null) {
+            LocationServices.getFusedLocationProviderClient(requireContext())
+                .removeLocationUpdates(myLocationCallback!!)
         }
     }
 
@@ -84,13 +94,13 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId==R.id.menuMapRefresh){
+        if (item.itemId == R.id.menuMapRefresh) {
             getMapPins(mGoogleMap)
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun getMapPins(googleMap: GoogleMap?){
+    private fun getMapPins(googleMap: GoogleMap?) {
         googleMap?.clear()
         googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(-7.982914, 112.630875)))
         googleMap?.animateCamera(CameraUpdateFactory.zoomTo(9F))
@@ -110,14 +120,14 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         }
     }
 
-    private fun setupPin(googleMap: GoogleMap?, listPin: MutableList<PinModel>){
+    private fun setupPin(googleMap: GoogleMap?, listPin: MutableList<PinModel>) {
         if (listPin.isNotEmpty()) {
-            for (pin in listPin){
+            for (pin in listPin) {
                 val markerOptions = MarkerOptions()
                 markerOptions.position(LatLng(pin.latitude!!, pin.longitude!!))
                 markerOptions.title(pin.name)
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin))
-                markerLocation =  googleMap?.addMarker(markerOptions)
+                markerLocation = googleMap?.addMarker(markerOptions)
                 markerLocation?.tag = MarkerTag(pin.name!!, 0, pin.latitude, pin.longitude)
 
                 googleMap?.setInfoWindowAdapter(MyCustomInfoWindowAdapter(activity))
@@ -125,10 +135,10 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         }
     }
 
-    private fun setMarkerAnimation(googleMap: GoogleMap?){
+    private fun setMarkerAnimation(googleMap: GoogleMap?) {
         googleMap?.setOnMarkerClickListener { marker ->
             val tag: MarkerTag = marker.tag as MarkerTag
-            if (tag.type==0) {
+            if (tag.type == 0) {
                 val handler = Handler()
                 val anim = BounceAnimation(SystemClock.uptimeMillis(), 1000L, marker, handler)
                 handler.post(anim)
@@ -141,12 +151,13 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
     }
 
     @SuppressLint("MissingPermission")
-    private fun enableUserLocation(googleMap: GoogleMap?){
+    private fun enableUserLocation(googleMap: GoogleMap?) {
         myLocationCallback = MyLocationCallback(googleMap)
         googleMap?.isMyLocationEnabled = true
         googleMap?.uiSettings?.isMyLocationButtonEnabled = true
         googleMap?.uiSettings?.isZoomControlsEnabled = true
-        val paddingBottom = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 108F, resources.displayMetrics).roundToInt()
+        val paddingBottom =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 108F, resources.displayMetrics).roundToInt()
         googleMap?.setPadding(0, 0, 0, paddingBottom)
         val locationRequest: LocationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -155,7 +166,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback!!, Looper.myLooper()!!)
     }
 
-    private fun getDirection(marker: Marker?){
+    private fun getDirection(marker: Marker?) {
         if (AppHelper.isPermissionLocationEnabled(requireContext())) {
             val tag: MarkerTag = marker?.tag as MarkerTag
             if (tag.type == 0) {
@@ -178,20 +189,20 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
                             .avoid(AvoidType.TOLLS)
                             .execute(this)
                     } else {
-                        AppHelper.displayToastError(requireContext(), getString(R.string.error_get_user_location))
+                        AppHelper.displayToastError(requireContext(), R.string.error_get_user_location)
                     }
                 } else {
-                    AppHelper.displayToastError(requireContext(), getString(R.string.error_get_user_location))
+                    AppHelper.displayToastError(requireContext(), R.string.error_get_user_location)
                 }
             }
         } else {
-            //requestPermissionLocation()
+            requestPermissionLocation.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
 
-    private fun setCameraWithCoordinationBounds(route: Route){
-        val southwest:LatLng = route.bound.southwestCoordination.coordination
-        val northeast:LatLng = route.bound.northeastCoordination.coordination
+    private fun setCameraWithCoordinationBounds(route: Route) {
+        val southwest: LatLng = route.bound.southwestCoordination.coordination
+        val northeast: LatLng = route.bound.northeastCoordination.coordination
         val bounds = LatLngBounds(southwest, northeast)
         mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
 
@@ -204,9 +215,7 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
         setMarkerAnimation(googleMap)
 
         if (AppHelper.checkLocationSetting(requireContext())) {
-            //
-        } else {
-            //AppHelper.displayLocationSettingsRequest(activity as Activity)
+            requestPermissionLocation.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
 
         googleMap.setOnInfoWindowClickListener { marker ->
@@ -219,19 +228,34 @@ class FragmentMaps: SupportMapFragment(), OnMapReadyCallback, DirectionCallback 
             progressDialog.dismiss()
         }
         if (direction?.isOK!!) {
-            if (direction.routeList.size>0) {
+            if (direction.routeList.size > 0) {
                 mGoogleMap?.clear()
-                mGoogleMap?.addMarker(MarkerOptions().position(origin!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_origin)))?.tag = MarkerTag("Origin",3,0.0,0.0)
-                mGoogleMap?.addMarker(MarkerOptions().position(destination!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin)))?.tag = MarkerTag("Destination",3,0.0,0.0)
+                mGoogleMap?.addMarker(
+                    MarkerOptions().position(origin!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_origin))
+                )?.tag = MarkerTag("Origin", 3, 0.0, 0.0)
+                mGoogleMap?.addMarker(
+                    MarkerOptions().position(destination!!)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin))
+                )?.tag = MarkerTag("Destination", 3, 0.0, 0.0)
                 setCameraWithCoordinationBounds(direction.routeList[0])
-                for (i:Int in 0 until direction.routeList.size) {
+                for (i: Int in 0 until direction.routeList.size) {
                     val color = colors[i % colors.size]
                     val route = direction.routeList[i]
                     val directionPositionList = route.legList[0].directionPoint
-                    mGoogleMap?.addPolyline(DirectionConverter.createPolyline(context, directionPositionList, 5, Color.parseColor(color)))
+                    mGoogleMap?.addPolyline(
+                        DirectionConverter.createPolyline(
+                            context,
+                            directionPositionList,
+                            5,
+                            Color.parseColor(color)
+                        )
+                    )
                 }
             } else {
-                AppHelper.displayToastError(requireContext(), context?.getString(R.string.error_direction_not_success)!!)
+                AppHelper.displayToastError(
+                    requireContext(),
+                    context?.getString(R.string.error_direction_not_success)!!
+                )
             }
         } else {
             AppHelper.displayToastError(requireContext(), context?.getString(R.string.error_direction_not_success)!!)
