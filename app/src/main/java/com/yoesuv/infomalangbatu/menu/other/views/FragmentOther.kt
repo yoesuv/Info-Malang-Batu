@@ -1,7 +1,6 @@
 package com.yoesuv.infomalangbatu.menu.other.views
 
 import androidx.databinding.DataBindingUtil
-import android.os.Build
 import android.os.Bundle
 import com.google.android.material.appbar.AppBarLayout
 import androidx.fragment.app.Fragment
@@ -14,10 +13,10 @@ import com.yoesuv.infomalangbatu.menu.other.adapters.TabOtherAdapter
 
 class FragmentOther: Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding: FragmentOtherBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_other, container, false)
 
-        binding.viewPagerOther.adapter = TabOtherAdapter(context, childFragmentManager)
+        binding.viewPagerOther.adapter = TabOtherAdapter(requireContext(), childFragmentManager)
         binding.tabLayoutViewPagerOther.setupWithViewPager(binding.viewPagerOther)
 
         setupAppBar(0F)
@@ -31,9 +30,7 @@ class FragmentOther: Fragment() {
     }
 
     private fun setupAppBar(elevation: Float){
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
-            activity?.findViewById<AppBarLayout>(R.id.appBarMain)?.elevation = elevation
-        }
+        activity?.findViewById<AppBarLayout>(R.id.appBarMain)?.elevation = elevation
     }
 
 }
