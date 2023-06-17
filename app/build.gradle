@@ -4,7 +4,7 @@ apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'com.google.firebase.crashlytics'
@@ -19,14 +19,17 @@ android {
             storePassword STORE_PASSWORD
         }
     }
-    compileSdkVersion 32
+
+    compileSdkVersion 33
+    namespace 'com.yoesuv.infomalangbatu'
+
     defaultConfig {
         applicationId "com.yoesuv.infomalangbatu"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 33
         multiDexEnabled true
-        versionCode 13
-        versionName "2.3.2"
+        versionCode 14
+        versionName "2.3.3"
         setProperty("archivesBaseName", applicationId+"-v"+versionCode+"("+versionName+")")
         resValue "string", "MAPS_API_KEY", apiKeyProperties['MAPS_API_KEY']
         resValue "string", "DIRECTION_API_KEY", apiKeyProperties['DIRECTION_API_KEY']
@@ -66,21 +69,18 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        buildConfig = true
     }
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     lint {
         abortOnError false
     }
-}
-
-androidExtensions {
-    experimental = true
 }
 
 dependencies {
