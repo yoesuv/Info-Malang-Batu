@@ -1,6 +1,5 @@
 package com.yoesuv.infomalangbatu.main.views
 
-import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.View
@@ -15,7 +14,7 @@ import com.yoesuv.infomalangbatu.databinding.ActivityMainBinding
 import com.yoesuv.infomalangbatu.main.viewmodels.MainViewModel
 import com.yoesuv.infomalangbatu.utils.AppHelper
 
-class MainActivity: AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     companion object {
         var BACK_PRESSED: Long = 0L
@@ -28,7 +27,7 @@ class MainActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         binding.main = viewModel
 
         setupToolbar()
@@ -36,16 +35,10 @@ class MainActivity: AppCompatActivity() {
         setupNavigation()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        for(fragment in supportFragmentManager.fragments){
-            fragment.onActivityResult(requestCode, resultCode, data)
-        }
-    }
 
     override fun onBackPressed() {
         if (Navigation.findNavController(this, R.id.fragmentMain).currentDestination?.id == R.id.fragmentList) {
-            if ((BACK_PRESSED+2000L) > System.currentTimeMillis()) {
+            if ((BACK_PRESSED + 2000L) > System.currentTimeMillis()) {
                 super.onBackPressed()
             } else {
                 AppHelper.displayToastNormal(this, getString(R.string.confirm_close))

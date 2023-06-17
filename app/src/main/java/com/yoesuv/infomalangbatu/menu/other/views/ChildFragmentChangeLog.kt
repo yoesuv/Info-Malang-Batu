@@ -31,9 +31,9 @@ class ChildFragmentChangeLog: Fragment() {
         setupRecycler()
 
         viewModel.setupData(requireContext())
-        viewModel.listData.observe(viewLifecycleOwner, {
+        viewModel.listData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
-        })
+        }
 
         return binding.root
     }
