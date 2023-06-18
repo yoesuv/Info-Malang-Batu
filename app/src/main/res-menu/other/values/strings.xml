@@ -27,6 +27,13 @@
     <string name="info_app_version">Versi %1$s</string>
 
     <!-- CHANGELOG -->
+    <string name="ver_14">Versi 2.3.3</string>
+    <string name="ver_14_info">
+        <![CDATA[
+            • mendukung Android 13<br/>
+            • pembaruan library
+        ]]>
+    </string>
     <string name="ver_13">Versi 2.3.2</string>
     <string name="ver_13_info">
         <![CDATA[
