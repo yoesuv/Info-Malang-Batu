@@ -3,18 +3,18 @@ package com.yoesuv.infomalangbatu.databases
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.yoesuv.infomalangbatu.databases.map.MapPinsRoom
+import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 
 @Dao
 interface MapPinDaoAccess {
 
     @Insert
-    suspend fun insertDbMapPins(mapPinsRoom: MapPinsRoom)
+    suspend fun insertDbMapPins(pin: PinModel)
 
-    @Query("SELECT * FROM MapPinsRoom")
-    suspend fun selectAllDbMapPins(): MutableList<MapPinsRoom>
+    @Query("SELECT * FROM PinModel")
+    suspend fun selectAllDbMapPins(): MutableList<PinModel>
 
-    @Query("DELETE FROM MapPinsRoom")
+    @Query("DELETE FROM PinModel")
     suspend  fun deleteAllDbMapPins()
 
 }

@@ -170,14 +170,8 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
 
         runBlocking {
             listPinModel.clear()
-            appDatabase?.mapPinDaoAccess()?.selectAllDbMapPins()?.forEach { mapPinsRoom ->
-                val pinModel = PinModel(
-                    mapPinsRoom.name,
-                    mapPinsRoom.location,
-                    mapPinsRoom.latitude,
-                    mapPinsRoom.longitude
-                )
-                listPinModel.add(pinModel)
+            appDatabase?.mapPinDaoAccess()?.selectAllDbMapPins()?.forEach { pin ->
+                listPinModel.add(pin)
             }
             setupPin(googleMap, listPinModel)
         }
