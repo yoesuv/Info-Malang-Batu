@@ -6,14 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yoesuv.infomalangbatu.data.PlaceLocation
 import com.yoesuv.infomalangbatu.databases.AppDatabase
-import com.yoesuv.infomalangbatu.databases.place.PlaceRoom
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import kotlinx.coroutines.launch
 
 class FragmentListPlaceViewModel: ViewModel() {
 
     private var listPlaceModel: MutableList<PlaceModel> = mutableListOf()
-    private var listPlaceRoom: MutableList<PlaceRoom> = mutableListOf()
+    private var listPlaceRoom: MutableList<PlaceModel> = mutableListOf()
 
     var listPlaceResponse: MutableLiveData<MutableList<PlaceModel>> = MutableLiveData()
 
@@ -44,9 +43,8 @@ class FragmentListPlaceViewModel: ViewModel() {
                     listPlaceRoom = it
                 }
             }
-            for (placeRoom in listPlaceRoom) {
-                val placeModel = PlaceModel(placeRoom.name, placeRoom.location, "", placeRoom.description, placeRoom.thumbnail, placeRoom.image)
-                listPlaceModel.add(placeModel)
+            for (place in listPlaceRoom) {
+                listPlaceModel.add(place)
             }
             listPlaceResponse.postValue(listPlaceModel)
         }

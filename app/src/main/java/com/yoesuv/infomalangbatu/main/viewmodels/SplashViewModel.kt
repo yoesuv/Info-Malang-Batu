@@ -12,7 +12,6 @@ import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databases.AppDatabase
 import com.yoesuv.infomalangbatu.databases.gallery.GaleriRoom
 import com.yoesuv.infomalangbatu.databases.map.MapPinsRoom
-import com.yoesuv.infomalangbatu.databases.place.PlaceRoom
 import com.yoesuv.infomalangbatu.main.views.MainActivity
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
@@ -50,14 +49,7 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     private suspend fun setupPlaces(places: MutableList<PlaceModel>?) {
         appDatabase?.placeDaoAccess()?.deleteAllPlace()
         places?.forEach { placeModel ->
-            val placeRoom = PlaceRoom(
-                placeModel.name,
-                placeModel.location,
-                placeModel.description,
-                placeModel.thumbnail,
-                placeModel.image
-            )
-            appDatabase?.placeDaoAccess()?.insertPlace(placeRoom)
+            appDatabase?.placeDaoAccess()?.insertPlace(placeModel)
         }
     }
 
