@@ -26,28 +26,32 @@ fun logDebug(message: String) {
 
 object AppHelper {
 
-    fun displayToastError(context: Context, message: String){
+    fun displayToastError(context: Context, message: String) {
         Toasty.error(context, message, Toast.LENGTH_SHORT, true).show()
     }
 
-    fun displayToastError(context: Context, @StringRes message: Int){
+    fun displayToastError(context: Context, @StringRes message: Int) {
         Toasty.error(context, context.getString(message), Toast.LENGTH_SHORT, true).show()
     }
 
-    fun displayToastNormal(context: Context, message: String){
+    fun displayToastNormal(context: Context, message: String) {
         Toasty.normal(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    fun checkLocationSetting(context: Context):Boolean{
+    fun displayToastNormal(context: Context, @StringRes message: Int) {
+        Toasty.normal(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun checkLocationSetting(context: Context): Boolean {
         val locationManager: LocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
     @Suppress("DEPRECATION")
-    fun fromHtml(source: String): String{
-        return if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N) {
+    fun fromHtml(source: String): String {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY).toString()
-        }else{
+        } else {
             Html.fromHtml(source).toString()
         }
     }
