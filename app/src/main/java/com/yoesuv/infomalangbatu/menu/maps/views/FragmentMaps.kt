@@ -196,7 +196,7 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         googleMap?.setOnMarkerClickListener { marker ->
             val tag: MarkerTag = marker.tag as MarkerTag
             if (tag.type == 0) {
-                val handler = Handler()
+                val handler = Handler(Looper.getMainLooper())
                 val anim = BounceAnimation(SystemClock.uptimeMillis(), 1000L, marker, handler)
                 handler.post(anim)
                 marker.showInfoWindow()
@@ -214,13 +214,12 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         googleMap?.uiSettings?.isMyLocationButtonEnabled = true
         googleMap?.uiSettings?.isZoomControlsEnabled = true
         val paddingBottom =
-            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 108F, resources.displayMetrics).roundToInt()
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150F, resources.displayMetrics).roundToInt()
         googleMap?.setPadding(0, 0, 0, paddingBottom)
-        val locationRequest: LocationRequest = LocationRequest.create()
-        locationRequest.priority = Priority.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = 2000
-        locationRequest.fastestInterval = 1000
-        mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback, Looper.myLooper()!!)
+        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 2000)
+            .setWaitForAccurateLocation(false)
+            .build()
+        mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback, Looper.getMainLooper())
     }
 
     private fun getDirection(marker: Marker?) {
