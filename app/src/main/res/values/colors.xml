@@ -7,4 +7,5 @@
     <color name="default_text_color">#808080</color>
     <color name="grey_50">#FAFAFA</color>
     <color name="purple_app">#c124fe</color>
+    <color name="amber_600">#FFB300</color>
 </resources>

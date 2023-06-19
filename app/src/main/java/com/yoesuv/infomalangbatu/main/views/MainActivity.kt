@@ -69,9 +69,9 @@ class MainActivity : AppCompatActivity() {
                 val nav = Navigation.findNavController(this@MainActivity, R.id.fragmentMain)
                 if (nav.currentDestination?.id == R.id.fragmentList) {
                     if ((BACK_PRESSED + 2000L) > System.currentTimeMillis()) {
-                        onBackPressedDispatcher.onBackPressed()
+                        finish()
                     } else {
-                        AppHelper.displayToastNormal(this@MainActivity, R.string.confirm_close)
+                        AppHelper.snackBarWarning(binding.coordinatorLayoutMain.rootView, R.string.confirm_close)
                     }
                     BACK_PRESSED = System.currentTimeMillis()
                 } else {

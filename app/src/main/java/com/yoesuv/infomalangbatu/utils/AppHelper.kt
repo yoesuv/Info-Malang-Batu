@@ -7,10 +7,13 @@ import android.location.LocationManager
 import android.os.Build
 import android.text.Html
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import com.yoesuv.infomalangbatu.BuildConfig
+import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
 import es.dmoral.toasty.Toasty
 
@@ -34,12 +37,10 @@ object AppHelper {
         Toasty.error(context, context.getString(message), Toast.LENGTH_SHORT, true).show()
     }
 
-    fun displayToastNormal(context: Context, message: String) {
-        Toasty.normal(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    fun displayToastNormal(context: Context, @StringRes message: Int) {
-        Toasty.normal(context, message, Toast.LENGTH_SHORT).show()
+    fun snackBarWarning(view: View, @StringRes message: Int) {
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(ContextCompat.getColor(view.context, R.color.amber_600))
+            .show()
     }
 
     fun checkLocationSetting(context: Context): Boolean {
