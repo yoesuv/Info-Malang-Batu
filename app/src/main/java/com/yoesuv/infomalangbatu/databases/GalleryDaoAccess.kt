@@ -3,18 +3,18 @@ package com.yoesuv.infomalangbatu.databases
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.yoesuv.infomalangbatu.databases.gallery.GaleriRoom
+import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 
 @Dao
 interface GalleryDaoAccess {
 
     @Insert
-    suspend fun insertDbGallery(galeriRoom: GaleriRoom)
+    suspend fun insertDbGallery(gallery: GalleryModel)
 
-    @Query("SELECT * FROM GaleriRoom")
-    suspend fun selectAllDbGallery(): MutableList<GaleriRoom>
+    @Query("SELECT * FROM GalleryModel")
+    suspend fun selectAllDbGallery(): MutableList<GalleryModel>
 
-    @Query("DELETE FROM GaleriRoom")
+    @Query("DELETE FROM GalleryModel")
     suspend fun deleteAllDbGallery()
 
 }

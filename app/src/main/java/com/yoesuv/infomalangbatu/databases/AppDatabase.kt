@@ -5,11 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.yoesuv.infomalangbatu.data.AppConstants
-import com.yoesuv.infomalangbatu.databases.gallery.GaleriRoom
 import com.yoesuv.infomalangbatu.databases.map.MapPinsRoom
+import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 
-@Database(entities = [GaleriRoom::class, MapPinsRoom::class, PlaceModel::class], version = 4, exportSchema = false)
+@Database(entities = [MapPinsRoom::class, PlaceModel::class, GalleryModel::class], version = 5, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun placeDaoAccess() : PlaceDaoAccess

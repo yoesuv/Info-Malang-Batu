@@ -10,7 +10,6 @@ import androidx.lifecycle.viewModelScope
 import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databases.AppDatabase
-import com.yoesuv.infomalangbatu.databases.gallery.GaleriRoom
 import com.yoesuv.infomalangbatu.databases.map.MapPinsRoom
 import com.yoesuv.infomalangbatu.main.views.MainActivity
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
@@ -55,13 +54,8 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
 
     private suspend fun setupGalleries(galleries: MutableList<GalleryModel>?) {
         appDatabase?.galleryDaoAccess()?.deleteAllDbGallery()
-        galleries?.forEach {galleryModel ->
-            val galeriRoom = GaleriRoom(
-                galleryModel.caption,
-                galleryModel.thumbnail,
-                galleryModel.image
-            )
-            appDatabase?.galleryDaoAccess()?.insertDbGallery(galeriRoom)
+        galleries?.forEach { galleryModel ->
+            appDatabase?.galleryDaoAccess()?.insertDbGallery(galleryModel)
         }
     }
 
