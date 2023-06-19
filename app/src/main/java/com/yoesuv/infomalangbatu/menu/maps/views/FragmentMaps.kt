@@ -131,10 +131,14 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
                     )
                 }
             } else {
-                AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
+                view?.rootView?.let {
+                    AppHelper.snackBarError(it, R.string.error_direction_not_success)
+                }
             }
         } else {
-            AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
+            view?.rootView?.let {
+                AppHelper.snackBarError(it, R.string.error_direction_not_success)
+            }
         }
     }
 
@@ -143,7 +147,9 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         if (progressDialog.isShowing) {
             progressDialog.dismiss()
         }
-        AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
+        view?.rootView?.let {
+            AppHelper.snackBarError(it, R.string.error_direction_not_success)
+        }
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -246,10 +252,14 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
                             .avoid(AvoidType.TOLLS)
                             .execute(this)
                     } else {
-                        AppHelper.displayToastError(requireContext(), R.string.error_get_user_location)
+                        view?.rootView?.let {
+                            AppHelper.snackBarError(it, R.string.error_get_user_location)
+                        }
                     }
                 } else {
-                    AppHelper.displayToastError(requireContext(), R.string.error_get_user_location)
+                    view?.rootView?.let {
+                        AppHelper.snackBarError(it, R.string.error_get_user_location)
+                    }
                 }
             }
         } else {

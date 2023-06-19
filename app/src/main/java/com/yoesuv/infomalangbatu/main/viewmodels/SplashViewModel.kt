@@ -3,6 +3,7 @@ package com.yoesuv.infomalangbatu.main.viewmodels
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
+import android.widget.RelativeLayout
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -40,7 +41,8 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
                 openApplication(activity)
             }
         }, {
-            AppHelper.displayToastError(activity,activity.getString(R.string.toast_error_get_list_place))
+            val layout: RelativeLayout = activity.findViewById(R.id.rlSplash)
+            AppHelper.snackBarError(layout.rootView, R.string.toast_error_get_list_place)
             activity.finish()
         })
     }

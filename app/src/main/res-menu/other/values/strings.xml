@@ -211,15 +211,6 @@
     </string>
     <string name="ssp_android">SSP - a scalable size unit for texts</string>
     <string name="ssp_android_url">https://github.com/intuit/ssp</string>
-    <string name="toasty">Toasty</string>
-    <string name="toasty_url">https://github.com/GrenderG/Toasty</string>
-    <string name="toasty_license">
-        <![CDATA[
-            GNU Lesser General Public License v3.0<br/><br/>
-            Everyone is permitted to copy and distribute verbatim copies
-            of this license document, but changing it is not allowed.
-        ]]>
-    </string>
     <string name="aosp">Android Open Source Project</string>
     <string name="aosp_url">https://source.android.com/setup/start/licenses</string>
     <string name="aosp_license">
