@@ -1,10 +1,9 @@
 # Info Malang Batu #
 [![](https://travis-ci.org/yoesuv/Info-Malang-Batu.svg)](https://app.travis-ci.com/github/yoesuv/Info-Malang-Batu)
 ![](https://img.shields.io/github/languages/top/yoesuv/Info-Malang-Batu)
-![](https://img.shields.io/github/v/release/yoesuv/Info-Malang-Batu?sort=semver)  
+
 * Build with Kotlin, Use MVVM Pattern
 * Local Database with [Room](https://developer.android.com/topic/libraries/architecture/room)
-* [AndroidX](https://developer.android.com/jetpack/androidx/)
 * [Architecture Component](https://developer.android.com/topic/libraries/architecture/)
 
 [![](https://i.imgur.com/vbFJRFm.png)](https://play.google.com/store/apps/details?id=com.yoesuv.infomalangbatu)
@@ -17,13 +16,12 @@ DIRECTION_API_KEY = your_direction_api_key
 ```
 
 ### Screenshot ###
-| ![](https://i.imgur.com/jXstCHr.jpg) | ![](https://i.imgur.com/TPG9BVX.jpg) | ![](https://i.imgur.com/A9qR7nl.jpg) | ![](https://i.imgur.com/fIsPL17.jpg) |
+| ![](https://images2.imgbox.com/f2/2c/JMaZirIu_o.png) | ![](https://images2.imgbox.com/e9/a3/ILmUo3YR_o.png) | ![](https://images2.imgbox.com/fa/5d/2nXO3jOv_o.png) | ![](https://images2.imgbox.com/89/67/Af4t3I5E_o.png) |
 | :---: | :---: | :---: | :---: |
-| ![](https://i.imgur.com/0t6ZfY5.jpg) | ![](https://i.imgur.com/01o9hm1.jpg) | ![](https://i.imgur.com/c4w19t9.jpg) | ![](https://i.imgur.com/6kbuSR0.jpg) |
+| ![](https://images2.imgbox.com/bd/0d/eAJ71ZzH_o.png) | ![](https://images2.imgbox.com/9c/ac/GnIwpuJb_o.png) | ![](https://i.imgur.com/1YNlQhk.png) | ![](https://i.imgur.com/LlTFiS8.png) |
 
 ### List Libraries Used in this Project ###
 * [Android GoogleDirectionLibrary](https://github.com/akexorcist/Android-GoogleDirectionLibrary)
-* [Dexcount Gradle Plugin](https://github.com/KeepSafe/dexcount-gradle-plugin)
 * [Glide](https://github.com/bumptech/glide)
 * [Icons8 Icon](https://icons8.com/)
 * [Retrofit](https://github.com/square/retrofit)
