@@ -102,7 +102,7 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         }
     }
 
-    override fun onDirectionSuccess(direction: Direction?, rawBody: String?) {
+    override fun onDirectionSuccess(direction: Direction?) {
         if (progressDialog.isShowing) {
             progressDialog.dismiss()
         }
@@ -123,7 +123,7 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
                     val directionPositionList = route.legList[0].directionPoint
                     mGoogleMap?.addPolyline(
                         DirectionConverter.createPolyline(
-                            context,
+                            requireContext(),
                             directionPositionList,
                             5,
                             Color.parseColor(color)
@@ -142,8 +142,8 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         }
     }
 
-    override fun onDirectionFailure(t: Throwable?) {
-        t?.printStackTrace()
+
+    override fun onDirectionFailure(t: Throwable) {
         if (progressDialog.isShowing) {
             progressDialog.dismiss()
         }
@@ -237,9 +237,10 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
 
                 if (latitude != "") {
                     if (longitude != "") {
-                        GoogleDirection.withServerKey(context?.getString(R.string.DIRECTION_API_KEY))
-                            .from(origin)
-                            .to(destination)
+                        val apiKey = requireContext().getString(R.string.DIRECTION_API_KEY)
+                        GoogleDirection.withServerKey(apiKey)
+                            .from(origin!!)
+                            .to(destination!!)
                             .alternativeRoute(true)
                             .transportMode(TransportMode.DRIVING)
                             .avoid(AvoidType.TOLLS)
