@@ -1,5 +1,5 @@
-name: Room Example
-run-name: ${{ github.actor }} is building Room Example 🚀
+name: Info Malang Batu
+run-name: ${{ github.actor }} is building Info Malang Batu 🚀
 on:
   push:
     branches:
@@ -13,6 +13,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+        run: ls ${{ github.workspace }}
+      - uses: actions/checkout@v3
+      - name: Decrypt GPG api keys
+        run: gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.API_KEY_PASSPHRASE }}" --output "${{ github.workspace }}"/apiKey.properties apiKey.properties.gpg
       - name: List files in the repository initial
         run: ls ${{ github.workspace }}
       - name: Setup Java JDK
