@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 class SplashViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val appRepository = AppRepository(viewModelScope)
+    private val appRepository = AppRepository()
     private val appDatabase = AppDatabase.getInstance(application.applicationContext)
 
     var version: ObservableField<String> = ObservableField()
@@ -30,18 +30,19 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun initDataBase(activity: Activity) {
-        appRepository.getAppData({ places, galleries, pins ->
-            viewModelScope.launch {
-                setupPlaces(places)
-                setupGalleries(galleries)
-                setupMapPins(pins)
-                openApplication(activity)
-            }
-        }, {
-            val layout: RelativeLayout = activity.findViewById(R.id.rlSplash)
-            AppHelper.snackBarError(layout.rootView, R.string.toast_error_get_list_place)
-            activity.finish()
-        })
+        viewModelScope.launch {
+            appRepository.getAppData({ places, galleries, pins ->
+                viewModelScope.launch {
+                    setupPlaces(places)
+                    setupGalleries(galleries)
+                    setupMapPins(pins)
+                    openApplication(activity)
+                }
+            }, {
+                val layout: RelativeLayout = activity.findViewById(R.id.rlSplash)
+                AppHelper.snackBarError(layout.rootView, R.string.toast_error_get_list_place)
+            })
+        }
     }
 
     private suspend fun setupPlaces(places: MutableList<PlaceModel>?) {
