@@ -28,7 +28,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 33
         multiDexEnabled true
-        versionCode 14
+        versionCode 15
         versionName "2.3.3"
         setProperty("archivesBaseName", applicationId+"-v"+versionCode+"("+versionName+")")
         resValue "string", "MAPS_API_KEY", apiKeyProperties['MAPS_API_KEY']
