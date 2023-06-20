@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewPagerOther"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutViewPagerOther"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/purple_app"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabIndicatorHeight="@dimen/_2sdp"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabTextAppearance="@style/TabLayout"
+            app:tabTextColor="@android:color/white" />
 
-            <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabLayoutViewPagerOther"
-                    android:background="@color/purple_app"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    app:tabTextAppearance="@style/TabLayout"
-                    app:tabMode="scrollable"
-                    app:tabIndicatorColor="@color/colorAccent"
-                    app:tabIndicatorHeight="@dimen/_2sdp"
-                    app:tabSelectedTextColor="@color/colorAccent"
-                    app:tabTextColor="@android:color/white"/>
-
-        </androidx.viewpager.widget.ViewPager>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPagerOther"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
