@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Keep
@@ -16,6 +17,7 @@ data class GalleryModel(
     @SerializedName("thumbnail") @Expose val thumbnail: String?,
     @SerializedName("image") @Expose val image: String?
 ) : Parcelable {
+    @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null
 }
