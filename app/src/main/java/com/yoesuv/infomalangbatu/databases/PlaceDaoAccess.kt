@@ -3,21 +3,21 @@ package com.yoesuv.infomalangbatu.databases
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.yoesuv.infomalangbatu.databases.place.PlaceRoom
+import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 
 @Dao
 interface PlaceDaoAccess {
 
     @Insert
-    suspend fun insertPlace(placeRoom: PlaceRoom)
+    suspend fun insertPlace(place: PlaceModel)
 
-    @Query("SELECT * FROM PlaceRoom")
-    suspend fun selectAll(): MutableList<PlaceRoom>
+    @Query("SELECT * FROM PlaceModel")
+    suspend fun selectAll(): MutableList<PlaceModel>
 
-    @Query("SELECT * FROM PlaceRoom WHERE location= :location")
-    suspend fun selectPlaceByLocation(location: String?): MutableList<PlaceRoom>
+    @Query("SELECT * FROM PlaceModel WHERE location= :location")
+    suspend fun selectPlaceByLocation(location: String?): MutableList<PlaceModel>
 
-    @Query("DELETE FROM PlaceRoom")
+    @Query("DELETE FROM PlaceModel")
     suspend fun deleteAllPlace()
 
 }

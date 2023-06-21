@@ -20,8 +20,7 @@ class ChildFragmentLibrariesViewModel: ViewModel() {
         listLibraries.add(LibraryModel(context.getString(R.string.okhttp), context.getString(R.string.okhttp_url), context.getString(R.string.okhttp_license), false))
         listLibraries.add(LibraryModel(context.getString(R.string.retrofit), context.getString(R.string.retrofit_url), context.getString(R.string.retrofit_license), false))
         listLibraries.add(LibraryModel(context.getString(R.string.sdp_android), context.getString(R.string.sdp_android_url), context.getString(R.string.sdp_android_license), false))
-        listLibraries.add(LibraryModel(context.getString(R.string.ssp_android), context.getString(R.string.ssp_android_url), context.getString(R.string.sdp_android_license), false))
-        listLibraries.add(LibraryModel(context.getString(R.string.toasty), context.getString(R.string.toasty_url), context.getString(R.string.toasty_license), true))
+        listLibraries.add(LibraryModel(context.getString(R.string.ssp_android), context.getString(R.string.ssp_android_url), context.getString(R.string.sdp_android_license), true))
         listData.value = listLibraries
     }
 

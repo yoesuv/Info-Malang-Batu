@@ -102,7 +102,7 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         }
     }
 
-    override fun onDirectionSuccess(direction: Direction?, rawBody: String?) {
+    override fun onDirectionSuccess(direction: Direction?) {
         if (progressDialog.isShowing) {
             progressDialog.dismiss()
         }
@@ -123,7 +123,7 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
                     val directionPositionList = route.legList[0].directionPoint
                     mGoogleMap?.addPolyline(
                         DirectionConverter.createPolyline(
-                            context,
+                            requireContext(),
                             directionPositionList,
                             5,
                             Color.parseColor(color)
@@ -131,19 +131,25 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
                     )
                 }
             } else {
-                AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
+                view?.rootView?.let {
+                    AppHelper.snackBarError(it, R.string.error_direction_not_success)
+                }
             }
         } else {
-            AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
+            view?.rootView?.let {
+                AppHelper.snackBarError(it, R.string.error_direction_not_success)
+            }
         }
     }
 
-    override fun onDirectionFailure(t: Throwable?) {
-        t?.printStackTrace()
+
+    override fun onDirectionFailure(t: Throwable) {
         if (progressDialog.isShowing) {
             progressDialog.dismiss()
         }
-        AppHelper.displayToastError(requireContext(), R.string.error_direction_not_success)
+        view?.rootView?.let {
+            AppHelper.snackBarError(it, R.string.error_direction_not_success)
+        }
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -164,14 +170,8 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
 
         runBlocking {
             listPinModel.clear()
-            appDatabase?.mapPinDaoAccess()?.selectAllDbMapPins()?.forEach { mapPinsRoom ->
-                val pinModel = PinModel(
-                    mapPinsRoom.name,
-                    mapPinsRoom.location,
-                    mapPinsRoom.latitude,
-                    mapPinsRoom.longitude
-                )
-                listPinModel.add(pinModel)
+            appDatabase?.mapPinDaoAccess()?.selectAllDbMapPins()?.forEach { pin ->
+                listPinModel.add(pin)
             }
             setupPin(googleMap, listPinModel)
         }
@@ -196,7 +196,7 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         googleMap?.setOnMarkerClickListener { marker ->
             val tag: MarkerTag = marker.tag as MarkerTag
             if (tag.type == 0) {
-                val handler = Handler()
+                val handler = Handler(Looper.getMainLooper())
                 val anim = BounceAnimation(SystemClock.uptimeMillis(), 1000L, marker, handler)
                 handler.post(anim)
                 marker.showInfoWindow()
@@ -214,13 +214,12 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         googleMap?.uiSettings?.isMyLocationButtonEnabled = true
         googleMap?.uiSettings?.isZoomControlsEnabled = true
         val paddingBottom =
-            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 108F, resources.displayMetrics).roundToInt()
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150F, resources.displayMetrics).roundToInt()
         googleMap?.setPadding(0, 0, 0, paddingBottom)
-        val locationRequest: LocationRequest = LocationRequest.create()
-        locationRequest.priority = Priority.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = 2000
-        locationRequest.fastestInterval = 1000
-        mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback, Looper.myLooper()!!)
+        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 2000)
+            .setWaitForAccurateLocation(false)
+            .build()
+        mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback, Looper.getMainLooper())
     }
 
     private fun getDirection(marker: Marker?) {
@@ -238,18 +237,23 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
 
                 if (latitude != "") {
                     if (longitude != "") {
-                        GoogleDirection.withServerKey(context?.getString(R.string.DIRECTION_API_KEY))
-                            .from(origin)
-                            .to(destination)
+                        val apiKey = requireContext().getString(R.string.DIRECTION_API_KEY)
+                        GoogleDirection.withServerKey(apiKey)
+                            .from(origin!!)
+                            .to(destination!!)
                             .alternativeRoute(true)
                             .transportMode(TransportMode.DRIVING)
                             .avoid(AvoidType.TOLLS)
                             .execute(this)
                     } else {
-                        AppHelper.displayToastError(requireContext(), R.string.error_get_user_location)
+                        view?.rootView?.let {
+                            AppHelper.snackBarError(it, R.string.error_get_user_location)
+                        }
                     }
                 } else {
-                    AppHelper.displayToastError(requireContext(), R.string.error_get_user_location)
+                    view?.rootView?.let {
+                        AppHelper.snackBarError(it, R.string.error_get_user_location)
+                    }
                 }
             }
         } else {

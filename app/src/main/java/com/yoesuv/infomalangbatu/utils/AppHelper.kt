@@ -7,12 +7,13 @@ import android.location.LocationManager
 import android.os.Build
 import android.text.Html
 import android.util.Log
-import android.widget.Toast
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import com.yoesuv.infomalangbatu.BuildConfig
+import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
-import es.dmoral.toasty.Toasty
 
 /**
  *  Created by yusuf on 5/1/18.
@@ -26,28 +27,28 @@ fun logDebug(message: String) {
 
 object AppHelper {
 
-    fun displayToastError(context: Context, message: String){
-        Toasty.error(context, message, Toast.LENGTH_SHORT, true).show()
+    fun snackBarWarning(view: View, @StringRes message: Int) {
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(ContextCompat.getColor(view.context, R.color.amber_600))
+            .show()
     }
 
-    fun displayToastError(context: Context, @StringRes message: Int){
-        Toasty.error(context, context.getString(message), Toast.LENGTH_SHORT, true).show()
+    fun snackBarError(view: View, @StringRes message: Int) {
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(ContextCompat.getColor(view.context, R.color.red_700))
+            .show()
     }
 
-    fun displayToastNormal(context: Context, message: String){
-        Toasty.normal(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    fun checkLocationSetting(context: Context):Boolean{
+    fun checkLocationSetting(context: Context): Boolean {
         val locationManager: LocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
     @Suppress("DEPRECATION")
-    fun fromHtml(source: String): String{
-        return if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N) {
+    fun fromHtml(source: String): String {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY).toString()
-        }else{
+        } else {
             Html.fromHtml(source).toString()
         }
     }

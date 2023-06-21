@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.PlaceLocation
@@ -18,13 +18,12 @@ import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentListPlaceView
 
 class FragmentListPlace: Fragment(), MenuProvider {
 
-    private lateinit var viewModel: FragmentListPlaceViewModel
     private lateinit var binding: FragmentListplaceBinding
+    private val viewModel: FragmentListPlaceViewModel by viewModels()
     private lateinit var adapter: ListPlaceAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentListplaceBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[FragmentListPlaceViewModel::class.java]
         binding.listplace = viewModel
 
         setupRecycler()
@@ -77,9 +76,11 @@ class FragmentListPlace: Fragment(), MenuProvider {
     }
 
     private fun onListDataChange(listPlace: MutableList<PlaceModel>?){
-        if(listPlace?.isNotEmpty()!!){
-            adapter.submitList(listPlace)
-            adapter.notifyDataSetChanged()
+        listPlace?.isNotEmpty()?.let { isNotEmpty ->
+            if (isNotEmpty) {
+                adapter.submitList(listPlace)
+                adapter.notifyDataSetChanged()
+            }
         }
     }
 

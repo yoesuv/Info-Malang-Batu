@@ -1,13 +1,14 @@
 package com.yoesuv.infomalangbatu.main.views
 
-import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.yoesuv.infomalangbatu.R
@@ -15,7 +16,7 @@ import com.yoesuv.infomalangbatu.databinding.ActivityMainBinding
 import com.yoesuv.infomalangbatu.main.viewmodels.MainViewModel
 import com.yoesuv.infomalangbatu.utils.AppHelper
 
-class MainActivity: AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     companion object {
         var BACK_PRESSED: Long = 0L
@@ -28,33 +29,15 @@ class MainActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         binding.main = viewModel
 
         setupToolbar()
         binding.bottomNavigationViewMain.itemIconTintList = null
         setupNavigation()
+        setupOnBackPressed()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        for(fragment in supportFragmentManager.fragments){
-            fragment.onActivityResult(requestCode, resultCode, data)
-        }
-    }
-
-    override fun onBackPressed() {
-        if (Navigation.findNavController(this, R.id.fragmentMain).currentDestination?.id == R.id.fragmentList) {
-            if ((BACK_PRESSED+2000L) > System.currentTimeMillis()) {
-                super.onBackPressed()
-            } else {
-                AppHelper.displayToastNormal(this, getString(R.string.confirm_close))
-            }
-            BACK_PRESSED = System.currentTimeMillis()
-        } else {
-            super.onBackPressed()
-        }
-    }
 
     override fun onSupportNavigateUp(): Boolean {
         return Navigation.findNavController(this, R.id.fragmentMain).navigateUp()
@@ -66,7 +49,8 @@ class MainActivity: AppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        val navController = Navigation.findNavController(this, R.id.fragmentMain)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentMain) as NavHostFragment
+        val navController = navHostFragment.navController
         setupActionBarWithNavController(navController)
         NavigationUI.setupWithNavController(binding.bottomNavigationViewMain, navController)
     }
@@ -77,6 +61,24 @@ class MainActivity: AppCompatActivity() {
         } else {
             binding.bottomNavigationViewMain.visibility = View.VISIBLE
         }
+    }
+
+    private fun setupOnBackPressed() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val nav = Navigation.findNavController(this@MainActivity, R.id.fragmentMain)
+                if (nav.currentDestination?.id == R.id.fragmentList) {
+                    if ((BACK_PRESSED + 2000L) > System.currentTimeMillis()) {
+                        finish()
+                    } else {
+                        AppHelper.snackBarWarning(binding.coordinatorLayoutMain.rootView, R.string.confirm_close)
+                    }
+                    BACK_PRESSED = System.currentTimeMillis()
+                } else {
+                    nav.popBackStack()
+                }
+            }
+        })
     }
 
 }

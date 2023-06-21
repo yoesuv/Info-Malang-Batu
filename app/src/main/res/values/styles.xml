@@ -1,11 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="snackbarStyle">@style/MySnackbar</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
@@ -14,6 +15,10 @@
     <style name="TabLayout" parent="@android:style/TextAppearance.Widget.TabWidget">
         <item name="android:textSize">@dimen/_10ssp</item>
         <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="MySnackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:layout_margin">@dimen/_50sdp</item>
     </style>
 
 </resources>

@@ -23,7 +23,7 @@ class FragmentDetailListPlace: Fragment() {
     private val args: FragmentDetailListPlaceArgs by navArgs()
     private var placeModel: PlaceModel? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         placeModel = args.dataDetailListPlace
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_listplace, container, false)
         return binding.root
