@@ -20,16 +20,16 @@ android {
         }
     }
 
-    compileSdkVersion 33
+    compileSdk 34
     namespace 'com.yoesuv.infomalangbatu'
 
     defaultConfig {
         applicationId "com.yoesuv.infomalangbatu"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         multiDexEnabled true
-        versionCode 15
-        versionName "2.3.3"
+        versionCode 16
+        versionName "2.3.4"
         setProperty("archivesBaseName", applicationId+"-v"+versionCode+"("+versionName+")")
         resValue "string", "MAPS_API_KEY", apiKeyProperties['MAPS_API_KEY']
         resValue "string", "DIRECTION_API_KEY", apiKeyProperties['DIRECTION_API_KEY']
