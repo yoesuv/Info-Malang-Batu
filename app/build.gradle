@@ -58,7 +58,7 @@ android {
             ]
         }
     }
-    flavorDimensions "default"
+    flavorDimensions.add("default")
     productFlavors {
         development {
             buildConfigField "String", "BASE_URL", "\"https://info-malang-batu.firebaseapp.com/\""
