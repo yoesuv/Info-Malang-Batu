@@ -5,7 +5,7 @@ on:
     branches:
       - master
   pull_request:
-    brances:
+    branches:
       - master
 jobs:
   Explore-GitHub-Actions:

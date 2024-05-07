@@ -1,5 +1,6 @@
 package com.yoesuv.infomalangbatu.main.views
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -8,6 +9,7 @@ import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.ActivitySplashBinding
 import com.yoesuv.infomalangbatu.main.viewmodels.SplashViewModel
 
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding

@@ -9,6 +9,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'com.google.devtools.ksp'
 
 android {
     signingConfigs {
@@ -20,16 +21,16 @@ android {
         }
     }
 
-    compileSdkVersion 33
+    compileSdk 34
     namespace 'com.yoesuv.infomalangbatu'
 
     defaultConfig {
         applicationId "com.yoesuv.infomalangbatu"
-        minSdkVersion 21
-        targetSdkVersion 33
+        minSdkVersion 24
+        targetSdkVersion 34
         multiDexEnabled true
-        versionCode 15
-        versionName "2.3.3"
+        versionCode 16
+        versionName "2.3.4"
         setProperty("archivesBaseName", applicationId+"-v"+versionCode+"("+versionName+")")
         resValue "string", "MAPS_API_KEY", apiKeyProperties['MAPS_API_KEY']
         resValue "string", "DIRECTION_API_KEY", apiKeyProperties['DIRECTION_API_KEY']
@@ -58,7 +59,7 @@ android {
             ]
         }
     }
-    flavorDimensions "default"
+    flavorDimensions.add("default")
     productFlavors {
         development {
             buildConfigField "String", "BASE_URL", "\"https://info-malang-batu.firebaseapp.com/\""
@@ -91,7 +92,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-maps:$playServicesMapsVersion"
     implementation "com.google.android.gms:play-services-location:$playServicesLocationVersion"
 
-    implementation platform('com.google.firebase:firebase-bom:32.1.1')
+    implementation platform("com.google.firebase:firebase-bom:33.0.0")
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-perf'
@@ -101,7 +102,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
     implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
     implementation "androidx.room:room-runtime:$roomVersion"
-    kapt "androidx.room:room-compiler:$roomVersion"
+    ksp "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
 
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
@@ -112,7 +113,7 @@ dependencies {
     implementation "com.intuit.ssp:ssp-android:$sspVersion"
     implementation "com.intuit.sdp:sdp-android:$sdpVersion"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
-    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+    ksp "com.github.bumptech.glide:compiler:$glideVersion"
     implementation "com.akexorcist:google-direction-library:$googleDirectionLibraryVersion"
     implementation "com.android.support:multidex:$multidexVersion"
 }
