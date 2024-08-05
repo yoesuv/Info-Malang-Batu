@@ -11,9 +11,9 @@ plugins {
     id("kotlin-parcelize")
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.perf.plugin)
-    id("com.google.firebase.crashlytics")
+    alias(libs.plugins.firebase.crashlytics.plugin)
     id("androidx.navigation.safeargs")
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.ksp)
 }
 
 android {
