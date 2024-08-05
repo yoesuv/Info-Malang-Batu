@@ -102,7 +102,6 @@ dependencies {
     val httpLoggingVersion: String by project
     val sspVersion: String by project
     val sdpVersion: String by project
-    val glideVersion: String by project
     val googleDirectionLibraryVersion: String by project
     val multidexVersion: String by project
 
@@ -135,8 +134,8 @@ dependencies {
 
     implementation("com.intuit.ssp:ssp-android:$sspVersion")
     implementation("com.intuit.sdp:sdp-android:$sdpVersion")
-    implementation("com.github.bumptech.glide:glide:$glideVersion")
-    ksp("com.github.bumptech.glide:compiler:$glideVersion")
+    implementation(libs.glide)
+    ksp(libs.glideCompiler)
     implementation("com.akexorcist:google-direction-library:$googleDirectionLibraryVersion")
     implementation("com.android.support:multidex:$multidexVersion")
 }
