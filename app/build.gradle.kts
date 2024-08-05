@@ -97,7 +97,6 @@ dependencies {
     val lifecycleVersion: String by project
     val navigationVersion: String by project
     val fragmentVersion: String by project
-    val roomVersion: String by project
     val retrofitVersion: String by project
     val httpLoggingVersion: String by project
     val sspVersion: String by project
@@ -124,9 +123,9 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
-    implementation("androidx.room:room-runtime:$roomVersion")
-    ksp("androidx.room:room-compiler:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation(libs.roomRuntime)
+    ksp(libs.roomCompiler)
+    implementation(libs.roomKtx)
 
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
