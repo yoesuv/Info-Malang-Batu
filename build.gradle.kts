@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.google.services) apply false
-    id("com.google.firebase.firebase-perf") version "1.4.2" apply false
-    id("com.google.firebase.crashlytics") version "2.9.9" apply false
+    alias(libs.plugins.firebase.perf.plugin) apply false
+    alias(libs.plugins.firebase.crashlytics.plugin) apply false
     id("com.google.devtools.ksp") version "1.9.0-1.0.13" apply false
 }
 
