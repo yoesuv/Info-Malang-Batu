@@ -112,10 +112,9 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:$playServicesMapsVersion")
     implementation("com.google.android.gms:play-services-location:$playServicesLocationVersion")
 
-    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
-    implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
-    implementation("com.google.firebase:firebase-perf")
+    implementation(libs.firebaseAnalytics)
+    implementation(libs.firebaseCrashlytics)
+    implementation(libs.firebasePerf)
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")

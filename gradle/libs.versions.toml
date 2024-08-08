@@ -13,6 +13,9 @@ glide = "4.16.0"
 room = "2.6.1"
 multidex = "1.0.3"
 googleDirection = "1.2.1"
+firebaseAnalytics = "22.0.2"
+firebaseCrashlytics = "19.0.3"
+firebasePerf = "21.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -26,6 +29,9 @@ roomCompiler = { group = "androidx.room", name = "room-compiler", version.ref = 
 roomKtx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 multidex = { group = "com.android.support", name = "multidex", version.ref = "multidex" }
 googleDirection = { group = "com.akexorcist", name = "google-direction-library", version.ref = "googleDirection" }
+firebaseAnalytics = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "firebaseAnalytics" }
+firebaseCrashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version.ref = "firebaseCrashlytics" }
+firebasePerf = { group = "com.google.firebase", name = "firebase-perf", version.ref = "firebasePerf" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
