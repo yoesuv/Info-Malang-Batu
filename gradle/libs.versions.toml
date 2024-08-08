@@ -11,6 +11,8 @@ firebaseCrashlyticsPlugin = "2.9.9"
 ksp = "1.9.0-1.0.13"
 glide = "4.16.0"
 room = "2.6.1"
+multidex = "1.0.3"
+googleDirection = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -22,6 +24,8 @@ glideCompiler = { group = "com.github.bumptech.glide", name = "compiler", versio
 roomRuntime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 roomCompiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 roomKtx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+multidex = { group = "com.android.support", name = "multidex", version.ref = "multidex" }
+googleDirection = { group = "com.akexorcist", name = "google-direction-library", version.ref = "googleDirection" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
