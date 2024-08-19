@@ -97,7 +97,6 @@ dependencies {
     val lifecycleVersion: String by project
     val navigationVersion: String by project
     val fragmentVersion: String by project
-    val retrofitVersion: String by project
     val httpLoggingVersion: String by project
 
     testImplementation(libs.junit)
@@ -122,8 +121,8 @@ dependencies {
     ksp(libs.roomCompiler)
     implementation(libs.roomKtx)
 
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
     implementation("com.squareup.okhttp3:logging-interceptor:$httpLoggingVersion")
 
     implementation(libs.ssp.android)

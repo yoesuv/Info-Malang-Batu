@@ -10,6 +10,7 @@ firebasePerfPlugin = "1.4.2"
 firebaseCrashlyticsPlugin = "2.9.9"
 ksp = "1.9.0-1.0.13"
 glide = "4.16.0"
+retrofitVersion = "2.9.0"
 room = "2.6.1"
 multidex = "1.0.3"
 googleDirection = "1.2.1"
@@ -26,6 +27,8 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 glideCompiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
+retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
 roomRuntime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 roomCompiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 roomKtx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
