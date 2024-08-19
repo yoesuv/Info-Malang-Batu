@@ -99,8 +99,6 @@ dependencies {
     val fragmentVersion: String by project
     val retrofitVersion: String by project
     val httpLoggingVersion: String by project
-    val sspVersion: String by project
-    val sdpVersion: String by project
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -128,8 +126,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
     implementation("com.squareup.okhttp3:logging-interceptor:$httpLoggingVersion")
 
-    implementation("com.intuit.ssp:ssp-android:$sspVersion")
-    implementation("com.intuit.sdp:sdp-android:$sdpVersion")
+    implementation(libs.ssp.android)
+    implementation(libs.sdp.android)
     implementation(libs.glide)
     ksp(libs.glideCompiler)
     implementation(libs.googleDirection)

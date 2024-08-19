@@ -16,6 +16,8 @@ googleDirection = "1.2.1"
 firebaseAnalytics = "22.0.2"
 firebaseCrashlytics = "19.0.3"
 firebasePerf = "21.0.1"
+sdpVersion = "1.1.1"
+sspVersion = "1.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +34,8 @@ googleDirection = { group = "com.akexorcist", name = "google-direction-library",
 firebaseAnalytics = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "firebaseAnalytics" }
 firebaseCrashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version.ref = "firebaseCrashlytics" }
 firebasePerf = { group = "com.google.firebase", name = "firebase-perf", version.ref = "firebasePerf" }
+sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpVersion" }
+ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
