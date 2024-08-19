@@ -19,6 +19,7 @@ firebaseCrashlytics = "19.0.3"
 firebasePerf = "21.0.1"
 sdpVersion = "1.1.1"
 sspVersion = "1.1.1"
+httpLoggingVersion = "4.11.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,6 +40,7 @@ firebaseCrashlytics = { group = "com.google.firebase", name = "firebase-crashlyt
 firebasePerf = { group = "com.google.firebase", name = "firebase-perf", version.ref = "firebasePerf" }
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpVersion" }
 ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspVersion" }
+httpLogging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "httpLoggingVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
