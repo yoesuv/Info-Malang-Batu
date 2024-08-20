@@ -90,7 +90,7 @@ android {
 }
 
 dependencies {
-    val appCompatVersion: String by project
+
     val materialVersion: String by project
     val playServicesMapsVersion: String by project
     val playServicesLocationVersion: String by project
@@ -103,7 +103,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.androidx.core.ktx)
-    implementation("androidx.appcompat:appcompat:$appCompatVersion")
+    implementation(libs.appCompat)
     implementation("com.google.android.material:material:$materialVersion")
     implementation("com.google.android.gms:play-services-maps:$playServicesMapsVersion")
     implementation("com.google.android.gms:play-services-location:$playServicesLocationVersion")
