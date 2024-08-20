@@ -91,8 +91,6 @@ android {
 
 dependencies {
 
-    val playServicesMapsVersion: String by project
-    val playServicesLocationVersion: String by project
     val navigationVersion: String by project
 
     testImplementation(libs.junit)
@@ -102,8 +100,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.appCompat)
     implementation(libs.material)
-    implementation("com.google.android.gms:play-services-maps:$playServicesMapsVersion")
-    implementation("com.google.android.gms:play-services-location:$playServicesLocationVersion")
+    implementation(libs.playServiceMaps)
+    implementation(libs.playServiceLocation)
 
     implementation(libs.firebaseAnalytics)
     implementation(libs.firebaseCrashlytics)

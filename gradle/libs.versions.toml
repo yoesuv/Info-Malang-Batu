@@ -24,6 +24,8 @@ httpLoggingVersion = "4.11.0"
 appCompat = "1.6.1"
 lifecycle = "2.7.0"
 material = "1.12.0"
+playServicesMaps = "18.2.0"
+playServicesLocation = "21.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -49,6 +51,8 @@ httpLogging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref
 appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
 lifecycleViewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
+playServiceMaps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+playServiceLocation = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
