@@ -94,7 +94,6 @@ dependencies {
     val materialVersion: String by project
     val playServicesMapsVersion: String by project
     val playServicesLocationVersion: String by project
-    val lifecycleVersion: String by project
     val navigationVersion: String by project
     val fragmentVersion: String by project
 
@@ -112,7 +111,7 @@ dependencies {
     implementation(libs.firebaseCrashlytics)
     implementation(libs.firebasePerf)
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation(libs.lifecycleViewModel)
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
