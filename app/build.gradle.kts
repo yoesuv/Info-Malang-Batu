@@ -95,7 +95,6 @@ dependencies {
     val playServicesMapsVersion: String by project
     val playServicesLocationVersion: String by project
     val navigationVersion: String by project
-    val fragmentVersion: String by project
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -114,7 +113,7 @@ dependencies {
     implementation(libs.lifecycleViewModel)
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
-    implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
+    implementation(libs.androidx.fragment.ktx)
     implementation(libs.roomRuntime)
     ksp(libs.roomCompiler)
     implementation(libs.roomKtx)
