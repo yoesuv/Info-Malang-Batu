@@ -12,8 +12,8 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.perf.plugin)
     alias(libs.plugins.firebase.crashlytics.plugin)
-    id("androidx.navigation.safeargs")
     alias(libs.plugins.ksp)
+    alias(libs.plugins.safeArgs)
 }
 
 android {

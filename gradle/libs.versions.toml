@@ -63,4 +63,5 @@ jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = 
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 firebase-perf-plugin = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerfPlugin" }
 firebase-crashlytics-plugin = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+safeArgs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
