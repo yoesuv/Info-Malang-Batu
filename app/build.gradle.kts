@@ -91,8 +91,6 @@ android {
 
 dependencies {
 
-    val navigationVersion: String by project
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -108,8 +106,8 @@ dependencies {
     implementation(libs.firebasePerf)
 
     implementation(libs.lifecycleViewModel)
-    implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
+    implementation(libs.navigationFragment)
+    implementation(libs.navigationUi)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.roomRuntime)
     ksp(libs.roomCompiler)
