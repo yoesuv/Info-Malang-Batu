@@ -16,22 +16,24 @@ import com.yoesuv.infomalangbatu.menu.listplace.adapters.ListPlaceAdapter
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentListPlaceViewModel
 
-class FragmentListPlace: Fragment(), MenuProvider {
+class FragmentListPlace : Fragment(), MenuProvider {
 
-    private lateinit var binding: FragmentListplaceBinding
+    private var binding: FragmentListplaceBinding? = null
     private val viewModel: FragmentListPlaceViewModel by viewModels()
     private lateinit var adapter: ListPlaceAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentListplaceBinding.inflate(inflater, container, false)
-        binding.listplace = viewModel
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if (binding == null) {
+            binding = FragmentListplaceBinding.inflate(inflater, container, false)
+            binding?.listplace = viewModel
 
-        setupRecycler()
+            setupRecycler()
 
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+            val menuHost: MenuHost = requireActivity()
+            menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        }
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,11 +55,11 @@ class FragmentListPlace: Fragment(), MenuProvider {
         viewModel.getListPlace(PlaceLocation.ALL)
     }
 
-    private fun setupRecycler(){
+    private fun setupRecycler() {
         adapter = ListPlaceAdapter {
             onItemClick(it)
         }
-        binding.recyclerViewListPlace.adapter = adapter
+        binding?.recyclerViewListPlace?.adapter = adapter
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -75,11 +77,11 @@ class FragmentListPlace: Fragment(), MenuProvider {
         return false
     }
 
-    private fun onListDataChange(listPlace: MutableList<PlaceModel>?){
+    private fun onListDataChange(listPlace: MutableList<PlaceModel>?) {
         listPlace?.isNotEmpty()?.let { isNotEmpty ->
             if (isNotEmpty) {
                 adapter.submitList(listPlace)
-                adapter.notifyDataSetChanged()
+                adapter.notifyItemRangeChanged(0, listPlace.size)
             }
         }
     }

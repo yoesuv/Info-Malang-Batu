@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentGalleryBinding
@@ -17,22 +17,21 @@ import com.yoesuv.infomalangbatu.menu.gallery.viewmodels.FragmentGalleryViewMode
 
 class FragmentGallery: Fragment() {
 
-    private lateinit var viewModel: FragmentGalleryViewModel
-    private lateinit var binding: FragmentGalleryBinding
+    private var binding: FragmentGalleryBinding? = null
+    private val viewModel: FragmentGalleryViewModel by viewModels()
     private lateinit var adapter: GalleryAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false)
-        return binding.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if (binding == null) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false)
+            binding?.gallery = viewModel
+            setupRecycler()
+        }
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[FragmentGalleryViewModel::class.java]
-        binding.gallery = viewModel
-
-        setupRecycler()
-
         viewModel.setupProperties(context)
         viewModel.listGalleryResponse.observe(viewLifecycleOwner) {
             onListDataChanged(it)
@@ -49,7 +48,7 @@ class FragmentGallery: Fragment() {
         adapter = GalleryAdapter {
             onItemGalleryClick(it)
         }
-        binding.recyclerViewGallery.adapter = adapter
+        binding?.recyclerViewGallery?.adapter = adapter
     }
 
     private fun onListDataChanged(listData: MutableList<GalleryModel>){
