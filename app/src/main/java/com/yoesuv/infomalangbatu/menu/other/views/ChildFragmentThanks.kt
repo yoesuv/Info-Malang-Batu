@@ -10,7 +10,7 @@ import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.ChildFragmentThanksBinding
 import com.yoesuv.infomalangbatu.utils.AppHelper
 
-class ChildFragmentThanks: Fragment() {
+class ChildFragmentThanks : Fragment() {
 
     companion object {
         fun getInstance(): Fragment {
@@ -18,10 +18,18 @@ class ChildFragmentThanks: Fragment() {
         }
     }
 
+    private var binding: ChildFragmentThanksBinding? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: ChildFragmentThanksBinding = DataBindingUtil.inflate(inflater, R.layout.child_fragment_thanks, container, false)
-        binding.textViewThanks.text = AppHelper.fromHtml(getString(R.string.trims))
-        return binding.root
+        if (binding == null) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.child_fragment_thanks, container, false)
+        }
+        return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding?.textViewThanks?.text = AppHelper.fromHtml(getString(R.string.trims))
     }
 
 }

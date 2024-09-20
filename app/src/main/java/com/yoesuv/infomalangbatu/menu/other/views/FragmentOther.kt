@@ -23,9 +23,12 @@ class FragmentOther : Fragment() {
         }
 
         setupAppBar(0F)
-        setupViewPager()
-
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupViewPager()
     }
 
     override fun onDestroy() {

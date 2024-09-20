@@ -12,7 +12,7 @@ import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.ChildFragmentInfoBinding
 
-class ChildFragmentInfo: Fragment() {
+class ChildFragmentInfo : Fragment() {
 
     companion object {
         fun getInstance(): Fragment {
@@ -20,14 +20,22 @@ class ChildFragmentInfo: Fragment() {
         }
     }
 
+    private var binding: ChildFragmentInfoBinding? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: ChildFragmentInfoBinding = DataBindingUtil.inflate(inflater, R.layout.child_fragment_info, container, false)
-        binding.textViewVersion.text = getString(R.string.info_app_version, BuildConfig.VERSION_NAME)
-        binding.textViewGithub.setOnClickListener {
+        if (binding == null) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.child_fragment_info, container, false)
+        }
+        return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding?.textViewVersion?.text = getString(R.string.info_app_version, BuildConfig.VERSION_NAME)
+        binding?.textViewGithub?.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(context?.getString(R.string.link_github)))
             context?.startActivity(intent)
         }
-        return binding.root
     }
 
 }
