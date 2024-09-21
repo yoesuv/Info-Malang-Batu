@@ -9,7 +9,7 @@ import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 interface PlaceDaoAccess {
 
     @Insert
-    suspend fun insertPlace(place: PlaceModel)
+    suspend fun insertPlaces(places: List<PlaceModel>)
 
     @Query("SELECT * FROM PlaceModel")
     suspend fun selectAll(): MutableList<PlaceModel>

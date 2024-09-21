@@ -9,7 +9,7 @@ import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 interface MapPinDaoAccess {
 
     @Insert
-    suspend fun insertDbMapPins(pin: PinModel)
+    suspend fun insertDbMapPins(pin: List<PinModel>)
 
     @Query("SELECT * FROM PinModel")
     suspend fun selectAllDbMapPins(): MutableList<PinModel>

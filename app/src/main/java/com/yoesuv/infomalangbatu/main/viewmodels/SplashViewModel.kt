@@ -47,22 +47,22 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
 
     private suspend fun setupPlaces(places: MutableList<PlaceModel>?) {
         appDatabase?.placeDaoAccess()?.deleteAllPlace()
-        places?.forEach { placeModel ->
-            appDatabase?.placeDaoAccess()?.insertPlace(placeModel)
+        if (places != null) {
+            appDatabase?.placeDaoAccess()?.insertPlaces(places)
         }
     }
 
     private suspend fun setupGalleries(galleries: MutableList<GalleryModel>?) {
         appDatabase?.galleryDaoAccess()?.deleteAllDbGallery()
-        galleries?.forEach { galleryModel ->
-            appDatabase?.galleryDaoAccess()?.insertDbGallery(galleryModel)
+        if (galleries != null) {
+            appDatabase?.galleryDaoAccess()?.insertDbGalleries(galleries)
         }
     }
 
     private suspend fun setupMapPins(pins: MutableList<PinModel>?) {
         appDatabase?.mapPinDaoAccess()?.deleteAllDbMapPins()
-        pins?.forEach { pinModel ->
-            appDatabase?.mapPinDaoAccess()?.insertDbMapPins(pinModel)
+        if (pins != null) {
+            appDatabase?.mapPinDaoAccess()?.insertDbMapPins(pins)
         }
     }
 
