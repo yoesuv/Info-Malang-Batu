@@ -181,11 +181,14 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         if (listPin.isNotEmpty()) {
             for (pin in listPin) {
                 val markerOptions = MarkerOptions()
-                markerOptions.position(LatLng(pin.latitude!!, pin.longitude!!))
-                markerOptions.title(pin.name)
+                val pinLat = pin.latitude ?: 0.0
+                val pinLng = pin.longitude ?: 0.0
+                val pinName = pin.name ?: ""
+                markerOptions.position(LatLng(pinLat, pinLng))
+                markerOptions.title(pinName)
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin))
                 markerLocation = googleMap?.addMarker(markerOptions)
-                markerLocation?.tag = MarkerTag(pin.name!!, 0, pin.latitude, pin.longitude)
+                markerLocation?.tag = MarkerTag(pinName, 0, pinLat, pinLng)
 
                 googleMap?.setInfoWindowAdapter(MyCustomInfoWindowAdapter(activity))
             }
