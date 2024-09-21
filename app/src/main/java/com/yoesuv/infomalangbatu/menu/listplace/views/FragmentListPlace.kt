@@ -19,7 +19,7 @@ class FragmentListPlace : Fragment(), MenuProvider {
 
     private var binding: FragmentListplaceBinding? = null
     private val viewModel: FragmentListPlaceViewModel by viewModels()
-    private lateinit var adapter: ListPlaceAdapter
+    private var adapter: ListPlaceAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (binding == null) {
@@ -67,8 +67,8 @@ class FragmentListPlace : Fragment(), MenuProvider {
     private fun onListDataChange(listPlace: MutableList<PlaceModel>?) {
         listPlace?.isNotEmpty()?.let { isNotEmpty ->
             if (isNotEmpty) {
-                adapter.submitList(listPlace)
-                adapter.notifyItemRangeChanged(0, listPlace.size)
+                adapter?.submitList(listPlace)
+                adapter?.notifyItemRangeChanged(0, listPlace.size)
             }
         }
     }
