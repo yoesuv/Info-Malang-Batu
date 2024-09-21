@@ -1,6 +1,5 @@
 package com.yoesuv.infomalangbatu.menu.listplace.views
 
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.*
@@ -26,13 +25,11 @@ class FragmentListPlace : Fragment(), MenuProvider {
         if (binding == null) {
             binding = FragmentListplaceBinding.inflate(inflater, container, false)
             binding?.listplace = viewModel
-
-            setupRecycler()
-
-            val menuHost: MenuHost = requireActivity()
-            menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         }
+        setupRecycler()
 
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         return binding?.root
     }
 
@@ -43,16 +40,6 @@ class FragmentListPlace : Fragment(), MenuProvider {
         viewModel.listPlaceResponse.observe(viewLifecycleOwner) {
             onListDataChange(it)
         }
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        activity?.recreate()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getListPlace(PlaceLocation.ALL)
     }
 
     private fun setupRecycler() {

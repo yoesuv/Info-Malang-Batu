@@ -1,6 +1,5 @@
 package com.yoesuv.infomalangbatu.menu.gallery.views
 
-import android.content.res.Configuration
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,8 +24,8 @@ class FragmentGallery: Fragment() {
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false)
             binding?.gallery = viewModel
-            setupRecycler()
         }
+        setupRecycler()
         return binding?.root
     }
 
@@ -37,11 +36,6 @@ class FragmentGallery: Fragment() {
             onListDataChanged(it)
         }
         viewModel.getListGallery()
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        activity?.recreate()
     }
 
     private fun setupRecycler(){
