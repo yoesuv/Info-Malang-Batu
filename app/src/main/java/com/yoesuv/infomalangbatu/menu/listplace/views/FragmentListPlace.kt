@@ -35,7 +35,7 @@ class FragmentListPlace : Fragment(), MenuProvider {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.setupProperties(context)
+        viewModel.setupProperties(requireContext())
         viewModel.getListPlace(PlaceLocation.ALL)
         viewModel.listPlaceResponse.observe(viewLifecycleOwner) {
             onListDataChange(it)

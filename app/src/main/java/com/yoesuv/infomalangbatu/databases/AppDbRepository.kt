@@ -12,6 +12,14 @@ class AppDbRepository(context: Context) {
         appDatabase?.placeDaoAccess()?.insertPlaces(places)
     }
 
+    suspend fun selectAllPlace(): MutableList<PlaceModel> {
+        return appDatabase?.placeDaoAccess()?.selectAll() ?: mutableListOf()
+    }
+
+    suspend fun selectPlaceByLocation(location: String): MutableList<PlaceModel> {
+        return appDatabase?.placeDaoAccess()?.selectPlaceByLocation(location) ?: mutableListOf()
+    }
+
     suspend fun deleteAllPlace() {
         appDatabase?.placeDaoAccess()?.deleteAllPlace()
     }
