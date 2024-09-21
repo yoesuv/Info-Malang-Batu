@@ -11,8 +11,10 @@ class MyLocationCallback: LocationCallback() {
         super.onLocationResult(result)
         val listLocation = result.locations
         if (listLocation.isNotEmpty()) {
-            App.prefHelper?.setString(AppConstants.PREFERENCE_LATITUDE, listLocation[0].latitude.toString())
-            App.prefHelper?.setString(AppConstants.PREFERENCE_LONGITUDE, listLocation[0].longitude.toString())
+            App.prefHelper?.let { pref ->
+                pref.setDouble(AppConstants.PREFERENCE_LATITUDE, listLocation[0].latitude)
+                pref.setDouble(AppConstants.PREFERENCE_LONGITUDE, listLocation[0].longitude)
+            }
         }
     }
 

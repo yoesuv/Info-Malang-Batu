@@ -222,7 +222,11 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 2000)
             .setWaitForAccurateLocation(false)
             .build()
-        mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback, Looper.getMainLooper())
+        mFusedLocationProviderClient?.requestLocationUpdates(
+            locationRequest,
+            myLocationCallback,
+            Looper.getMainLooper()
+        )
     }
 
     private fun getDirection(marker: Marker?) {
@@ -233,31 +237,19 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
                     progressDialog.show()
                 }
 
-                val latitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LATITUDE)
-                val longitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LONGITUDE)
-                origin = LatLng(latitude?.toDouble()!!, longitude?.toDouble()!!)
+                val latitude = App.prefHelper?.getDouble(AppConstants.PREFERENCE_LATITUDE) ?: 0.0
+                val longitude = App.prefHelper?.getDouble(AppConstants.PREFERENCE_LONGITUDE) ?: 0.0
+                origin = LatLng(latitude, longitude)
                 destination = LatLng(tag.latitude, tag.longitude)
 
-                if (latitude != "") {
-                    if (longitude != "") {
-                        val apiKey = requireContext().getString(R.string.DIRECTION_API_KEY)
-                        GoogleDirection.withServerKey(apiKey)
-                            .from(origin!!)
-                            .to(destination!!)
-                            .alternativeRoute(true)
-                            .transportMode(TransportMode.DRIVING)
-                            .avoid(AvoidType.TOLLS)
-                            .execute(this)
-                    } else {
-                        view?.rootView?.let {
-                            AppHelper.snackBarError(it, R.string.error_get_user_location)
-                        }
-                    }
-                } else {
-                    view?.rootView?.let {
-                        AppHelper.snackBarError(it, R.string.error_get_user_location)
-                    }
-                }
+                val apiKey = requireContext().getString(R.string.DIRECTION_API_KEY)
+                GoogleDirection.withServerKey(apiKey)
+                    .from(origin!!)
+                    .to(destination!!)
+                    .alternativeRoute(true)
+                    .transportMode(TransportMode.DRIVING)
+                    .avoid(AvoidType.TOLLS)
+                    .execute(this)
             }
         } else {
             requestPermissionLocation.launch(Manifest.permission.ACCESS_FINE_LOCATION)
