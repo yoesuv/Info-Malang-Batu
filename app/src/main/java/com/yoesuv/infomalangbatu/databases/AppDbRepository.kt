@@ -24,9 +24,7 @@ class AppDbRepository(context: Context) {
         appDatabase?.placeDaoAccess()?.deleteAllPlace()
     }
 
-    suspend fun selectAllGallery(): MutableList<GalleryModel> {
-        return appDatabase?.galleryDaoAccess()?.selectAllDbGallery() ?: mutableListOf()
-    }
+    fun selectAllGallery() = appDatabase?.galleryDaoAccess()?.selectAllDbGallery()
 
     suspend fun insertGalleries(galleries: MutableList<GalleryModel>) {
         appDatabase?.galleryDaoAccess()?.insertDbGalleries(galleries)

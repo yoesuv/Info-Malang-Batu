@@ -32,10 +32,9 @@ class FragmentGallery : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.setupProperties(requireContext())
-        viewModel.listGalleryResponse.observe(viewLifecycleOwner) {
+        viewModel.getListGallery()?.observe(viewLifecycleOwner) {
             onListDataChanged(it)
         }
-        viewModel.getListGallery()
     }
 
     private fun setupRecycler() {
@@ -45,7 +44,7 @@ class FragmentGallery : Fragment() {
         binding?.recyclerViewGallery?.adapter = adapter
     }
 
-    private fun onListDataChanged(listData: MutableList<GalleryModel>) {
+    private fun onListDataChanged(listData: List<GalleryModel>) {
         if (listData.isNotEmpty()) {
             adapter?.submitList(listData)
         }
