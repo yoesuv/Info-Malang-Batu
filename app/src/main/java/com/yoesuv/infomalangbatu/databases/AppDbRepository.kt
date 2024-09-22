@@ -24,12 +24,16 @@ class AppDbRepository(context: Context) {
         appDatabase?.placeDaoAccess()?.deleteAllPlace()
     }
 
-    suspend fun deleteAllGallery() {
-        appDatabase?.galleryDaoAccess()?.deleteAllDbGallery()
+    suspend fun selectAllGallery(): MutableList<GalleryModel> {
+        return appDatabase?.galleryDaoAccess()?.selectAllDbGallery() ?: mutableListOf()
     }
 
     suspend fun insertGalleries(galleries: MutableList<GalleryModel>) {
         appDatabase?.galleryDaoAccess()?.insertDbGalleries(galleries)
+    }
+
+    suspend fun deleteAllGallery() {
+        appDatabase?.galleryDaoAccess()?.deleteAllDbGallery()
     }
 
     suspend fun insertMapPins(pins: MutableList<PinModel>) {

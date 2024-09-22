@@ -31,7 +31,7 @@ class FragmentGallery : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.setupProperties(context)
+        viewModel.setupProperties(requireContext())
         viewModel.listGalleryResponse.observe(viewLifecycleOwner) {
             onListDataChanged(it)
         }

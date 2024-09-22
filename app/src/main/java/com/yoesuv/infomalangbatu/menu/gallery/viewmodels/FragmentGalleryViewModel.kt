@@ -4,27 +4,26 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yoesuv.infomalangbatu.databases.AppDatabase
+import com.yoesuv.infomalangbatu.databases.AppDbRepository
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import kotlinx.coroutines.launch
 
-class FragmentGalleryViewModel: ViewModel() {
+class FragmentGalleryViewModel : ViewModel() {
 
     private var listGalleryModel: MutableList<GalleryModel> = mutableListOf()
     var listGalleryResponse: MutableLiveData<MutableList<GalleryModel>> = MutableLiveData()
 
-    private var appDatabase: AppDatabase? = null
+    private var appDbRepository: AppDbRepository? = null
 
-    fun setupProperties(context: Context?){
-        appDatabase = AppDatabase.getInstance(context!!)
+    fun setupProperties(context: Context) {
+        appDbRepository = AppDbRepository(context)
     }
 
     fun getListGallery() {
         viewModelScope.launch {
             listGalleryModel.clear()
-            appDatabase?.galleryDaoAccess()?.selectAllDbGallery()?.forEach {
-                val galleryModel = GalleryModel(it.caption, it.thumbnail, it.image)
-                listGalleryModel.add(galleryModel)
+            appDbRepository?.selectAllGallery()?.let {
+                listGalleryModel.addAll(it)
             }
             listGalleryResponse.postValue(listGalleryModel)
         }
