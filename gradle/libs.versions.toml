@@ -24,8 +24,8 @@ httpLoggingVersion = "4.11.0"
 appCompat = "1.6.1"
 lifecycle = "2.8.6"
 material = "1.12.0"
-playServicesMaps = "18.2.0"
-playServicesLocation = "21.2.0"
+playServicesMaps = "19.0.0"
+playServicesLocation = "21.3.0"
 navigation = "2.8.1"
 
 [libraries]
