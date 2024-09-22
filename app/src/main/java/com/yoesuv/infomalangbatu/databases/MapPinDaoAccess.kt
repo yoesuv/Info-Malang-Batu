@@ -1,5 +1,6 @@
 package com.yoesuv.infomalangbatu.databases
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -12,7 +13,7 @@ interface MapPinDaoAccess {
     suspend fun insertDbMapPins(pin: List<PinModel>)
 
     @Query("SELECT * FROM PinModel")
-    suspend fun selectAllDbMapPins(): MutableList<PinModel>
+    fun selectAllDbMapPins(): LiveData<List<PinModel>>
 
     @Query("DELETE FROM PinModel")
     suspend  fun deleteAllDbMapPins()

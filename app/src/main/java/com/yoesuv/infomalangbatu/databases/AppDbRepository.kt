@@ -40,6 +40,8 @@ class AppDbRepository(context: Context) {
         appDatabase?.mapPinDaoAccess()?.insertDbMapPins(pins)
     }
 
+    fun selectAllMapPins() = appDatabase?.mapPinDaoAccess()?.selectAllDbMapPins()
+
     suspend fun deleteAllMapPins() {
         appDatabase?.mapPinDaoAccess()?.deleteAllDbMapPins()
     }
