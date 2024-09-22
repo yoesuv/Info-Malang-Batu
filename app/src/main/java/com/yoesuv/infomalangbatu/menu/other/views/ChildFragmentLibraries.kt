@@ -27,6 +27,7 @@ class ChildFragmentLibraries : Fragment() {
             binding = ChildFragmentLibrariesBinding.inflate(inflater, container, false)
             binding?.libraries = viewModel
         }
+        binding?.lifecycleOwner = viewLifecycleOwner
         setupRecycler()
         return binding?.root
     }

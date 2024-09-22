@@ -26,6 +26,7 @@ class FragmentListPlace : Fragment(), MenuProvider {
             binding = FragmentListplaceBinding.inflate(inflater, container, false)
             binding?.listplace = viewModel
         }
+        binding?.lifecycleOwner = viewLifecycleOwner
         setupRecycler()
 
         val menuHost: MenuHost = requireActivity()

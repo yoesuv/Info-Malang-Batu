@@ -33,6 +33,7 @@ class FragmentDetailGallery : Fragment() {
             binding = FragmentDetailGalleryBinding.inflate(inflater, container, false)
             binding?.detailGallery = viewModel
         }
+        binding?.lifecycleOwner = viewLifecycleOwner
         return binding?.root
     }
 

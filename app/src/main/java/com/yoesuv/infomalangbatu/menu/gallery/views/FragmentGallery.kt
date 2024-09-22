@@ -25,6 +25,7 @@ class FragmentGallery : Fragment() {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false)
             binding?.gallery = viewModel
         }
+        binding?.lifecycleOwner = viewLifecycleOwner
         setupRecycler()
         return binding?.root
     }

@@ -21,7 +21,7 @@ class FragmentOther : Fragment() {
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_other, container, false)
         }
-
+        binding?.lifecycleOwner = viewLifecycleOwner
         setupAppBar(0F)
         return binding?.root
     }

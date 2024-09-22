@@ -35,6 +35,7 @@ class FragmentDetailListPlace : Fragment() {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_listplace, container, false)
             binding?.detailListPlace = viewModel
         }
+        binding?.lifecycleOwner = viewLifecycleOwner
         return binding?.root
     }
 

@@ -24,6 +24,7 @@ class ChildFragmentThanks : Fragment() {
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.child_fragment_thanks, container, false)
         }
+        binding?.lifecycleOwner = viewLifecycleOwner
         return binding?.root
     }
 

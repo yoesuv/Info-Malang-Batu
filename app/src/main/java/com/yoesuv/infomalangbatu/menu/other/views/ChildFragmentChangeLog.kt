@@ -29,6 +29,7 @@ class ChildFragmentChangeLog : Fragment() {
             binding = DataBindingUtil.inflate(inflater, R.layout.child_fragment_changelog, container, false)
             binding?.changelog = viewModel
         }
+        binding?.lifecycleOwner = viewLifecycleOwner
         setupRecycler()
         return binding?.root
     }
