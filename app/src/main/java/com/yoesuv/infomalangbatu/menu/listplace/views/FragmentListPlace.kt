@@ -36,10 +36,7 @@ class FragmentListPlace : Fragment(), MenuProvider {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.setupProperties(requireContext())
-        viewModel.getListPlace(PlaceLocation.ALL)
-        viewModel.listPlaceResponse.observe(viewLifecycleOwner) {
-            onListDataChange(it)
-        }
+        loadPlace(PlaceLocation.ALL)
     }
 
     private fun setupRecycler() {
@@ -55,21 +52,31 @@ class FragmentListPlace : Fragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
-            R.id.listSemua -> viewModel.getListPlace(PlaceLocation.ALL)
-            R.id.listKabMalang -> viewModel.getListPlace(PlaceLocation.KAB_MALANG)
-            R.id.listKotaBatu -> viewModel.getListPlace(PlaceLocation.KOTA_BATU)
-            R.id.listKotaMalang -> viewModel.getListPlace(PlaceLocation.KOTA_MALANG)
+            R.id.listSemua -> loadPlace(PlaceLocation.ALL)
+            R.id.listKabMalang -> loadPlace(PlaceLocation.KAB_MALANG)
+            R.id.listKotaBatu -> loadPlace(PlaceLocation.KOTA_BATU)
+            R.id.listKotaMalang -> loadPlace(PlaceLocation.KOTA_MALANG)
         }
         menuItem.isChecked = true
         return false
     }
 
-    private fun onListDataChange(listPlace: MutableList<PlaceModel>?) {
-        listPlace?.isNotEmpty()?.let { isNotEmpty ->
-            if (isNotEmpty) {
-                adapter?.submitList(listPlace)
-                adapter?.notifyItemRangeChanged(0, listPlace.size)
+    private fun loadPlace(place: PlaceLocation) {
+        if (place == PlaceLocation.ALL) {
+            viewModel.getListPlaceAll()?.observe(viewLifecycleOwner) {
+                onListDataChange(it)
             }
+        } else {
+            viewModel.getListPlace(place)?.observe(viewLifecycleOwner) {
+                onListDataChange(it)
+            }
+        }
+    }
+
+    private fun onListDataChange(listPlace: List<PlaceModel>) {
+        if (listPlace.isNotEmpty()) {
+            adapter?.submitList(listPlace)
+            adapter?.notifyItemRangeChanged(0, listPlace.size)
         }
     }
 

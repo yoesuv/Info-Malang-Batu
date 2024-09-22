@@ -8,22 +8,20 @@ import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 class AppDbRepository(context: Context) {
     private val appDatabase = AppDatabase.getInstance(context)
 
+    // place
     suspend fun insertPlaces(places: MutableList<PlaceModel>) {
         appDatabase?.placeDaoAccess()?.insertPlaces(places)
     }
 
-    suspend fun selectAllPlace(): MutableList<PlaceModel> {
-        return appDatabase?.placeDaoAccess()?.selectAll() ?: mutableListOf()
-    }
+    fun selectAllPlace() = appDatabase?.placeDaoAccess()?.selectAll()
 
-    suspend fun selectPlaceByLocation(location: String): MutableList<PlaceModel> {
-        return appDatabase?.placeDaoAccess()?.selectPlaceByLocation(location) ?: mutableListOf()
-    }
+    fun selectPlaceByLocation(location: String) = appDatabase?.placeDaoAccess()?.selectPlaceByLocation(location)
 
     suspend fun deleteAllPlace() {
         appDatabase?.placeDaoAccess()?.deleteAllPlace()
     }
 
+    // gallery
     fun selectAllGallery() = appDatabase?.galleryDaoAccess()?.selectAllDbGallery()
 
     suspend fun insertGalleries(galleries: MutableList<GalleryModel>) {
@@ -34,6 +32,7 @@ class AppDbRepository(context: Context) {
         appDatabase?.galleryDaoAccess()?.deleteAllDbGallery()
     }
 
+    // map pins
     suspend fun insertMapPins(pins: MutableList<PinModel>) {
         appDatabase?.mapPinDaoAccess()?.insertDbMapPins(pins)
     }
