@@ -9,16 +9,24 @@ import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 
-@Database(entities = [PlaceModel::class, GalleryModel::class, PinModel::class], version = 6, exportSchema = false)
+@Database(
+    entities = [
+        PlaceModel::class,
+        GalleryModel::class,
+        PinModel::class
+    ], version = 7,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun placeDaoAccess() : PlaceDaoAccess
+    abstract fun placeDaoAccess(): PlaceDaoAccess
     abstract fun galleryDaoAccess(): GalleryDaoAccess
     abstract fun mapPinDaoAccess(): MapPinDaoAccess
 
     companion object {
         @Volatile
         private var instance: AppDatabase? = null
+
         @Synchronized
         fun getInstance(context: Context): AppDatabase? {
             if (instance == null) {
@@ -27,7 +35,7 @@ abstract class AppDatabase : RoomDatabase() {
             return instance
         }
 
-        private fun create(context: Context): AppDatabase{
+        private fun create(context: Context): AppDatabase {
             return Room.databaseBuilder(context, AppDatabase::class.java, AppConstants.DATABASE_NAME)
                 .fallbackToDestructiveMigration()
                 .build()
