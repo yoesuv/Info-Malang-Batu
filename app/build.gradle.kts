@@ -74,11 +74,10 @@ android {
     sourceSets {
         getByName("main") {
             res.srcDirs("src/main/res")
-            res.srcDirs("src/main/res-menu")
-            res.srcDirs("src/main/res-menu/gallery")
-            res.srcDirs("src/main/res-menu/listplace")
-            res.srcDirs("src/main/res-menu/maps")
-            res.srcDirs("src/main/res-menu/other")
+            res.srcDirs("src/main/res-gallery")
+            res.srcDirs("src/main/res-listplace")
+            res.srcDirs("src/main/res-maps")
+            res.srcDirs("src/main/res-other")
         }
     }
 
