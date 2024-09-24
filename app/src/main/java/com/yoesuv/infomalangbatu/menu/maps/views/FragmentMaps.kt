@@ -32,14 +32,13 @@ import com.google.android.gms.maps.model.*
 import com.yoesuv.infomalangbatu.App
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.AppConstants
-import com.yoesuv.infomalangbatu.databases.AppDatabase
+import com.yoesuv.infomalangbatu.databases.AppDbRepository
 import com.yoesuv.infomalangbatu.menu.maps.adapters.MyCustomInfoWindowAdapter
 import com.yoesuv.infomalangbatu.menu.maps.models.MarkerTag
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.utils.AppHelper
 import com.yoesuv.infomalangbatu.utils.BounceAnimation
 import com.yoesuv.infomalangbatu.widgets.AppDialog
-import kotlinx.coroutines.runBlocking
 import kotlin.math.roundToInt
 
 class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback, MenuProvider {
@@ -54,8 +53,7 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
     private val colors = arrayListOf("#7F2196f3", "#7F4CAF50", "#7FF44336")
     private lateinit var progressDialog: AppDialog
 
-    private var appDatabase: AppDatabase? = null
-    private var listPinModel: MutableList<PinModel> = arrayListOf()
+    private var appDbRepository: AppDbRepository? = null
 
     private val requestPermissionLocation =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -66,8 +64,7 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
-
-        appDatabase = AppDatabase.getInstance(requireContext())
+        appDbRepository = AppDbRepository(requireContext())
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
         progressDialog = AppDialog(requireContext())
@@ -167,25 +164,23 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         googleMap?.clear()
         googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(-7.982914, 112.630875)))
         googleMap?.animateCamera(CameraUpdateFactory.zoomTo(9F))
-
-        runBlocking {
-            listPinModel.clear()
-            appDatabase?.mapPinDaoAccess()?.selectAllDbMapPins()?.forEach { pin ->
-                listPinModel.add(pin)
-            }
-            setupPin(googleMap, listPinModel)
+        appDbRepository?.selectAllMapPins()?.observe(viewLifecycleOwner) {
+            setupPin(googleMap, it)
         }
     }
 
-    private fun setupPin(googleMap: GoogleMap?, listPin: MutableList<PinModel>) {
+    private fun setupPin(googleMap: GoogleMap?, listPin: List<PinModel>) {
         if (listPin.isNotEmpty()) {
             for (pin in listPin) {
                 val markerOptions = MarkerOptions()
-                markerOptions.position(LatLng(pin.latitude!!, pin.longitude!!))
-                markerOptions.title(pin.name)
+                val pinLat = pin.latitude ?: 0.0
+                val pinLng = pin.longitude ?: 0.0
+                val pinName = pin.name ?: ""
+                markerOptions.position(LatLng(pinLat, pinLng))
+                markerOptions.title(pinName)
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin))
                 markerLocation = googleMap?.addMarker(markerOptions)
-                markerLocation?.tag = MarkerTag(pin.name!!, 0, pin.latitude, pin.longitude)
+                markerLocation?.tag = MarkerTag(pinName, 0, pinLat, pinLng)
 
                 googleMap?.setInfoWindowAdapter(MyCustomInfoWindowAdapter(activity))
             }
@@ -219,7 +214,11 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 2000)
             .setWaitForAccurateLocation(false)
             .build()
-        mFusedLocationProviderClient?.requestLocationUpdates(locationRequest, myLocationCallback, Looper.getMainLooper())
+        mFusedLocationProviderClient?.requestLocationUpdates(
+            locationRequest,
+            myLocationCallback,
+            Looper.getMainLooper()
+        )
     }
 
     private fun getDirection(marker: Marker?) {
@@ -230,31 +229,19 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
                     progressDialog.show()
                 }
 
-                val latitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LATITUDE)
-                val longitude = App.prefHelper?.getString(AppConstants.PREFERENCE_LONGITUDE)
-                origin = LatLng(latitude?.toDouble()!!, longitude?.toDouble()!!)
+                val latitude = App.prefHelper?.getDouble(AppConstants.PREFERENCE_LATITUDE) ?: 0.0
+                val longitude = App.prefHelper?.getDouble(AppConstants.PREFERENCE_LONGITUDE) ?: 0.0
+                origin = LatLng(latitude, longitude)
                 destination = LatLng(tag.latitude, tag.longitude)
 
-                if (latitude != "") {
-                    if (longitude != "") {
-                        val apiKey = requireContext().getString(R.string.DIRECTION_API_KEY)
-                        GoogleDirection.withServerKey(apiKey)
-                            .from(origin!!)
-                            .to(destination!!)
-                            .alternativeRoute(true)
-                            .transportMode(TransportMode.DRIVING)
-                            .avoid(AvoidType.TOLLS)
-                            .execute(this)
-                    } else {
-                        view?.rootView?.let {
-                            AppHelper.snackBarError(it, R.string.error_get_user_location)
-                        }
-                    }
-                } else {
-                    view?.rootView?.let {
-                        AppHelper.snackBarError(it, R.string.error_get_user_location)
-                    }
-                }
+                val apiKey = requireContext().getString(R.string.DIRECTION_API_KEY)
+                GoogleDirection.withServerKey(apiKey)
+                    .from(origin!!)
+                    .to(destination!!)
+                    .alternativeRoute(true)
+                    .transportMode(TransportMode.DRIVING)
+                    .avoid(AvoidType.TOLLS)
+                    .execute(this)
             }
         } else {
             requestPermissionLocation.launch(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -266,6 +253,5 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         val northeast: LatLng = route.bound.northeastCoordination.coordination
         val bounds = LatLngBounds(southwest, northeast)
         mGoogleMap?.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
-
     }
 }

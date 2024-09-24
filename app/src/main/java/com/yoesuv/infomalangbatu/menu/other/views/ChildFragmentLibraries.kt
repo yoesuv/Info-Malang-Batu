@@ -10,7 +10,7 @@ import com.yoesuv.infomalangbatu.databinding.ChildFragmentLibrariesBinding
 import com.yoesuv.infomalangbatu.menu.other.adapters.LibrariesAdapter
 import com.yoesuv.infomalangbatu.menu.other.viewmodels.ChildFragmentLibrariesViewModel
 
-class ChildFragmentLibraries: Fragment() {
+class ChildFragmentLibraries : Fragment() {
 
     companion object {
         fun getInstance(): Fragment {
@@ -19,28 +19,30 @@ class ChildFragmentLibraries: Fragment() {
     }
 
     private val viewModel: ChildFragmentLibrariesViewModel by viewModels()
-    private lateinit var binding: ChildFragmentLibrariesBinding
+    private var binding: ChildFragmentLibrariesBinding? = null
     private lateinit var adapter: LibrariesAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = ChildFragmentLibrariesBinding.inflate(inflater, container, false)
-        binding.libraries = viewModel
-
+        if (binding == null) {
+            binding = ChildFragmentLibrariesBinding.inflate(inflater, container, false)
+            binding?.libraries = viewModel
+        }
+        binding?.lifecycleOwner = viewLifecycleOwner
         setupRecycler()
-        viewModel.setupData(requireContext())
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.setupData(requireContext())
         viewModel.listData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
     }
 
-    private fun setupRecycler(){
+    private fun setupRecycler() {
         adapter = LibrariesAdapter()
-        binding.recyclerViewListLibraries.adapter = adapter
+        binding?.recyclerViewListLibraries?.adapter = adapter
     }
 
 }

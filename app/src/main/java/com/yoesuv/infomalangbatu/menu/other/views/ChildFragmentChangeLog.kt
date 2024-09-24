@@ -12,7 +12,7 @@ import com.yoesuv.infomalangbatu.databinding.ChildFragmentChangelogBinding
 import com.yoesuv.infomalangbatu.menu.other.adapters.ChangeLogAdapter
 import com.yoesuv.infomalangbatu.menu.other.viewmodels.ChildFragmentChangelogViewModel
 
-class ChildFragmentChangeLog: Fragment() {
+class ChildFragmentChangeLog : Fragment() {
 
     companion object {
         fun getInstance(): Fragment {
@@ -20,27 +20,31 @@ class ChildFragmentChangeLog: Fragment() {
         }
     }
 
-    private lateinit var binding: ChildFragmentChangelogBinding
+    private var binding: ChildFragmentChangelogBinding? = null
     private val viewModel: ChildFragmentChangelogViewModel by viewModels()
-    private lateinit var adapter:ChangeLogAdapter
+    private lateinit var adapter: ChangeLogAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.child_fragment_changelog, container, false)
-        binding.changelog = viewModel
-
+        if (binding == null) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.child_fragment_changelog, container, false)
+            binding?.changelog = viewModel
+        }
+        binding?.lifecycleOwner = viewLifecycleOwner
         setupRecycler()
+        return binding?.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.setupData(requireContext())
         viewModel.listData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-
-        return binding.root
     }
 
-    private fun setupRecycler(){
+    private fun setupRecycler() {
         adapter = ChangeLogAdapter()
-        binding.recyclerViewChangelog.adapter = adapter
+        binding?.recyclerViewChangelog?.adapter = adapter
     }
 
 }

@@ -12,18 +12,23 @@ import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentOtherBinding
 import com.yoesuv.infomalangbatu.menu.other.adapters.NewTabOtherAdapter
 
-class FragmentOther: Fragment() {
+class FragmentOther : Fragment() {
 
-    private lateinit var binding:FragmentOtherBinding
+    private var binding: FragmentOtherBinding? = null
     private lateinit var tabAdapter: NewTabOtherAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_other, container, false)
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if (binding == null) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_other, container, false)
+        }
+        binding?.lifecycleOwner = viewLifecycleOwner
         setupAppBar(0F)
-        setupViewPager()
+        return binding?.root
+    }
 
-        return binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupViewPager()
     }
 
     override fun onDestroy() {
@@ -31,7 +36,7 @@ class FragmentOther: Fragment() {
         setupAppBar(8F)
     }
 
-    private fun setupAppBar(elevation: Float){
+    private fun setupAppBar(elevation: Float) {
         activity?.findViewById<AppBarLayout>(R.id.appBarMain)?.elevation = elevation
     }
 
@@ -43,10 +48,12 @@ class FragmentOther: Fragment() {
         tabAdapter.addFragment(ChildFragmentThanks.getInstance())
         tabAdapter.addFragment(ChildFragmentLibraries.getInstance())
 
-        binding.viewPagerOther.adapter = tabAdapter
-        TabLayoutMediator(binding.tabLayoutViewPagerOther, binding.viewPagerOther) { tab, position ->
-            tab.text = arrayTitle[position]
-        }.attach()
+        binding?.viewPagerOther?.adapter = tabAdapter
+        binding?.let { binding ->
+            TabLayoutMediator(binding.tabLayoutViewPagerOther, binding.viewPagerOther) { tab, position ->
+                tab.text = arrayTitle[position]
+            }.attach()
+        }
     }
 
 }

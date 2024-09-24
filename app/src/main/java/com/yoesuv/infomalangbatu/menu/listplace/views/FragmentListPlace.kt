@@ -1,6 +1,5 @@
 package com.yoesuv.infomalangbatu.menu.listplace.views
 
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.*
@@ -16,48 +15,36 @@ import com.yoesuv.infomalangbatu.menu.listplace.adapters.ListPlaceAdapter
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentListPlaceViewModel
 
-class FragmentListPlace: Fragment(), MenuProvider {
+class FragmentListPlace : Fragment(), MenuProvider {
 
-    private lateinit var binding: FragmentListplaceBinding
+    private var binding: FragmentListplaceBinding? = null
     private val viewModel: FragmentListPlaceViewModel by viewModels()
-    private lateinit var adapter: ListPlaceAdapter
+    private var adapter: ListPlaceAdapter? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentListplaceBinding.inflate(inflater, container, false)
-        binding.listplace = viewModel
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if (binding == null) {
+            binding = FragmentListplaceBinding.inflate(inflater, container, false)
+            binding?.listplace = viewModel
+        }
+        binding?.lifecycleOwner = viewLifecycleOwner
         setupRecycler()
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.setupProperties(context)
-        viewModel.getListPlace(PlaceLocation.ALL)
-        viewModel.listPlaceResponse.observe(viewLifecycleOwner) {
-            onListDataChange(it)
-        }
+        viewModel.setupProperties(requireContext())
+        loadPlace(PlaceLocation.ALL)
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        activity?.recreate()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getListPlace(PlaceLocation.ALL)
-    }
-
-    private fun setupRecycler(){
+    private fun setupRecycler() {
         adapter = ListPlaceAdapter {
             onItemClick(it)
         }
-        binding.recyclerViewListPlace.adapter = adapter
+        binding?.recyclerViewListPlace?.adapter = adapter
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -66,21 +53,31 @@ class FragmentListPlace: Fragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
-            R.id.listSemua -> viewModel.getListPlace(PlaceLocation.ALL)
-            R.id.listKabMalang -> viewModel.getListPlace(PlaceLocation.KAB_MALANG)
-            R.id.listKotaBatu -> viewModel.getListPlace(PlaceLocation.KOTA_BATU)
-            R.id.listKotaMalang -> viewModel.getListPlace(PlaceLocation.KOTA_MALANG)
+            R.id.listSemua -> loadPlace(PlaceLocation.ALL)
+            R.id.listKabMalang -> loadPlace(PlaceLocation.KAB_MALANG)
+            R.id.listKotaBatu -> loadPlace(PlaceLocation.KOTA_BATU)
+            R.id.listKotaMalang -> loadPlace(PlaceLocation.KOTA_MALANG)
         }
         menuItem.isChecked = true
         return false
     }
 
-    private fun onListDataChange(listPlace: MutableList<PlaceModel>?){
-        listPlace?.isNotEmpty()?.let { isNotEmpty ->
-            if (isNotEmpty) {
-                adapter.submitList(listPlace)
-                adapter.notifyDataSetChanged()
+    private fun loadPlace(place: PlaceLocation) {
+        if (place == PlaceLocation.ALL) {
+            viewModel.getListPlaceAll()?.observe(viewLifecycleOwner) {
+                onListDataChange(it)
             }
+        } else {
+            viewModel.getListPlace(place)?.observe(viewLifecycleOwner) {
+                onListDataChange(it)
+            }
+        }
+    }
+
+    private fun onListDataChange(listPlace: List<PlaceModel>) {
+        if (listPlace.isNotEmpty()) {
+            adapter?.submitList(listPlace)
+            adapter?.notifyItemRangeChanged(0, listPlace.size)
         }
     }
 

@@ -9,7 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.R
-import com.yoesuv.infomalangbatu.databases.AppDatabase
+import com.yoesuv.infomalangbatu.databases.AppDbRepository
 import com.yoesuv.infomalangbatu.main.views.MainActivity
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class SplashViewModel(application: Application) : AndroidViewModel(application) {
 
     private val appRepository = AppRepository()
-    private val appDatabase = AppDatabase.getInstance(application.applicationContext)
+    private val appDbRepository = AppDbRepository(application.applicationContext)
 
     var version: ObservableField<String> = ObservableField()
 
@@ -46,23 +46,23 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private suspend fun setupPlaces(places: MutableList<PlaceModel>?) {
-        appDatabase?.placeDaoAccess()?.deleteAllPlace()
-        places?.forEach { placeModel ->
-            appDatabase?.placeDaoAccess()?.insertPlace(placeModel)
+        appDbRepository.deleteAllPlace()
+        if (places != null) {
+            appDbRepository.insertPlaces(places)
         }
     }
 
     private suspend fun setupGalleries(galleries: MutableList<GalleryModel>?) {
-        appDatabase?.galleryDaoAccess()?.deleteAllDbGallery()
-        galleries?.forEach { galleryModel ->
-            appDatabase?.galleryDaoAccess()?.insertDbGallery(galleryModel)
+        appDbRepository.deleteAllGallery()
+        if (galleries != null) {
+            appDbRepository.insertGalleries(galleries)
         }
     }
 
     private suspend fun setupMapPins(pins: MutableList<PinModel>?) {
-        appDatabase?.mapPinDaoAccess()?.deleteAllDbMapPins()
-        pins?.forEach { pinModel ->
-            appDatabase?.mapPinDaoAccess()?.insertDbMapPins(pinModel)
+        appDbRepository.deleteAllMapPins()
+        if (pins != null) {
+            appDbRepository.insertMapPins(pins)
         }
     }
 
