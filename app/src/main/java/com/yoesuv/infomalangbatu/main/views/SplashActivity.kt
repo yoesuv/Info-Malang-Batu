@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.ActivitySplashBinding
 import com.yoesuv.infomalangbatu.main.viewmodels.SplashViewModel
+import com.yoesuv.infomalangbatu.networks.AppRepositoryImpl
 import com.yoesuv.infomalangbatu.utils.AppHelper
+import com.yoesuv.infomalangbatu.utils.SplashViewModelFactory
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -24,8 +26,11 @@ class SplashActivity : AppCompatActivity() {
             enableEdgeToEdge()
         }
 
+        val appRepository = AppRepositoryImpl()
+        val viewModelFactory = SplashViewModelFactory(application, appRepository)
+        viewModel = ViewModelProvider(this, viewModelFactory)[SplashViewModel::class.java]
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
-        viewModel = ViewModelProvider(this)[SplashViewModel::class.java]
         binding.splash = viewModel
 
         viewModel.setupProperties(this)
