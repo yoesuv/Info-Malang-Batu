@@ -1,3 +1,4 @@
+import com.google.firebase.perf.plugin.FirebasePerfExtension
 import java.util.Properties
 
 val apiKeyPropertiesFile = project.rootProject.file("apiKey.properties")
@@ -58,6 +59,9 @@ android {
             signingConfig = signingConfigs.getByName("config")
             enableUnitTestCoverage = true
             enableAndroidTestCoverage = true
+            configure<FirebasePerfExtension> {
+                setInstrumentationEnabled(false)
+            }
         }
         release {
             isMinifyEnabled = true
