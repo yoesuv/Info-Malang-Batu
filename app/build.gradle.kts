@@ -147,9 +147,10 @@ dependencies {
     implementation(libs.playServiceMaps)
     implementation(libs.playServiceLocation)
 
-    implementation(libs.firebaseAnalytics)
-    implementation(libs.firebaseCrashlytics)
-    implementation(libs.firebasePerf)
+    implementation(platform(libs.firebaseBom))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-perf")
 
     implementation(libs.lifecycleViewModel)
     implementation(libs.navigationFragment)
