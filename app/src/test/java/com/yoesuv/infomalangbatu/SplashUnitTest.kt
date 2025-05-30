@@ -1,0 +1,60 @@
+package com.yoesuv.infomalangbatu
+
+import android.app.Activity
+import android.app.Application
+import android.content.Context
+import com.yoesuv.infomalangbatu.main.viewmodels.SplashViewModel
+import com.yoesuv.infomalangbatu.utils.JsonParser
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
+import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnitRunner
+import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
+import com.yoesuv.infomalangbatu.networks.AppRepository
+import org.junit.Assert.*
+import org.mockito.Mock
+
+@RunWith(MockitoJUnitRunner::class)
+class SplashUnitTest {
+
+    @Mock
+    private lateinit var application: Application
+    @Mock
+    private lateinit var appRepository: AppRepository
+    @Mock
+    private lateinit var activity: Activity
+    private var places: List<PlaceModel> = listOf()
+    private lateinit var splashViewModel: SplashViewModel
+
+    @Before
+    fun setup() {
+        MockitoAnnotations.openMocks(this)
+        `when`(application.applicationContext).thenReturn(mock(Context::class.java))
+        splashViewModel = SplashViewModel(application, appRepository)
+    }
+
+    @Throws(Exception::class)
+    private fun loadPlaceModelsFromJson(): List<PlaceModel> {
+        val placeModels: Array<PlaceModel> = JsonParser.stringToObject("list_place.json", Array<PlaceModel>::class.java)
+        return placeModels.toList()
+    }
+
+    @Test
+    fun placesResponseIsOk() {
+        places = loadPlaceModelsFromJson()
+        assert(places.isNotEmpty())
+        assertEquals(places.size, 3)
+    }
+
+    @Test
+    fun testSetupProperties() {
+        val versionText = "Version 2.3.6"
+        `when`(activity.getString(R.string.info_app_version, BuildConfig.VERSION_NAME)).thenReturn(versionText)
+        splashViewModel.setupProperties(activity)
+        assertEquals(splashViewModel.version.get(), versionText)
+    }
+
+}

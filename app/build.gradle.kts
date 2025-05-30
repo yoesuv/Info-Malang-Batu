@@ -37,8 +37,8 @@ android {
         applicationId = "com.yoesuv.infomalangbatu"
         minSdk = 24
         targetSdk = 35
-        versionCode = 17
-        versionName = "2.3.5"
+        versionCode = 18
+        versionName = "2.3.6"
         multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -139,6 +139,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.mockito.core)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.appCompat)
