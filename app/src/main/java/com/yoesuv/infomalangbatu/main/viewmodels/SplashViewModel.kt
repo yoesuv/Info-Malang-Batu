@@ -51,14 +51,14 @@ class SplashViewModel(application: Application, private val appRepository: AppRe
         }
     }
 
-    private suspend fun setupGalleries(galleries: MutableList<GalleryModel>?) {
+    suspend fun setupGalleries(galleries: MutableList<GalleryModel>?) {
         appDbRepository.deleteAllGallery()
         if (galleries != null) {
             appDbRepository.insertGalleries(galleries)
         }
     }
 
-    private suspend fun setupMapPins(pins: MutableList<PinModel>?) {
+    suspend fun setupMapPins(pins: MutableList<PinModel>?) {
         appDbRepository.deleteAllMapPins()
         if (pins != null) {
             appDbRepository.insertMapPins(pins)
