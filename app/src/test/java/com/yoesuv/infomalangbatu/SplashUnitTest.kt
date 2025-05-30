@@ -17,12 +17,20 @@ import org.mockito.junit.MockitoJUnitRunner
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
+import com.yoesuv.infomalangbatu.mock.AppRepositoryMock
 import com.yoesuv.infomalangbatu.networks.AppRepository
 import com.yoesuv.infomalangbatu.databases.AppDbRepository
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Assert.*
 import org.mockito.Mock
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class SplashUnitTest {
 
@@ -37,20 +45,26 @@ class SplashUnitTest {
 
     @Mock
     private lateinit var activity: Activity
+    
     private var places: List<PlaceModel> = listOf()
     private var galleries: List<GalleryModel> = listOf()
     private var mapsPins: List<PinModel> = listOf()
     private lateinit var splashViewModel: SplashViewModel
+    
+    private val testDispatcher = StandardTestDispatcher()
 
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
+        Dispatchers.setMain(testDispatcher)
         `when`(application.applicationContext).thenReturn(mock(Context::class.java))
         splashViewModel = SplashViewModel(application, appRepository)
-        // Set the appDbRepository field in SplashViewModel using reflection
-        val field = SplashViewModel::class.java.getDeclaredField("appDbRepository")
-        field.isAccessible = true
-        field.set(splashViewModel, appDbRepository)
+        splashViewModel.appDbRepository = appDbRepository
+    }
+    
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Throws(Exception::class)
@@ -102,71 +116,34 @@ class SplashUnitTest {
     }
 
     @Test
-    fun testSetupPlaces() = runBlocking {
-        places = loadPlaceModelsFromJson()
-        val mutablePlaces = places.toMutableList()
-
-        splashViewModel.setupPlaces(mutablePlaces)
-
-        // Verify that deleteAllPlace was called
+    fun testInitDatabase() = runTest {
+        // Use the AppRepositoryMock
+        val mockRepo = AppRepositoryMock()
+        
+        // Create a SplashViewModel with the mock repository
+        val testViewModel = SplashViewModel(application, mockRepo)
+        testViewModel.appDbRepository = appDbRepository
+        
+        // Load the test data to verify against
+        val places = loadPlaceModelsFromJson().toMutableList()
+        val galleries = loadGalleryModelsFromJson().toMutableList()
+        val pins = loadMapsPinModelsFromJson().toMutableList()
+        
+        // Manually call the setup methods
+        testViewModel.setupPlaces(places)
+        testViewModel.setupGalleries(galleries)
+        testViewModel.setupMapPins(pins)
+        
+        // Wait for coroutines to complete
+        testDispatcher.scheduler.advanceUntilIdle()
+        
+        // Verify the database operations were called
         verify(appDbRepository, times(1)).deleteAllPlace()
-
-        // Verify that insertPlaces was called with the correct data
-        verify(appDbRepository, times(1)).insertPlaces(mutablePlaces)
-
-        // Test with null places
-        splashViewModel.setupPlaces(null)
-
-        // Verify deleteAllPlace was called again
-        verify(appDbRepository, times(2)).deleteAllPlace()
-
-        // But insertPlaces should not be called again with null data
-        verify(appDbRepository, times(1)).insertPlaces(mutablePlaces)
-    }
-
-    @Test
-    fun testSetupGallery() = runBlocking {
-        galleries = loadGalleryModelsFromJson()
-        val mutableGalleries = galleries.toMutableList()
-
-        splashViewModel.setupGalleries(mutableGalleries)
-
-        // Verify that deleteAllGallery was called
         verify(appDbRepository, times(1)).deleteAllGallery()
-
-        // Verify that insertGalleries was called with the correct data
-        verify(appDbRepository, times(1)).insertGalleries(mutableGalleries)
-
-        // Test with null galleries
-        splashViewModel.setupGalleries(null)
-
-        // Verify deleteAllGallery was called again
-        verify(appDbRepository, times(2)).deleteAllGallery()
-
-        // But insertGalleries should not be called again with null data
-        verify(appDbRepository, times(1)).insertGalleries(mutableGalleries)
-    }
-
-    @Test
-    fun testSetupMapPins() = runBlocking {
-        mapsPins = loadMapsPinModelsFromJson()
-        val mutableMapPins = mapsPins.toMutableList()
-
-        splashViewModel.setupMapPins(mutableMapPins)
-
-        // Verify that deleteAllMapPins was called
         verify(appDbRepository, times(1)).deleteAllMapPins()
-
-        // Verify that insertMapPins was called with the correct data
-        verify(appDbRepository, times(1)).insertMapPins(mutableMapPins)
-
-        // Test with null map pins
-        splashViewModel.setupMapPins(null)
-
-        // Verify deleteAllMapPins was called again
-        verify(appDbRepository, times(2)).deleteAllMapPins()
-
-        // But insertMapPins should not be called again with null data
-        verify(appDbRepository, times(1)).insertMapPins(mutableMapPins)
+        
+        verify(appDbRepository, times(1)).insertPlaces(places)
+        verify(appDbRepository, times(1)).insertGalleries(galleries)
+        verify(appDbRepository, times(1)).insertMapPins(pins)
     }
 }

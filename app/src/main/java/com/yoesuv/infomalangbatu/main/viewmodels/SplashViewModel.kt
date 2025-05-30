@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 class SplashViewModel(application: Application, private val appRepository: AppRepository) : AndroidViewModel(application) {
 
-    private val appDbRepository = AppDbRepository(application.applicationContext)
+    var appDbRepository = AppDbRepository(application.applicationContext)
 
     var version: ObservableField<String> = ObservableField()
 
