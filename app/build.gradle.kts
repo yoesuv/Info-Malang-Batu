@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.firebase.crashlytics.plugin)
     alias(libs.plugins.ksp)
     alias(libs.plugins.safeArgs)
+    id("jacoco")
 }
 
 android {
@@ -27,7 +28,7 @@ android {
     }
 
     namespace = "com.yoesuv.infomalangbatu"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         val keyMaps = apiKeyProperties["MAPS_API_KEY"].toString()
@@ -35,9 +36,9 @@ android {
 
         applicationId = "com.yoesuv.infomalangbatu"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 17
-        versionName = "2.3.5"
+        targetSdk = 35
+        versionCode = 18
+        versionName = "2.3.6"
         multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -55,6 +56,8 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("config")
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
         }
         release {
             isMinifyEnabled = true
@@ -64,11 +67,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "11"
     }
 
     sourceSets {
@@ -88,11 +91,55 @@ android {
     flavorDimensions.add("default")
 }
 
+// JaCoCo configuration for code coverage
+tasks.withType<Test> {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*")
+        isEnabled = true
+        output = JacocoTaskExtension.Output.FILE
+    }
+}
+
+tasks.register("jacocoTestReport", JacocoReport::class) {
+    dependsOn("testDebugUnitTest")
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        xml.outputLocation.set(file("${project.buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"))
+        html.outputLocation.set(file("${project.buildDir}/reports/jacoco/jacocoTestReport/html"))
+    }
+
+    val fileFilter = listOf(
+        "**/R.class",
+        "**/R$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "**/*Test*.*",
+        "android/**/*.*",
+    )
+
+    val debugTree = fileTree("${project.buildDir}/tmp/kotlin-classes/debug") {
+        exclude(fileFilter)
+    }
+
+    val mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom(files(mainSrc))
+    classDirectories.setFrom(files(debugTree))
+    executionData.setFrom(files(
+        "${project.buildDir}/jacoco/testDebugUnitTest.exec",
+        "${project.buildDir}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
+    ))
+}
+
 dependencies {
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.mockito.core)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.appCompat)

@@ -6,8 +6,10 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -24,9 +26,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (AppHelper.isVanillaIceCreamAndUp()) {
+            enableEdgeToEdge()
+        }
+
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
@@ -36,11 +44,13 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationViewMain.itemIconTintList = null
         setupNavigation()
         setupOnBackPressed()
+
+        AppHelper.insetsPadding(binding.coordinatorLayoutMain, top = true, color = ContextCompat.getColor(this, R.color.colorPrimary))
     }
 
 
     override fun onSupportNavigateUp(): Boolean {
-        return Navigation.findNavController(this, R.id.fragmentMain).navigateUp()
+        return navController.navigateUp()
     }
 
     private fun setupToolbar() {
@@ -50,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentMain) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
         setupActionBarWithNavController(navController)
         NavigationUI.setupWithNavController(binding.bottomNavigationViewMain, navController)
     }
@@ -66,8 +76,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupOnBackPressed() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val nav = Navigation.findNavController(this@MainActivity, R.id.fragmentMain)
-                if (nav.currentDestination?.id == R.id.fragmentList) {
+                if (navController.currentDestination?.id == R.id.fragmentList) {
                     if ((BACK_PRESSED + 2000L) > System.currentTimeMillis()) {
                         finish()
                     } else {
@@ -75,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     BACK_PRESSED = System.currentTimeMillis()
                 } else {
-                    nav.popBackStack()
+                    navController.popBackStack()
                 }
             }
         })
