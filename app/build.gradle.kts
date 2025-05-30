@@ -1,3 +1,4 @@
+import com.google.firebase.perf.plugin.FirebasePerfExtension
 import java.util.Properties
 
 val apiKeyPropertiesFile = project.rootProject.file("apiKey.properties")
@@ -58,6 +59,9 @@ android {
             signingConfig = signingConfigs.getByName("config")
             enableUnitTestCoverage = true
             enableAndroidTestCoverage = true
+            configure<FirebasePerfExtension> {
+                setInstrumentationEnabled(false)
+            }
         }
         release {
             isMinifyEnabled = true
@@ -140,6 +144,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.coroutines.core)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.appCompat)
@@ -147,9 +154,10 @@ dependencies {
     implementation(libs.playServiceMaps)
     implementation(libs.playServiceLocation)
 
-    implementation(libs.firebaseAnalytics)
-    implementation(libs.firebaseCrashlytics)
-    implementation(libs.firebasePerf)
+    implementation(platform(libs.firebaseBom))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-perf")
 
     implementation(libs.lifecycleViewModel)
     implementation(libs.navigationFragment)

@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 class SplashViewModel(application: Application, private val appRepository: AppRepository) : AndroidViewModel(application) {
 
-    private val appDbRepository = AppDbRepository(application.applicationContext)
+    var appDbRepository = AppDbRepository(application.applicationContext)
 
     var version: ObservableField<String> = ObservableField()
 
@@ -44,21 +44,21 @@ class SplashViewModel(application: Application, private val appRepository: AppRe
         }
     }
 
-    private suspend fun setupPlaces(places: MutableList<PlaceModel>?) {
+    suspend fun setupPlaces(places: MutableList<PlaceModel>?) {
         appDbRepository.deleteAllPlace()
         if (places != null) {
             appDbRepository.insertPlaces(places)
         }
     }
 
-    private suspend fun setupGalleries(galleries: MutableList<GalleryModel>?) {
+    suspend fun setupGalleries(galleries: MutableList<GalleryModel>?) {
         appDbRepository.deleteAllGallery()
         if (galleries != null) {
             appDbRepository.insertGalleries(galleries)
         }
     }
 
-    private suspend fun setupMapPins(pins: MutableList<PinModel>?) {
+    suspend fun setupMapPins(pins: MutableList<PinModel>?) {
         appDbRepository.deleteAllMapPins()
         if (pins != null) {
             appDbRepository.insertMapPins(pins)
