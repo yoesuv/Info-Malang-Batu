@@ -10,10 +10,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.times
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.networks.AppRepository
+import com.yoesuv.infomalangbatu.databases.AppDbRepository
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
 import org.mockito.Mock
 
@@ -25,6 +29,8 @@ class SplashUnitTest {
     @Mock
     private lateinit var appRepository: AppRepository
     @Mock
+    private lateinit var appDbRepository: AppDbRepository
+    @Mock
     private lateinit var activity: Activity
     private var places: List<PlaceModel> = listOf()
     private lateinit var splashViewModel: SplashViewModel
@@ -34,6 +40,10 @@ class SplashUnitTest {
         MockitoAnnotations.openMocks(this)
         `when`(application.applicationContext).thenReturn(mock(Context::class.java))
         splashViewModel = SplashViewModel(application, appRepository)
+        // Set the appDbRepository field in SplashViewModel using reflection
+        val field = SplashViewModel::class.java.getDeclaredField("appDbRepository")
+        field.isAccessible = true
+        field.set(splashViewModel, appDbRepository)
     }
 
     @Throws(Exception::class)
@@ -57,4 +67,26 @@ class SplashUnitTest {
         assertEquals(splashViewModel.version.get(), versionText)
     }
 
+    @Test
+    fun testSetupPlaces() = runBlocking {
+        places = loadPlaceModelsFromJson()
+        val mutablePlaces = places.toMutableList()
+
+        splashViewModel.setupPlaces(mutablePlaces)
+        
+        // Verify that deleteAllPlace was called
+        verify(appDbRepository, times(1)).deleteAllPlace()
+        
+        // Verify that insertPlaces was called with the correct data
+        verify(appDbRepository, times(1)).insertPlaces(mutablePlaces)
+        
+        // Test with null places
+        splashViewModel.setupPlaces(null)
+        
+        // Verify deleteAllPlace was called again
+        verify(appDbRepository, times(2)).deleteAllPlace()
+        
+        // But insertPlaces should not be called again with null data
+        verify(appDbRepository, times(1)).insertPlaces(mutablePlaces)
+    }
 }

@@ -44,7 +44,7 @@ class SplashViewModel(application: Application, private val appRepository: AppRe
         }
     }
 
-    private suspend fun setupPlaces(places: MutableList<PlaceModel>?) {
+    suspend fun setupPlaces(places: MutableList<PlaceModel>?) {
         appDbRepository.deleteAllPlace()
         if (places != null) {
             appDbRepository.insertPlaces(places)
