@@ -20,6 +20,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -75,7 +76,7 @@ class SplashUnitTest {
     fun setup() {
         MockitoAnnotations.openMocks(this)
         Dispatchers.setMain(testDispatcher)
-        
+
         // Mock the application context
         `when`(application.applicationContext).thenReturn(context)
     }
@@ -101,28 +102,28 @@ class SplashUnitTest {
     fun testInitDatabase() = runTest {
         // Use the AppRepositoryMock
         val mockRepo = AppRepositoryMock()
-        
+
         // Create a SplashViewModel with the mock repository
         val testViewModel = SplashViewModel(application, mockRepo)
-        
+
         // Directly inject the mocked AppDbRepository instead of creating a new one
         testViewModel.appDbRepository = appDbRepository
-        
+
         // Load the test data to verify against
         val places = loadPlaceModelsFromJson().toMutableList()
         val galleries = loadGalleryModelsFromJson().toMutableList()
         val pins = loadMapsPinModelsFromJson().toMutableList()
-        
+
         // Create an observer for the boolean LiveData
         val observer = mock(Observer::class.java) as Observer<Boolean>
         testViewModel.isDataLoadingComplete.observeForever(observer)
-        
+
         // Call the actual initDatabase function
         testViewModel.initDataBase(activity)
-        
+
         // Wait for coroutines to complete
         testDispatcher.scheduler.advanceUntilIdle()
-        
+
         // Verify the database operations were called
         verify(appDbRepository, times(1)).deleteAllPlace()
         verify(appDbRepository, times(1)).deleteAllGallery()
@@ -130,12 +131,23 @@ class SplashUnitTest {
         verify(appDbRepository, times(1)).insertPlaces(places)
         verify(appDbRepository, times(1)).insertGalleries(galleries)
         verify(appDbRepository, times(1)).insertMapPins(pins)
-        
+
         // Verify the loading state was updated to true (complete)
         val argumentCaptor = ArgumentCaptor.forClass(Boolean::class.java)
         verify(observer, atLeastOnce()).onChanged(argumentCaptor.capture())
-        
+
         // The last value should be true
         assertTrue(argumentCaptor.value)
+    }
+
+    @Test
+    fun testSetupProperties() {
+        val mockRepo = AppRepositoryMock()
+        val splashViewModel = SplashViewModel(application, mockRepo)
+
+        val versionText = "Version 2.3.6"
+        `when`(activity.getString(R.string.info_app_version, BuildConfig.VERSION_NAME)).thenReturn(versionText)
+        splashViewModel.setupProperties(activity)
+        assertEquals(splashViewModel.version.get(), versionText)
     }
 }
