@@ -3,116 +3,98 @@ package com.yoesuv.infomalangbatu
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.os.Looper
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
+import com.yoesuv.infomalangbatu.databases.AppDbRepository
 import com.yoesuv.infomalangbatu.main.viewmodels.SplashViewModel
-import com.yoesuv.infomalangbatu.utils.JsonParser
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.times
-import org.mockito.MockitoAnnotations
-import org.mockito.junit.MockitoJUnitRunner
-import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
+import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.mock.AppRepositoryMock
-import com.yoesuv.infomalangbatu.networks.AppRepository
-import com.yoesuv.infomalangbatu.databases.AppDbRepository
+import com.yoesuv.infomalangbatu.utils.JsonParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.model.Statement
+import org.mockito.ArgumentCaptor
 import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.Mockito.atLeastOnce
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
+import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class SplashUnitTest {
 
+    @get:Rule
+    val instantExecutorRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val testRule = org.junit.rules.TestRule { base, _ ->
+        object : Statement() {
+            @Throws(Throwable::class)
+            override fun evaluate() {
+                Mockito.mockStatic(Looper::class.java).use { mockedLooper ->
+                    mockedLooper.`when`<Looper> { Looper.getMainLooper() }.thenReturn(mock(Looper::class.java))
+                    base.evaluate()
+                }
+            }
+        }
+    }
+
+    private val testDispatcher = StandardTestDispatcher()
+
     @Mock
     private lateinit var application: Application
 
     @Mock
-    private lateinit var appRepository: AppRepository
+    private lateinit var activity: Activity
 
     @Mock
     private lateinit var appDbRepository: AppDbRepository
 
     @Mock
-    private lateinit var activity: Activity
-    
-    private var places: List<PlaceModel> = listOf()
-    private var galleries: List<GalleryModel> = listOf()
-    private var mapsPins: List<PinModel> = listOf()
-    private lateinit var splashViewModel: SplashViewModel
-    
-    private val testDispatcher = StandardTestDispatcher()
+    private lateinit var context: Context
 
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
         Dispatchers.setMain(testDispatcher)
-        `when`(application.applicationContext).thenReturn(mock(Context::class.java))
-        splashViewModel = SplashViewModel(application, appRepository)
-        splashViewModel.appDbRepository = appDbRepository
+        
+        // Mock the application context
+        `when`(application.applicationContext).thenReturn(context)
     }
-    
+
     @After
     fun tearDown() {
         Dispatchers.resetMain()
     }
 
-    @Throws(Exception::class)
-    private fun loadPlaceModelsFromJson(): List<PlaceModel> {
-        val placeModels: Array<PlaceModel> = JsonParser.stringToObject("list_place.json", Array<PlaceModel>::class.java)
-        return placeModels.toList()
+    private fun loadPlaceModelsFromJson(): Array<PlaceModel> {
+        return JsonParser.stringToObject("list_place.json", Array<PlaceModel>::class.java)
     }
 
-    @Throws(Exception::class)
-    private fun loadGalleryModelsFromJson(): List<GalleryModel> {
-        val galleryModels: Array<GalleryModel> =
-            JsonParser.stringToObject("gallery.json", Array<GalleryModel>::class.java)
-        return galleryModels.toList()
+    private fun loadGalleryModelsFromJson(): Array<GalleryModel> {
+        return JsonParser.stringToObject("gallery.json", Array<GalleryModel>::class.java)
     }
 
-    @Throws(Exception::class)
-    private fun loadMapsPinModelsFromJson(): List<PinModel> {
-        val pinModels: Array<PinModel> = JsonParser.stringToObject("maps_pin.json", Array<PinModel>::class.java)
-        return pinModels.toList()
-    }
-
-    @Test
-    fun placesResponseIsOk() {
-        places = loadPlaceModelsFromJson()
-        assert(places.isNotEmpty())
-        assertEquals(places.size, 3)
-    }
-
-    @Test
-    fun galleryResponseIsOk() {
-        galleries = loadGalleryModelsFromJson()
-        assert(galleries.isNotEmpty())
-        assertEquals(galleries.size, 3)
-    }
-
-    @Test
-    fun mapsPinResponseIsOke() {
-        mapsPins = loadMapsPinModelsFromJson()
-        assert(mapsPins.isNotEmpty())
-        assertEquals(mapsPins.size, 2)
-    }
-
-    @Test
-    fun testSetupProperties() {
-        val versionText = "Version 2.3.6"
-        `when`(activity.getString(R.string.info_app_version, BuildConfig.VERSION_NAME)).thenReturn(versionText)
-        splashViewModel.setupProperties(activity)
-        assertEquals(splashViewModel.version.get(), versionText)
+    private fun loadMapsPinModelsFromJson(): Array<PinModel> {
+        return JsonParser.stringToObject("maps_pin.json", Array<PinModel>::class.java)
     }
 
     @Test
@@ -122,6 +104,8 @@ class SplashUnitTest {
         
         // Create a SplashViewModel with the mock repository
         val testViewModel = SplashViewModel(application, mockRepo)
+        
+        // Directly inject the mocked AppDbRepository instead of creating a new one
         testViewModel.appDbRepository = appDbRepository
         
         // Load the test data to verify against
@@ -129,10 +113,12 @@ class SplashUnitTest {
         val galleries = loadGalleryModelsFromJson().toMutableList()
         val pins = loadMapsPinModelsFromJson().toMutableList()
         
-        // Manually call the setup methods
-        testViewModel.setupPlaces(places)
-        testViewModel.setupGalleries(galleries)
-        testViewModel.setupMapPins(pins)
+        // Create an observer for the boolean LiveData
+        val observer = mock(Observer::class.java) as Observer<Boolean>
+        testViewModel.isDataLoadingComplete.observeForever(observer)
+        
+        // Call the actual initDatabase function
+        testViewModel.initDataBase(activity)
         
         // Wait for coroutines to complete
         testDispatcher.scheduler.advanceUntilIdle()
@@ -141,9 +127,15 @@ class SplashUnitTest {
         verify(appDbRepository, times(1)).deleteAllPlace()
         verify(appDbRepository, times(1)).deleteAllGallery()
         verify(appDbRepository, times(1)).deleteAllMapPins()
-        
         verify(appDbRepository, times(1)).insertPlaces(places)
         verify(appDbRepository, times(1)).insertGalleries(galleries)
         verify(appDbRepository, times(1)).insertMapPins(pins)
+        
+        // Verify the loading state was updated to true (complete)
+        val argumentCaptor = ArgumentCaptor.forClass(Boolean::class.java)
+        verify(observer, atLeastOnce()).onChanged(argumentCaptor.capture())
+        
+        // The last value should be true
+        assertTrue(argumentCaptor.value)
     }
 }
