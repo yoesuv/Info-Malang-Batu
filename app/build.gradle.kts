@@ -147,6 +147,7 @@ dependencies {
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.coroutines.test)
     testImplementation(libs.coroutines.core)
+    testImplementation(libs.arch.core.testing)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.appCompat)
