@@ -2,15 +2,15 @@ package com.yoesuv.infomalangbatu.main.viewmodels
 
 import android.app.Activity
 import android.app.Application
-import android.content.Intent
 import android.widget.RelativeLayout
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databases.AppDbRepository
-import com.yoesuv.infomalangbatu.main.views.MainActivity
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
@@ -23,19 +23,22 @@ class SplashViewModel(application: Application, private val appRepository: AppRe
     var appDbRepository = AppDbRepository(application.applicationContext)
 
     var version: ObservableField<String> = ObservableField()
+    private val _isDataLoadingComplete = MutableLiveData<Boolean>()
+    val isDataLoadingComplete: LiveData<Boolean> = _isDataLoadingComplete
 
     fun setupProperties(activity: Activity) {
         version.set(activity.getString(R.string.info_app_version, BuildConfig.VERSION_NAME))
     }
 
     fun initDataBase(activity: Activity) {
+        _isDataLoadingComplete.value = false
         viewModelScope.launch {
             appRepository.getAppData({ places, galleries, pins ->
                 viewModelScope.launch {
                     setupPlaces(places)
                     setupGalleries(galleries)
                     setupMapPins(pins)
-                    openApplication(activity)
+                    _isDataLoadingComplete.value = true
                 }
             }, {
                 val layout: RelativeLayout = activity.findViewById(R.id.rlSplash)
@@ -63,13 +66,5 @@ class SplashViewModel(application: Application, private val appRepository: AppRe
         if (pins != null) {
             appDbRepository.insertMapPins(pins)
         }
-    }
-
-    private fun openApplication(activity: Activity) {
-        val intent = Intent(activity, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        activity.startActivity(intent)
-        activity.finish()
     }
 }

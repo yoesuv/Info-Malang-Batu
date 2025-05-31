@@ -1,6 +1,7 @@
 package com.yoesuv.infomalangbatu.main.views
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -34,9 +35,22 @@ class SplashActivity : AppCompatActivity() {
         binding.splash = viewModel
 
         viewModel.setupProperties(this)
+        viewModel.isDataLoadingComplete.observe(this) { isComplete ->
+            if (isComplete) {
+                openApplication()
+            }
+        }
+
         viewModel.initDataBase(this)
 
         AppHelper.insetsPadding(binding.rlSplash, bottom = true)
     }
 
+    private fun openApplication() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
+        finish()
+    }
 }
