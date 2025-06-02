@@ -9,13 +9,12 @@ on:
       - master
 jobs:
   Explore-GitHub-Actions:
-    runs-on: macos-15
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: List files in the repository initial
         run: ls ${{ github.workspace }}
-      - uses: actions/checkout@v4
       - name: Decrypt GPG api keys
         run: gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.API_KEY_PASSPHRASE }}" --output "${{ github.workspace }}"/apiKey.properties apiKey.properties.gpg
       - name: List files in the repository after decrypt
