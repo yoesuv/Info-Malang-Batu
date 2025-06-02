@@ -29,6 +29,11 @@ jobs:
         run: java --version
       - name: Setup Android SDK Tools
         uses: android-actions/setup-android@v2.0.2
+      - name: Enable KVM
+        run: |
+            echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+            sudo udevadm control --reload-rules
+            sudo udevadm trigger --name-match=kvm
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - name: Run unit tests with coverage JaCoCo
@@ -38,6 +43,18 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml
+      - name: run instrumentedtests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+            api-level: 34
+            disable-animations: false
+            profile: Pixel 8a
+            script: ./gradlew connectedDebugAndroidTest jacocoInstrumentedTestReport
+      - name: Upload coverage report to Codacy
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: app/build/reports/jacoco/jacocoInstrumentedTestReport/jacocoInstrumentedTestReport.xml
       - name: build apk release
         run: ./gradlew assembleRelease
       - run: echo "🍏 This job's status is ${{ job.status }}."
