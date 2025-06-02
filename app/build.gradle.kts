@@ -141,7 +141,7 @@ tasks.register("jacocoTestReport", JacocoReport::class) {
 tasks.register<JacocoReport>("jacocoInstrumentedTestReport") {
     dependsOn("connectedDebugAndroidTest")
 
-    val coverageFile = file("$buildDir/outputs/code_coverage/debugAndroidTest/connected/Pixel_8a_API_34(AVD) - 14/coverage.ec")
+    val coverageFile = file("$buildDir/outputs/code_coverage/debugAndroidTest/connected/Pixel_7_API_34(AVD) - 14/coverage.ec")
     executionData.setFrom(coverageFile)
 
     val mainSrc = "$projectDir/src/main/java"
