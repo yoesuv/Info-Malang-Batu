@@ -9,7 +9,7 @@ on:
       - master
 jobs:
   Explore-GitHub-Actions:
-    runs-on: ubuntu-22.04
+    runs-on: macos-15
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -46,12 +46,12 @@ jobs:
       - name: run instrumentedtests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-            api-level: 34
-            disable-animations: false
-            profile: Pixel 8a
-            target: playstore
-            arch: x86_64
-            script: ./gradlew connectedDebugAndroidTest jacocoInstrumentedTestReport
+          api-level: 34
+          disable-animations: false
+          profile: Pixel 8a
+          target: playstore
+          arch: arm64-v8a
+          script: ./gradlew connectedDebugAndroidTest jacocoInstrumentedTestReport
       - name: Upload coverage report to Codacy
         uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
