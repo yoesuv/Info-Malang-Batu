@@ -1,4 +1,5 @@
 import com.google.firebase.perf.plugin.FirebasePerfExtension
+import org.gradle.internal.impldep.bsh.commands.dir
 import java.util.Properties
 
 val apiKeyPropertiesFile = project.rootProject.file("apiKey.properties")
@@ -106,7 +107,7 @@ tasks.withType<Test> {
 }
 
 tasks.register("jacocoTestReport", JacocoReport::class) {
-    dependsOn("testDebugUnitTest")
+    dependsOn("testDebugUnitTest", "connectedDebugAndroidTest")
 
     reports {
         xml.required.set(true)
@@ -133,27 +134,9 @@ tasks.register("jacocoTestReport", JacocoReport::class) {
     sourceDirectories.setFrom(files(mainSrc))
     classDirectories.setFrom(files(debugTree))
     executionData.setFrom(files(
-        "${project.buildDir}/jacoco/testDebugUnitTest.exec",
-        "${project.buildDir}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
+        "${project.buildDir}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
+        "${project.buildDir}/outputs/code_coverage/debugAndroidTest/connected/**/*coverage.ec"
     ))
-}
-
-tasks.register<JacocoReport>("jacocoInstrumentedTestReport") {
-    dependsOn("connectedDebugAndroidTest")
-
-    val coverageFile = file("$buildDir/outputs/code_coverage/debugAndroidTest/connected/Pixel_7_API_34(AVD) - 14/coverage.ec")
-    executionData.setFrom(coverageFile)
-
-    val mainSrc = "$projectDir/src/main/java"
-    sourceDirectories.setFrom(files(mainSrc))
-    classDirectories.setFrom(
-        fileTree("$buildDir/tmp/kotlin-classes/debug")
-    )
-
-    reports {
-        xml.required.set(true)
-        html.required.set(true)
-    }
 }
 
 dependencies {
