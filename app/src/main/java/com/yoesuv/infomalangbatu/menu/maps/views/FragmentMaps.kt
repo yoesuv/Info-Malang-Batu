@@ -40,6 +40,7 @@ import com.yoesuv.infomalangbatu.utils.AppHelper
 import com.yoesuv.infomalangbatu.utils.BounceAnimation
 import com.yoesuv.infomalangbatu.widgets.AppDialog
 import kotlin.math.roundToInt
+import androidx.core.graphics.toColorInt
 
 class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback, MenuProvider {
 
@@ -103,8 +104,10 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         if (progressDialog.isShowing) {
             progressDialog.dismiss()
         }
-        if (direction?.isOK!!) {
-            if (direction.routeList.size > 0) {
+        val isOk = direction?.isOK ?: false
+        val routeList = direction?.routeList ?: emptyList()
+        if (isOk) {
+            if (routeList.isNotEmpty()) {
                 mGoogleMap?.clear()
                 mGoogleMap?.addMarker(
                     MarkerOptions().position(origin!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_origin))
@@ -113,17 +116,17 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
                     MarkerOptions().position(destination!!)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin))
                 )?.tag = MarkerTag("Destination", 3, 0.0, 0.0)
-                setCameraWithCoordinationBounds(direction.routeList[0])
-                for (i: Int in 0 until direction.routeList.size) {
+                setCameraWithCoordinationBounds(routeList[0])
+                for (i: Int in routeList.indices) {
                     val color = colors[i % colors.size]
-                    val route = direction.routeList[i]
+                    val route = routeList[i]
                     val directionPositionList = route.legList[0].directionPoint
                     mGoogleMap?.addPolyline(
                         DirectionConverter.createPolyline(
                             requireContext(),
                             directionPositionList,
                             5,
-                            Color.parseColor(color)
+                            color.toColorInt()
                         )
                     )
                 }

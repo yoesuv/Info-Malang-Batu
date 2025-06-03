@@ -1,6 +1,8 @@
 # Info Malang Batu #
 [![](https://github.com/yoesuv/Info-Malang-Batu/actions/workflows/github-actions.yml/badge.svg)](https://github.com/yoesuv/Info-Malang-Batu/actions)
 ![](https://img.shields.io/github/languages/top/yoesuv/Info-Malang-Batu)
+![Codacy Badge](https://app.codacy.com/project/badge/Grade/e7ed4b5c62ba4881af60cfe251f80057)
+![Codacy Badge](https://app.codacy.com/project/badge/Coverage/e7ed4b5c62ba4881af60cfe251f80057)
 
 * Build with Kotlin, Use MVVM Pattern
 * Local Database with [Room](https://developer.android.com/topic/libraries/architecture/room)

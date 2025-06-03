@@ -3,32 +3,28 @@ package com.yoesuv.infomalangbatu.widgets
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.util.AttributeSet
 import android.view.ViewOutlineProvider
 import android.widget.RelativeLayout
 import com.yoesuv.infomalangbatu.R
+import androidx.core.content.withStyledAttributes
 
 /**
  *  Created by yusuf on 2/20/17.
  */
 
-class ForegroundRelativeLayout(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
+class ForegroundRelativeLayout(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs) {
 
     private var foreground: Drawable? = null
 
     init {
-
-        val a = context.obtainStyledAttributes(attrs, R.styleable.ForegroundView)
-
-        val d = a.getDrawable(R.styleable.ForegroundView_android_foreground)
-        if (d != null) {
-            setForeground(d)
+        context.withStyledAttributes(attrs, R.styleable.ForegroundView) {
+            val d = getDrawable(R.styleable.ForegroundView_android_foreground)
+            if (d != null) {
+                setForeground(d)
+            }
         }
-        a.recycle()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            outlineProvider = ViewOutlineProvider.BOUNDS
-        }
+        outlineProvider = ViewOutlineProvider.BOUNDS
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -76,7 +72,7 @@ class ForegroundRelativeLayout(context: Context, attrs: AttributeSet) : Relative
      *
      * @param drawable The Drawable to be drawn on top of the children.
      */
-    override fun setForeground(drawable: Drawable) {
+    override fun setForeground(drawable: Drawable?) {
         if (foreground !== drawable) {
             if (foreground != null) {
                 foreground!!.callback = null
@@ -109,9 +105,7 @@ class ForegroundRelativeLayout(context: Context, attrs: AttributeSet) : Relative
     override fun drawableHotspotChanged(x: Float, y: Float) {
         super.drawableHotspotChanged(x, y)
         if (foreground != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                foreground!!.setHotspot(x, y)
-            }
+            foreground!!.setHotspot(x, y)
         }
     }
 

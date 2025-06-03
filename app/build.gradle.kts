@@ -106,7 +106,7 @@ tasks.withType<Test> {
 }
 
 tasks.register("jacocoTestReport", JacocoReport::class) {
-    dependsOn("testDebugUnitTest")
+    dependsOn("testDebugUnitTest", "connectedDebugAndroidTest")
 
     reports {
         xml.required.set(true)
@@ -132,10 +132,14 @@ tasks.register("jacocoTestReport", JacocoReport::class) {
 
     sourceDirectories.setFrom(files(mainSrc))
     classDirectories.setFrom(files(debugTree))
-    executionData.setFrom(files(
-        "${project.buildDir}/jacoco/testDebugUnitTest.exec",
-        "${project.buildDir}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
-    ))
+    executionData.setFrom(
+        fileTree(project.buildDir) {
+            include(
+                "/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
+                "/outputs/code_coverage/debugAndroidTest/connected/**/coverage.ec"
+            )
+        }
+    )
 }
 
 dependencies {
@@ -143,6 +147,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    debugImplementation(libs.fragmentTesting)
+    debugImplementation(libs.arch.core.testing)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.coroutines.test)

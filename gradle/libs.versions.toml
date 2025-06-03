@@ -1,6 +1,6 @@
 [versions]
 agp = "8.10.1"
-fragmentVersion = "1.8.3"
+fragmentVersion = "1.8.7"
 kotlin = "2.0.21"
 coreKtx = "1.16.0"
 junit = "4.13.2"
@@ -61,6 +61,7 @@ mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", versio
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCore" }
+fragmentTesting = { group = "androidx.fragment", name = "fragment-testing", version.ref = "fragmentVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

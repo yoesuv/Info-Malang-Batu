@@ -9,13 +9,12 @@ on:
       - master
 jobs:
   Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: List files in the repository initial
         run: ls ${{ github.workspace }}
-      - uses: actions/checkout@v4
       - name: Decrypt GPG api keys
         run: gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.API_KEY_PASSPHRASE }}" --output "${{ github.workspace }}"/apiKey.properties apiKey.properties.gpg
       - name: List files in the repository after decrypt
@@ -29,10 +28,22 @@ jobs:
         run: java --version
       - name: Setup Android SDK Tools
         uses: android-actions/setup-android@v2.0.2
+      - name: Enable KVM
+        run: |
+            echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+            sudo udevadm control --reload-rules
+            sudo udevadm trigger --name-match=kvm
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-      - name: Run unit tests with coverage JaCoCo
-        run: ./gradlew clean testDebugUnitTest jacocoTestReport
+      - name: run instrumented test and unit test
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+           api-level: 30
+           disable-animations: false
+           profile: Nexus 6
+           target: default
+           arch: x86_64
+           script: ./gradlew clean testDebugUnitTest connectedDebugAndroidTest jacocoTestReport
       - name: Upload coverage report to Codacy
         uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
