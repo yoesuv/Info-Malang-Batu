@@ -1,5 +1,4 @@
 import com.google.firebase.perf.plugin.FirebasePerfExtension
-import org.gradle.internal.impldep.bsh.commands.dir
 import java.util.Properties
 
 val apiKeyPropertiesFile = project.rootProject.file("apiKey.properties")
@@ -144,6 +143,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.fragmentTesting)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.coroutines.test)

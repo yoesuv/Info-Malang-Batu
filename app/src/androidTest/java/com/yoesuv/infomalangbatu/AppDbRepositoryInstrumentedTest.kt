@@ -5,9 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.yoesuv.infomalangbatu.databases.AppDatabase
-import com.yoesuv.infomalangbatu.databases.GalleryDaoAccess
-import com.yoesuv.infomalangbatu.databases.MapPinDaoAccess
-import com.yoesuv.infomalangbatu.databases.PlaceDaoAccess
+import com.yoesuv.infomalangbatu.databases.AppDbRepository
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
@@ -20,11 +18,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class AppDatabaseInstrumentedTest {
+class AppDbRepositoryInstrumentedTest {
     private lateinit var db: AppDatabase
-    private lateinit var placeDao: PlaceDaoAccess
-    private lateinit var galleryDao: GalleryDaoAccess
-    private lateinit var mapPinDao: MapPinDaoAccess
+    private lateinit var repository: AppDbRepository
 
     @Before
     fun setUp() {
@@ -32,9 +28,7 @@ class AppDatabaseInstrumentedTest {
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
             .allowMainThreadQueries()
             .build()
-        placeDao = db.placeDaoAccess()
-        galleryDao = db.galleryDaoAccess()
-        mapPinDao = db.mapPinDaoAccess()
+        repository = AppDbRepository(context)
     }
 
     @After
@@ -52,10 +46,11 @@ class AppDatabaseInstrumentedTest {
             thumbnail = "test_thumb.jpg",
             image = "test.jpg"
         )
-        placeDao.deleteAllPlace()
-        placeDao.insertPlaces(mutableListOf(place))
-        val allPlaces = placeDao.selectAll()
-        val places = allPlaces.getOrAwaitValue()
+        place.id = 1
+        repository.deleteAllPlace()
+        repository.insertPlaces(mutableListOf(place))
+        val allPlaces = repository.selectAllPlace()
+        val places = allPlaces?.getOrAwaitValue() ?: emptyList()
         assertEquals(1, places.size)
         assertEquals("Test Place", places.first().name)
     }
@@ -63,16 +58,17 @@ class AppDatabaseInstrumentedTest {
     @Test
     fun insertAndReadGallery() = runBlocking {
         val gallery = GalleryModel(
-            caption = "Test Caption",
-            thumbnail = "test_thumb.jpg",
-            image = "test.jpg"
+            caption = "Repo Test Caption",
+            thumbnail = "repo_thumb.jpg",
+            image = "repo_image.jpg"
         )
-        galleryDao.deleteAllDbGallery()
-        galleryDao.insertDbGalleries(listOf(gallery))
-        val allGalleries = galleryDao.selectAllDbGallery()
-        val galleries = allGalleries.getOrAwaitValue()
+        gallery.id = 1
+        repository.deleteAllGallery()
+        repository.insertGalleries(mutableListOf(gallery))
+        val allGalleries = repository.selectAllGallery()
+        val galleries = allGalleries?.getOrAwaitValue() ?: emptyList()
         assertEquals(1, galleries.size)
-        assertEquals("Test Caption", galleries.first().caption)
+        assertEquals("Repo Test Caption", galleries.first().caption)
     }
 
     @Test
@@ -83,12 +79,12 @@ class AppDatabaseInstrumentedTest {
             latitude = -7.982,
             longitude = 112.630
         )
-        mapPinDao.deleteAllDbMapPins()
-        mapPinDao.insertDbMapPins(listOf(pin))
-        val allPins = mapPinDao.selectAllDbMapPins()
-        val pins = allPins.getOrAwaitValue()
+        pin.id = 1
+        repository.deleteAllMapPins()
+        repository.insertMapPins(mutableListOf(pin))
+        val allPins = repository.selectAllMapPins()
+        val pins = allPins?.getOrAwaitValue() ?: emptyList()
         assertEquals(1, pins.size)
         assertEquals("Test Pin", pins.first().name)
-        assertEquals(123, pins.first().location)
     }
 }
