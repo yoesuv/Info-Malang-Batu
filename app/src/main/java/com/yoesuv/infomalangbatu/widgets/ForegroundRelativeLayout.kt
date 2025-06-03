@@ -13,7 +13,7 @@ import androidx.core.content.withStyledAttributes
  *  Created by yusuf on 2/20/17.
  */
 
-class ForegroundRelativeLayout(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
+class ForegroundRelativeLayout(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs) {
 
     private var foreground: Drawable? = null
 

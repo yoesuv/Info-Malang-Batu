@@ -132,10 +132,14 @@ tasks.register("jacocoTestReport", JacocoReport::class) {
 
     sourceDirectories.setFrom(files(mainSrc))
     classDirectories.setFrom(files(debugTree))
-    executionData.setFrom(files(
-        "${project.buildDir}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
-        "${project.buildDir}/outputs/code_coverage/debugAndroidTest/connected/**/*coverage.ec"
-    ))
+    executionData.setFrom(
+        fileTree(project.buildDir) {
+            include(
+                "/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
+                "/outputs/code_coverage/debugAndroidTest/connected/**/coverage.ec"
+            )
+        }
+    )
 }
 
 dependencies {
