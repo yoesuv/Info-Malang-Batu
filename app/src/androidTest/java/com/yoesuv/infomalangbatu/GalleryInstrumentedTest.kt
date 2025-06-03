@@ -12,7 +12,9 @@ import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.runner.RunWith
 import androidx.room.Room
+import com.yoesuv.infomalangbatu.utils.getOrAwaitValuee
 import kotlinx.coroutines.Dispatchers
+import org.junit.Assert.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class GalleryInstrumentedTest {
@@ -42,9 +44,8 @@ class GalleryInstrumentedTest {
     }
 
     @Test
-    fun testGalleryFlow() {
+    fun loadGallery() {
         runBlocking(Dispatchers.IO) {
-            // Insert test data
             val gallery = GalleryModel(
                 caption = "Test Gallery Caption",
                 thumbnail = "test_thumb.jpg",
@@ -54,5 +55,7 @@ class GalleryInstrumentedTest {
             repository.deleteAllGallery()
             repository.insertGalleries(mutableListOf(gallery))
         }
+        val gallery = viewModel.getListGallery()?.getOrAwaitValuee()
+        assertEquals(gallery?.size, 1)
     }
 }
