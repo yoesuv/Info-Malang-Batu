@@ -10,16 +10,20 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.data.PlaceLocation
+import com.yoesuv.infomalangbatu.databases.AppDbRepository
 import com.yoesuv.infomalangbatu.databinding.FragmentListplaceBinding
 import com.yoesuv.infomalangbatu.menu.listplace.adapters.ListPlaceAdapter
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentListPlaceViewModel
+import com.yoesuv.infomalangbatu.utils.ViewModelFactory
 
 class FragmentListPlace : Fragment(), MenuProvider {
 
     private var binding: FragmentListplaceBinding? = null
-    private val viewModel: FragmentListPlaceViewModel by viewModels()
-    private var adapter: ListPlaceAdapter? = null
+    private lateinit var adapter: ListPlaceAdapter
+    private val viewModel: FragmentListPlaceViewModel by viewModels {
+        ViewModelFactory(AppDbRepository(requireContext()))
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (binding == null) {
@@ -36,7 +40,6 @@ class FragmentListPlace : Fragment(), MenuProvider {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.setupProperties(requireContext())
         loadPlace(PlaceLocation.ALL)
     }
 
@@ -76,8 +79,8 @@ class FragmentListPlace : Fragment(), MenuProvider {
 
     private fun onListDataChange(listPlace: List<PlaceModel>) {
         if (listPlace.isNotEmpty()) {
-            adapter?.submitList(listPlace)
-            adapter?.notifyItemRangeChanged(0, listPlace.size)
+            adapter.submitList(listPlace)
+            adapter.notifyItemRangeChanged(0, listPlace.size)
         }
     }
 

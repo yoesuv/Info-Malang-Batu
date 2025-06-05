@@ -9,16 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.yoesuv.infomalangbatu.R
+import com.yoesuv.infomalangbatu.databases.AppDbRepository
 import com.yoesuv.infomalangbatu.databinding.FragmentGalleryBinding
 import com.yoesuv.infomalangbatu.menu.gallery.adapters.GalleryAdapter
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.gallery.viewmodels.FragmentGalleryViewModel
+import com.yoesuv.infomalangbatu.utils.ViewModelFactory
 
 class FragmentGallery : Fragment() {
 
     private var binding: FragmentGalleryBinding? = null
-    private val viewModel: FragmentGalleryViewModel by viewModels()
-    private var adapter: GalleryAdapter? = null
+    private lateinit var adapter: GalleryAdapter
+    private val viewModel: FragmentGalleryViewModel by viewModels {
+        ViewModelFactory(AppDbRepository(requireContext()))
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (binding == null) {
@@ -32,22 +36,26 @@ class FragmentGallery : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.setupProperties(requireContext())
-        viewModel.getListGallery()?.observe(viewLifecycleOwner) {
-            onListDataChanged(it)
-        }
+        loadGallery()
     }
 
     private fun setupRecycler() {
-        adapter = GalleryAdapter {
-            onItemGalleryClick(it)
+        adapter = GalleryAdapter { galleryModel ->
+            onItemGalleryClick(galleryModel)
         }
+        binding?.recyclerViewGallery?.layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, 2)
         binding?.recyclerViewGallery?.adapter = adapter
+    }
+
+    private fun loadGallery() {
+        viewModel.getListGallery()?.observe(viewLifecycleOwner) { listGallery ->
+            onListDataChanged(listGallery)
+        }
     }
 
     private fun onListDataChanged(listData: List<GalleryModel>) {
         if (listData.isNotEmpty()) {
-            adapter?.submitList(listData)
+            adapter.submitList(listData)
         }
     }
 

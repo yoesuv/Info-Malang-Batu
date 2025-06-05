@@ -1,8 +1,7 @@
 package com.yoesuv.infomalangbatu.main.viewmodels
 
-import android.app.Activity
 import android.app.Application
-import android.widget.RelativeLayout
+import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -15,7 +14,6 @@ import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.networks.AppRepository
-import com.yoesuv.infomalangbatu.utils.AppHelper
 import kotlinx.coroutines.launch
 
 class SplashViewModel(application: Application, private val appRepository: AppRepository) : AndroidViewModel(application) {
@@ -26,11 +24,11 @@ class SplashViewModel(application: Application, private val appRepository: AppRe
     private val _isDataLoadingComplete = MutableLiveData<Boolean>()
     val isDataLoadingComplete: LiveData<Boolean> = _isDataLoadingComplete
 
-    fun setupProperties(activity: Activity) {
-        version.set(activity.getString(R.string.info_app_version, BuildConfig.VERSION_NAME))
+    fun setupProperties(context: Context) {
+        version.set(context.getString(R.string.info_app_version, BuildConfig.VERSION_NAME))
     }
 
-    fun initDataBase(activity: Activity) {
+    fun initDataBase(onError: () -> Unit) {
         _isDataLoadingComplete.value = false
         viewModelScope.launch {
             appRepository.getAppData({ places, galleries, pins ->
@@ -41,27 +39,26 @@ class SplashViewModel(application: Application, private val appRepository: AppRe
                     _isDataLoadingComplete.value = true
                 }
             }, {
-                val layout: RelativeLayout = activity.findViewById(R.id.rlSplash)
-                AppHelper.snackBarError(layout.rootView, R.string.toast_error_get_list_place)
+                onError()
             })
         }
     }
 
-    suspend fun setupPlaces(places: MutableList<PlaceModel>?) {
+    private suspend fun setupPlaces(places: MutableList<PlaceModel>?) {
         appDbRepository.deleteAllPlace()
         if (places != null) {
             appDbRepository.insertPlaces(places)
         }
     }
 
-    suspend fun setupGalleries(galleries: MutableList<GalleryModel>?) {
+    private suspend fun setupGalleries(galleries: MutableList<GalleryModel>?) {
         appDbRepository.deleteAllGallery()
         if (galleries != null) {
             appDbRepository.insertGalleries(galleries)
         }
     }
 
-    suspend fun setupMapPins(pins: MutableList<PinModel>?) {
+    private suspend fun setupMapPins(pins: MutableList<PinModel>?) {
         appDbRepository.deleteAllMapPins()
         if (pins != null) {
             appDbRepository.insertMapPins(pins)
