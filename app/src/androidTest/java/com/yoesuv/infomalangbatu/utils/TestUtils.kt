@@ -3,6 +3,8 @@ package com.yoesuv.infomalangbatu.utils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread
+import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
+import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -74,4 +76,12 @@ fun <T> LiveData<T>.getOrAwaitValuee(
 
     @Suppress("UNCHECKED_CAST")
     return data as T
+}
+
+fun loadPlaceItemsFromJson(): List<PlaceModel> {
+    return JsonParser.stringToObject("list_place.json", Array<PlaceModel>::class.java).toList()
+}
+
+fun loadGalleryItemsFromJson(): List<GalleryModel> {
+    return JsonParser.stringToObject("gallery.json", Array<GalleryModel>::class.java).toList()
 }

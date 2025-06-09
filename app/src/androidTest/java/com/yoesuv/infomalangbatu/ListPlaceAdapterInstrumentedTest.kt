@@ -6,7 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.yoesuv.infomalangbatu.menu.listplace.adapters.ListPlaceAdapter
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
-import com.yoesuv.infomalangbatu.utils.JsonParser
+import com.yoesuv.infomalangbatu.utils.loadPlaceItemsFromJson
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -39,9 +39,5 @@ class ListPlaceAdapterInstrumentedTest {
     @Test
     fun testAdapterItemCount() {
         assertEquals(placeItems.size, adapter.itemCount)
-    }
-
-    private fun loadPlaceItemsFromJson(): List<PlaceModel> {
-        return JsonParser.stringToObject("list_place.json", Array<PlaceModel>::class.java).toList()
     }
 }

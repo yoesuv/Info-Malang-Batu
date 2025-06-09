@@ -5,7 +5,8 @@ import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.gallery.viewmodels.FragmentDetailGalleryViewModel
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentDetailListPlaceViewModel
-import com.yoesuv.infomalangbatu.utils.JsonParser
+import com.yoesuv.infomalangbatu.utils.loadGalleryItemsFromJson
+import com.yoesuv.infomalangbatu.utils.loadPlaceItemsFromJson
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -25,26 +26,26 @@ class DetailViewModelsInstrumentedTest {
 
     @Test
     fun testFragmentDetailListPlaceViewModel() {
-        val testPlace = placeItems[0]
-        val viewModel = FragmentDetailListPlaceViewModel(testPlace)
+        val placeModel = placeItems[0]
+        val viewModel = FragmentDetailListPlaceViewModel(placeModel)
 
-        assertEquals("Alun Alun Malang", viewModel.title.get())
-        assertEquals("alun alun ini baru saja dipermak pada tahun 2015. yang sebelumnya terlihat semrawut sekarang menjadi lebih tertata.", viewModel.description.get())
-        assertEquals("https://lh3.googleusercontent.com/-rTHiiW3vPMk/VqQXrbG5u6I/AAAAAAAACfs/buFhkMyTN98/s600-Ic42/alun_alun_malang.jpg", viewModel.imageUrl.get())
+        assertEquals(placeModel.name, viewModel.title.get())
+        assertEquals(placeModel.image, viewModel.imageUrl.get())
+        assertEquals(placeModel.description, viewModel.description.get())
     }
 
     @Test
     fun testFragmentDetailGalleryViewModel() {
-        val testGallery = galleryItems[0]
-        val viewModel = FragmentDetailGalleryViewModel(testGallery)
+        val galleryModel = galleryItems[0]
+        val viewModel = FragmentDetailGalleryViewModel(galleryModel)
 
-        assertEquals("https://images2.imgbox.com/0a/e7/G421oy0Q_o.jpg", viewModel.imageUrl.get())
-        assertEquals("Zona Infinite World di Jatim Park 3", viewModel.caption.get())
+        assertEquals(galleryModel.image, viewModel.imageUrl.get())
+        assertEquals(galleryModel.caption, viewModel.caption.get())
     }
 
     @Test
     fun testFragmentDetailListPlaceViewModel_NullSafety() {
-        val nullPlace = PlaceModel(
+        val placeModel = PlaceModel(
             name = null,
             location = null,
             category = null,
@@ -55,7 +56,7 @@ class DetailViewModelsInstrumentedTest {
 
         var exceptionThrown = false
         try {
-            FragmentDetailListPlaceViewModel(nullPlace)
+            FragmentDetailListPlaceViewModel(placeModel)
         } catch (e: Exception) {
             exceptionThrown = true
         }
@@ -65,23 +66,15 @@ class DetailViewModelsInstrumentedTest {
 
     @Test
     fun testFragmentDetailGalleryViewModel_NullValues() {
-        val nullGallery = GalleryModel(
+        val galleryModel = GalleryModel(
             caption = null,
             thumbnail = null,
             image = null
         )
 
-        val viewModel = FragmentDetailGalleryViewModel(nullGallery)
+        val viewModel = FragmentDetailGalleryViewModel(galleryModel)
 
         assertEquals(null, viewModel.imageUrl.get())
         assertEquals(null, viewModel.caption.get())
-    }
-
-    private fun loadPlaceItemsFromJson(): List<PlaceModel> {
-        return JsonParser.stringToObject("list_place.json", Array<PlaceModel>::class.java).toList()
-    }
-
-    private fun loadGalleryItemsFromJson(): List<GalleryModel> {
-        return JsonParser.stringToObject("gallery.json", Array<GalleryModel>::class.java).toList()
     }
 }
