@@ -26,28 +26,21 @@ class ListPlaceAdapterInstrumentedTest {
     fun setUp() {
         context = ApplicationProvider.getApplicationContext()
         recyclerView = RecyclerView(context)
-        
-        // Load test data from JSON file
+
         placeItems = loadPlaceItemsFromJson()
-        
-        // Create adapter with click listener
+
         adapter = ListPlaceAdapter { placeModel ->
             clickedItem.set(placeModel)
         }
-        
-        // Submit the list to the adapter
+
         adapter.submitList(placeItems)
     }
 
     @Test
     fun testAdapterItemCount() {
-        // Verify that the adapter has the correct number of items
         assertEquals(placeItems.size, adapter.itemCount)
     }
 
-    /**
-     * Helper method to load place items from the test JSON file
-     */
     private fun loadPlaceItemsFromJson(): List<PlaceModel> {
         return JsonParser.stringToObject("list_place.json", Array<PlaceModel>::class.java).toList()
     }
