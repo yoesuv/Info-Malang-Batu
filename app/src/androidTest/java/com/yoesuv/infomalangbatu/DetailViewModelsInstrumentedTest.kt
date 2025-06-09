@@ -12,7 +12,6 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class DetailViewModelsInstrumentedTest {
 
-    // Test data for PlaceModel
     private val testPlace = PlaceModel(
         name = "Test Place",
         location = "Test Location",
@@ -22,7 +21,6 @@ class DetailViewModelsInstrumentedTest {
         image = "test_image.jpg"
     )
 
-    // Test data for GalleryModel
     private val testGallery = GalleryModel(
         caption = "Test Caption",
         thumbnail = "test_gallery_thumb.jpg",
@@ -31,10 +29,8 @@ class DetailViewModelsInstrumentedTest {
 
     @Test
     fun testFragmentDetailListPlaceViewModel() {
-        // Initialize the ViewModel with test data
         val viewModel = FragmentDetailListPlaceViewModel(testPlace)
 
-        // Verify that the ObservableFields are correctly initialized
         assertEquals("Test Place", viewModel.title.get())
         assertEquals("Test Description", viewModel.description.get())
         assertEquals("test_image.jpg", viewModel.imageUrl.get())
@@ -42,17 +38,14 @@ class DetailViewModelsInstrumentedTest {
 
     @Test
     fun testFragmentDetailGalleryViewModel() {
-        // Initialize the ViewModel with test data
         val viewModel = FragmentDetailGalleryViewModel(testGallery)
 
-        // Verify that the ObservableFields are correctly initialized
         assertEquals("test_gallery_image.jpg", viewModel.imageUrl.get())
         assertEquals("Test Caption", viewModel.caption.get())
     }
 
     @Test
     fun testFragmentDetailListPlaceViewModel_NullSafety() {
-        // Create a PlaceModel with null values to test null safety
         val nullPlace = PlaceModel(
             name = null,
             location = null,
@@ -62,32 +55,26 @@ class DetailViewModelsInstrumentedTest {
             image = null
         )
 
-        // This should throw an exception due to null assertion in the ViewModel
-        // We're expecting an exception, so we'll catch it to pass the test
         var exceptionThrown = false
         try {
             FragmentDetailListPlaceViewModel(nullPlace)
         } catch (e: Exception) {
             exceptionThrown = true
         }
-        
-        // The test passes if an exception was thrown
+
         assertEquals(true, exceptionThrown)
     }
 
     @Test
     fun testFragmentDetailGalleryViewModel_NullValues() {
-        // Create a GalleryModel with null values
         val nullGallery = GalleryModel(
             caption = null,
             thumbnail = null,
             image = null
         )
 
-        // Initialize the ViewModel with null data
         val viewModel = FragmentDetailGalleryViewModel(nullGallery)
 
-        // Verify that the ObservableFields handle null values correctly
         assertEquals(null, viewModel.imageUrl.get())
         assertEquals(null, viewModel.caption.get())
     }

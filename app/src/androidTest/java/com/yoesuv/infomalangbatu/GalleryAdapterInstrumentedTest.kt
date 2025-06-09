@@ -26,28 +26,21 @@ class GalleryAdapterInstrumentedTest {
     fun setUp() {
         context = ApplicationProvider.getApplicationContext()
         recyclerView = RecyclerView(context)
-        
-        // Load test data from JSON file
+
         galleryItems = loadGalleryItemsFromJson()
-        
-        // Create adapter with click listener
+
         adapter = GalleryAdapter { galleryModel ->
             clickedItem.set(galleryModel)
         }
-        
-        // Submit the list to the adapter
+
         adapter.submitList(galleryItems)
     }
 
     @Test
     fun testAdapterItemCount() {
-        // Verify that the adapter has the correct number of items
         assertEquals(galleryItems.size, adapter.itemCount)
     }
 
-    /**
-     * Helper method to load gallery items from the test JSON file
-     */
     private fun loadGalleryItemsFromJson(): List<GalleryModel> {
         return JsonParser.stringToObject("gallery.json", Array<GalleryModel>::class.java).toList()
     }
