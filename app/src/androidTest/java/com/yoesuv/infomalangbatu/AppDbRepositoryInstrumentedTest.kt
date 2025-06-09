@@ -10,6 +10,9 @@ import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.utils.getOrAwaitValue
+import com.yoesuv.infomalangbatu.utils.loadGalleryItemsFromJson
+import com.yoesuv.infomalangbatu.utils.loadMapsPinItemsFromJson
+import com.yoesuv.infomalangbatu.utils.loadPlaceItemsFromJson
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -21,6 +24,9 @@ import org.junit.runner.RunWith
 class AppDbRepositoryInstrumentedTest {
     private lateinit var db: AppDatabase
     private lateinit var repository: AppDbRepository
+    private lateinit var placeItems: List<PlaceModel>
+    private lateinit var galleryItems: List<GalleryModel>
+    private lateinit var pinItems: List<PinModel>
 
     @Before
     fun setUp() {
@@ -29,6 +35,10 @@ class AppDbRepositoryInstrumentedTest {
             .allowMainThreadQueries()
             .build()
         repository = AppDbRepository(context)
+
+        placeItems = loadPlaceItemsFromJson()
+        galleryItems = loadGalleryItemsFromJson()
+        pinItems = loadMapsPinItemsFromJson()
     }
 
     @After
@@ -38,7 +48,7 @@ class AppDbRepositoryInstrumentedTest {
 
     @Test
     fun insertAndReadPlace() = runBlocking {
-        val place = PlaceModel(
+        val place = placeItems.firstOrNull()?.copy() ?: PlaceModel(
             name = "Test Place",
             location = "Test Location",
             category = "Test Category",
@@ -52,12 +62,12 @@ class AppDbRepositoryInstrumentedTest {
         val allPlaces = repository.selectAllPlace()
         val places = allPlaces?.getOrAwaitValue() ?: emptyList()
         assertEquals(1, places.size)
-        assertEquals("Test Place", places.first().name)
+        assertEquals(place.name, places.first().name)
     }
 
     @Test
     fun insertAndReadGallery() = runBlocking {
-        val gallery = GalleryModel(
+        val gallery = galleryItems.firstOrNull()?.copy() ?: GalleryModel(
             caption = "Repo Test Caption",
             thumbnail = "repo_thumb.jpg",
             image = "repo_image.jpg"
@@ -68,12 +78,12 @@ class AppDbRepositoryInstrumentedTest {
         val allGalleries = repository.selectAllGallery()
         val galleries = allGalleries?.getOrAwaitValue() ?: emptyList()
         assertEquals(1, galleries.size)
-        assertEquals("Repo Test Caption", galleries.first().caption)
+        assertEquals(gallery.caption, galleries.first().caption)
     }
 
     @Test
     fun insertAndReadPin() = runBlocking {
-        val pin = PinModel(
+        val pin = pinItems.firstOrNull()?.copy() ?: PinModel(
             name = "Test Pin",
             location = 123,
             latitude = -7.982,
@@ -85,6 +95,6 @@ class AppDbRepositoryInstrumentedTest {
         val allPins = repository.selectAllMapPins()
         val pins = allPins?.getOrAwaitValue() ?: emptyList()
         assertEquals(1, pins.size)
-        assertEquals("Test Pin", pins.first().name)
+        assertEquals(pin.name, pins.first().name)
     }
 }
