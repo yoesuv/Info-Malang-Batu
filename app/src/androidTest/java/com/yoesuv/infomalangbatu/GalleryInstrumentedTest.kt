@@ -34,8 +34,7 @@ class GalleryInstrumentedTest {
         repository = AppDbRepository(context)
 
         // Initialize ViewModel with test repository
-        viewModel = FragmentGalleryViewModel()
-        viewModel.setupProperties(context)
+        viewModel = FragmentGalleryViewModel(repository)
     }
 
     @After

@@ -1,6 +1,5 @@
 package com.yoesuv.infomalangbatu
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Looper
@@ -64,9 +63,6 @@ class SplashUnitTest {
     private lateinit var application: Application
 
     @Mock
-    private lateinit var activity: Activity
-
-    @Mock
     private lateinit var appDbRepository: AppDbRepository
 
     @Mock
@@ -119,7 +115,7 @@ class SplashUnitTest {
         testViewModel.isDataLoadingComplete.observeForever(observer)
 
         // Call the actual initDatabase function
-        testViewModel.initDataBase(activity)
+        testViewModel.initDataBase {}
 
         // Wait for coroutines to complete
         testDispatcher.scheduler.advanceUntilIdle()
@@ -146,8 +142,8 @@ class SplashUnitTest {
         val splashViewModel = SplashViewModel(application, mockRepo)
 
         val versionText = "Version 2.3.6"
-        `when`(activity.getString(R.string.info_app_version, BuildConfig.VERSION_NAME)).thenReturn(versionText)
-        splashViewModel.setupProperties(activity)
+        `when`(context.getString(R.string.info_app_version, BuildConfig.VERSION_NAME)).thenReturn(versionText)
+        splashViewModel.setupProperties(context)
         assertEquals(splashViewModel.version.get(), versionText)
     }
 }

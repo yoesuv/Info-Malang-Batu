@@ -3,6 +3,7 @@ package com.yoesuv.infomalangbatu.main.views
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.widget.RelativeLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -41,7 +42,9 @@ class SplashActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.initDataBase(this)
+        viewModel.initDataBase {
+            AppHelper.snackBarError(binding.root, R.string.toast_error_get_list_place)
+        }
 
         AppHelper.insetsPadding(binding.rlSplash, bottom = true)
     }
