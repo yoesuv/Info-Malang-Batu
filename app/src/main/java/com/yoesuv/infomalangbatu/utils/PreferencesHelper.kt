@@ -3,6 +3,7 @@ package com.yoesuv.infomalangbatu.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.yoesuv.infomalangbatu.data.AppConstants
+import androidx.core.content.edit
 
 class PreferencesHelper(context: Context) {
 
@@ -10,7 +11,7 @@ class PreferencesHelper(context: Context) {
         context.getSharedPreferences(AppConstants.PREFERENCE_NAME, Context.MODE_PRIVATE)
 
     fun setDouble(key: String, value: Double) {
-        prefHelper.edit().putLong(key, java.lang.Double.doubleToRawLongBits(value)).apply()
+        prefHelper.edit { putLong(key, java.lang.Double.doubleToRawLongBits(value)) }
     }
 
     fun getDouble(key: String): Double {
