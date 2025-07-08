@@ -29,7 +29,7 @@ android {
     }
 
     namespace = "com.yoesuv.infomalangbatu"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         val keyMaps = apiKeyProperties["MAPS_API_KEY"].toString()
@@ -37,7 +37,7 @@ android {
 
         applicationId = "com.yoesuv.infomalangbatu"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 18
         versionName = "2.3.6"
         multiDexEnabled = true
