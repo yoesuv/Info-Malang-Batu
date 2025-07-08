@@ -15,7 +15,7 @@ import com.yoesuv.infomalangbatu.databinding.FragmentListplaceBinding
 import com.yoesuv.infomalangbatu.menu.listplace.adapters.ListPlaceAdapter
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentListPlaceViewModel
-import com.yoesuv.infomalangbatu.utils.ViewModelFactory
+import com.yoesuv.infomalangbatu.utils.bindings.ViewModelFactory
 
 class FragmentListPlace : Fragment(), MenuProvider {
 

@@ -14,7 +14,7 @@ import com.yoesuv.infomalangbatu.databinding.FragmentGalleryBinding
 import com.yoesuv.infomalangbatu.menu.gallery.adapters.GalleryAdapter
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.gallery.viewmodels.FragmentGalleryViewModel
-import com.yoesuv.infomalangbatu.utils.ViewModelFactory
+import com.yoesuv.infomalangbatu.utils.bindings.ViewModelFactory
 
 class FragmentGallery : Fragment() {
 
@@ -43,7 +43,6 @@ class FragmentGallery : Fragment() {
         adapter = GalleryAdapter { galleryModel ->
             onItemGalleryClick(galleryModel)
         }
-        binding?.recyclerViewGallery?.layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, 2)
         binding?.recyclerViewGallery?.adapter = adapter
     }
 

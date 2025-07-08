@@ -24,7 +24,7 @@ class App: MultiDexApplication() {
     }
 
     private fun setupFirebaseCrashlytics() {
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
+        FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = !BuildConfig.DEBUG
     }
 
 }

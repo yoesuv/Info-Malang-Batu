@@ -1,4 +1,4 @@
-package com.yoesuv.infomalangbatu.utils
+package com.yoesuv.infomalangbatu.utils.bindings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
