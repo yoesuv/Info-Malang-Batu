@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import android.os.Build
 import android.text.Html
 import android.util.Log
 import android.view.View
@@ -13,6 +12,7 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.google.android.material.snackbar.Snackbar
 import com.yoesuv.infomalangbatu.BuildConfig
 import com.yoesuv.infomalangbatu.R
@@ -56,10 +56,6 @@ object AppHelper {
         return permission == PackageManager.PERMISSION_GRANTED
     }
 
-    fun isVanillaIceCreamAndUp(): Boolean {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM
-    }
-
     fun insetsPadding(
         view: View, left: Boolean = false,
         top: Boolean = false,
@@ -69,11 +65,11 @@ object AppHelper {
     ) {
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, windowInset ->
             val inset = windowInset.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(
-                if (left) inset.left else v.paddingLeft,
-                if (top) inset.top else v.paddingTop,
-                if (right) inset.right else v.paddingRight,
-                if (bottom) inset.bottom + 32 else v.paddingBottom
+            v.updatePadding(
+                left = if (left) inset.left else v.paddingLeft,
+                top = if (top) inset.top else v.paddingTop,
+                right = if (right) inset.right else v.paddingRight,
+                bottom = if (bottom) inset.bottom else v.paddingBottom
             )
             color?.let {
                 v.setBackgroundColor(it)

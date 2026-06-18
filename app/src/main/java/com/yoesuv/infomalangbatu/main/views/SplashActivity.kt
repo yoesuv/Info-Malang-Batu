@@ -23,9 +23,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (AppHelper.isVanillaIceCreamAndUp()) {
-            enableEdgeToEdge()
-        }
+        enableEdgeToEdge()
 
         val appRepository = AppRepositoryImpl()
         val viewModelFactory = SplashViewModelFactory(application, appRepository)
