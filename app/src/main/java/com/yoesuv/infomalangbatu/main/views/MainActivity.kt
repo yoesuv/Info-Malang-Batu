@@ -1,13 +1,13 @@
 package com.yoesuv.infomalangbatu.main.views
 
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -19,7 +19,6 @@ import com.yoesuv.infomalangbatu.main.viewmodels.MainViewModel
 import com.yoesuv.infomalangbatu.utils.AppHelper
 
 class MainActivity : AppCompatActivity() {
-
     companion object {
         var BACK_PRESSED: Long = 0L
     }
@@ -45,10 +44,7 @@ class MainActivity : AppCompatActivity() {
         AppHelper.insetsPadding(binding.coordinatorLayoutMain, top = true, color = ContextCompat.getColor(this, R.color.colorPrimary))
     }
 
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp()
-    }
+    override fun onSupportNavigateUp(): Boolean = navController.navigateUp()
 
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbarMain)
@@ -71,20 +67,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupOnBackPressed() {
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (navController.currentDestination?.id == R.id.fragmentList) {
-                    if ((BACK_PRESSED + 2000L) > System.currentTimeMillis()) {
-                        finish()
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (navController.currentDestination?.id == R.id.fragmentList) {
+                        if ((BACK_PRESSED + 2000L) > System.currentTimeMillis()) {
+                            finish()
+                        } else {
+                            AppHelper.snackBarWarning(binding.coordinatorLayoutMain.rootView, R.string.confirm_close)
+                        }
+                        BACK_PRESSED = System.currentTimeMillis()
                     } else {
-                        AppHelper.snackBarWarning(binding.coordinatorLayoutMain.rootView, R.string.confirm_close)
+                        navController.popBackStack()
                     }
-                    BACK_PRESSED = System.currentTimeMillis()
-                } else {
-                    navController.popBackStack()
                 }
-            }
-        })
+            },
+        )
     }
-
 }

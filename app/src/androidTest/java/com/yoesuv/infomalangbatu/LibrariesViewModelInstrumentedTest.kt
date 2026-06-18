@@ -18,7 +18,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class LibrariesViewModelInstrumentedTest {
-
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -55,13 +54,13 @@ class LibrariesViewModelInstrumentedTest {
         // Verify each item has the expected structure
         for (i in librariesList.indices) {
             val item = librariesList[i]
-            
+
             // Check that title, url, and license are not null
             assertNotNull(item.title)
             assertNotNull(item.url)
             assertNotNull(item.license)
             assertNotNull(item.isLast)
-            
+
             // Only the last item should have isLast = true
             if (i == librariesList.size - 1) {
                 assertTrue(item.isLast!!)
@@ -87,15 +86,15 @@ class LibrariesViewModelInstrumentedTest {
         val lastItem = librariesList.last()
         assertTrue(lastItem.isLast!!)
     }
-    
+
     @Test
     fun testExpectedLibrariesCount() {
         // Call the setupData function
         viewModel.setupData(context)
-        
+
         // Get the LiveData value
         val librariesList = viewModel.listData.getOrAwaitValuee()
-        
+
         // The ChildFragmentLibrariesViewModel adds 8 libraries in setupData
         assertEquals(8, librariesList.size)
     }

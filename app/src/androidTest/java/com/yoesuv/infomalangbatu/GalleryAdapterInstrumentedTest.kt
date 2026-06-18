@@ -15,7 +15,6 @@ import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(AndroidJUnit4::class)
 class GalleryAdapterInstrumentedTest {
-
     private lateinit var context: Context
     private lateinit var adapter: GalleryAdapter
     private lateinit var galleryItems: List<GalleryModel>
@@ -29,9 +28,10 @@ class GalleryAdapterInstrumentedTest {
 
         galleryItems = loadGalleryItemsFromJson()
 
-        adapter = GalleryAdapter { galleryModel ->
-            clickedItem.set(galleryModel)
-        }
+        adapter =
+            GalleryAdapter { galleryModel ->
+                clickedItem.set(galleryModel)
+            }
 
         adapter.submitList(galleryItems)
     }

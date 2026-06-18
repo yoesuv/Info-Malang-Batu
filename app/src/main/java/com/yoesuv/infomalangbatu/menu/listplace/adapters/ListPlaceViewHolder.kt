@@ -7,8 +7,9 @@ import com.yoesuv.infomalangbatu.databinding.ItemListplaceBinding
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.ItemListPlaceViewModel
 
-class ListPlaceViewHolder(val binding: ItemListplaceBinding): RecyclerView.ViewHolder(binding.root) {
-
+class ListPlaceViewHolder(
+    val binding: ItemListplaceBinding,
+) : RecyclerView.ViewHolder(binding.root) {
     fun bind(placeModel: PlaceModel) {
         binding.itemListPlace = ItemListPlaceViewModel(placeModel)
         binding.executePendingBindings()
@@ -21,5 +22,4 @@ class ListPlaceViewHolder(val binding: ItemListplaceBinding): RecyclerView.ViewH
             return ListPlaceViewHolder(binding)
         }
     }
-
 }

@@ -5,8 +5,7 @@ import com.google.android.gms.location.LocationResult
 import com.yoesuv.infomalangbatu.App
 import com.yoesuv.infomalangbatu.data.AppConstants
 
-class MyLocationCallback: LocationCallback() {
-
+class MyLocationCallback : LocationCallback() {
     override fun onLocationResult(result: LocationResult) {
         super.onLocationResult(result)
         val listLocation = result.locations
@@ -17,5 +16,4 @@ class MyLocationCallback: LocationCallback() {
             }
         }
     }
-
 }

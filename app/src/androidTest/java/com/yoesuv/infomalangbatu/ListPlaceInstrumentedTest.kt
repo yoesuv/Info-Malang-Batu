@@ -30,39 +30,44 @@ class ListPlaceInstrumentedTest {
     private lateinit var viewModel: FragmentListPlaceViewModel
 
     // Test data
-    private val placeKotaMalang = PlaceModel(
-        name = "Test Place Malang",
-        location = "Kota Malang",
-        category = "Test Category",
-        description = "Test Description",
-        thumbnail = "test_thumb.jpg",
-        image = "test_image.jpg"
-    )
+    private val placeKotaMalang =
+        PlaceModel(
+            name = "Test Place Malang",
+            location = "Kota Malang",
+            category = "Test Category",
+            description = "Test Description",
+            thumbnail = "test_thumb.jpg",
+            image = "test_image.jpg",
+        )
 
-    private val placeKotaBatu = PlaceModel(
-        name = "Test Place Batu",
-        location = "Kota Batu",
-        category = "Test Category",
-        description = "Test Description",
-        thumbnail = "test_thumb.jpg",
-        image = "test_image.jpg"
-    )
+    private val placeKotaBatu =
+        PlaceModel(
+            name = "Test Place Batu",
+            location = "Kota Batu",
+            category = "Test Category",
+            description = "Test Description",
+            thumbnail = "test_thumb.jpg",
+            image = "test_image.jpg",
+        )
 
-    private val placeKabMalang = PlaceModel(
-        name = "Test Place Kab Malang",
-        location = "Kab. Malang",
-        category = "Test Category",
-        description = "Test Description",
-        thumbnail = "test_thumb.jpg",
-        image = "test_image.jpg"
-    )
+    private val placeKabMalang =
+        PlaceModel(
+            name = "Test Place Kab Malang",
+            location = "Kab. Malang",
+            category = "Test Category",
+            description = "Test Description",
+            thumbnail = "test_thumb.jpg",
+            image = "test_image.jpg",
+        )
 
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+        db =
+            Room
+                .inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+                .allowMainThreadQueries()
+                .build()
         repository = AppDbRepository(context)
 
         // Initialize ViewModel with test repository

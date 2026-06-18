@@ -8,7 +8,6 @@ import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 
 @Dao
 interface GalleryDaoAccess {
-
     @Insert
     suspend fun insertDbGalleries(gallery: List<GalleryModel>)
 
@@ -17,5 +16,4 @@ interface GalleryDaoAccess {
 
     @Query("DELETE FROM GalleryModel")
     suspend fun deleteAllDbGallery()
-
 }

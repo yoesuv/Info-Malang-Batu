@@ -4,13 +4,12 @@ import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 
-class AppRepositoryImpl : AppRepository{
-
+class AppRepositoryImpl : AppRepository {
     private val restApi = ServiceFactory.create()
 
     override suspend fun getAppData(
         onSuccess: (MutableList<PlaceModel>?, MutableList<GalleryModel>?, MutableList<PinModel>?) -> Unit,
-        onError: (Throwable) -> Unit
+        onError: (Throwable) -> Unit,
     ) {
         try {
             val resultListPlace = restApi.getListPlace()
@@ -21,5 +20,4 @@ class AppRepositoryImpl : AppRepository{
             onError(throwable)
         }
     }
-
 }

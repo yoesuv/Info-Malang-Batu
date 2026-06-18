@@ -75,13 +75,14 @@ android {
     sourceSets {
         getByName("main") {
             res {
-                directories += listOf(
-                    "src/main/res",
-                    "src/main/res-gallery",
-                    "src/main/res-listplace",
-                    "src/main/res-maps",
-                    "src/main/res-other"
-                )
+                directories +=
+                    listOf(
+                        "src/main/res",
+                        "src/main/res-gallery",
+                        "src/main/res-listplace",
+                        "src/main/res-maps",
+                        "src/main/res-other",
+                    )
             }
         }
     }
@@ -120,18 +121,20 @@ tasks.register("jacocoTestReport", JacocoReport::class) {
         html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/jacocoTestReport/html"))
     }
 
-    val fileFilter = listOf(
-        "**/R.class",
-        "**/R$*.class",
-        "**/BuildConfig.*",
-        "**/Manifest*.*",
-        "**/*Test*.*",
-        "android/**/*.*",
-    )
+    val fileFilter =
+        listOf(
+            "**/R.class",
+            "**/R$*.class",
+            "**/BuildConfig.*",
+            "**/Manifest*.*",
+            "**/*Test*.*",
+            "android/**/*.*",
+        )
 
-    val debugTree = fileTree(layout.buildDirectory.dir("tmp/kotlin-classes/debug")) {
-        exclude(fileFilter)
-    }
+    val debugTree =
+        fileTree(layout.buildDirectory.dir("tmp/kotlin-classes/debug")) {
+            exclude(fileFilter)
+        }
 
     val mainSrc = "${project.projectDir}/src/main/java"
 
@@ -141,9 +144,9 @@ tasks.register("jacocoTestReport", JacocoReport::class) {
         fileTree(layout.buildDirectory) {
             include(
                 "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
-                "outputs/code_coverage/debugAndroidTest/connected/**/coverage.ec"
+                "outputs/code_coverage/debugAndroidTest/connected/**/coverage.ec",
             )
-        }
+        },
     )
 }
 

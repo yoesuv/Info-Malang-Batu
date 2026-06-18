@@ -7,8 +7,9 @@ import com.yoesuv.infomalangbatu.databinding.ItemLibrariesBinding
 import com.yoesuv.infomalangbatu.menu.other.models.LibraryModel
 import com.yoesuv.infomalangbatu.menu.other.viewmodels.ItemLibrariesViewModel
 
-class LibraryViewHolder(val binding: ItemLibrariesBinding): RecyclerView.ViewHolder(binding.root) {
-
+class LibraryViewHolder(
+    val binding: ItemLibrariesBinding,
+) : RecyclerView.ViewHolder(binding.root) {
     fun bind(libraryModel: LibraryModel) {
         binding.library = ItemLibrariesViewModel(libraryModel)
         binding.executePendingBindings()
@@ -21,5 +22,4 @@ class LibraryViewHolder(val binding: ItemLibrariesBinding): RecyclerView.ViewHol
             return LibraryViewHolder(binding)
         }
     }
-
 }

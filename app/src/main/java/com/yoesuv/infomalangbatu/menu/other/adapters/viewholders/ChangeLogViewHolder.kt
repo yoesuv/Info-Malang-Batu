@@ -7,8 +7,9 @@ import com.yoesuv.infomalangbatu.databinding.ItemChangelogBinding
 import com.yoesuv.infomalangbatu.menu.other.models.ChangeLogModel
 import com.yoesuv.infomalangbatu.menu.other.viewmodels.ItemChangeLogViewModel
 
-class ChangeLogViewHolder(val binding: ItemChangelogBinding): RecyclerView.ViewHolder(binding.root) {
-
+class ChangeLogViewHolder(
+    val binding: ItemChangelogBinding,
+) : RecyclerView.ViewHolder(binding.root) {
     fun bind(changeLogModel: ChangeLogModel) {
         binding.changelog = ItemChangeLogViewModel(changeLogModel)
         binding.executePendingBindings()
@@ -21,5 +22,4 @@ class ChangeLogViewHolder(val binding: ItemChangelogBinding): RecyclerView.ViewH
             return ChangeLogViewHolder(binding)
         }
     }
-
 }

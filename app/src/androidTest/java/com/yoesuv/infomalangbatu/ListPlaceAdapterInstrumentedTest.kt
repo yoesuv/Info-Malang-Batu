@@ -15,7 +15,6 @@ import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(AndroidJUnit4::class)
 class ListPlaceAdapterInstrumentedTest {
-
     private lateinit var context: Context
     private lateinit var adapter: ListPlaceAdapter
     private lateinit var placeItems: List<PlaceModel>
@@ -29,9 +28,10 @@ class ListPlaceAdapterInstrumentedTest {
 
         placeItems = loadPlaceItemsFromJson()
 
-        adapter = ListPlaceAdapter { placeModel ->
-            clickedItem.set(placeModel)
-        }
+        adapter =
+            ListPlaceAdapter { placeModel ->
+                clickedItem.set(placeModel)
+            }
 
         adapter.submitList(placeItems)
     }

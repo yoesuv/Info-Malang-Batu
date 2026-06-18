@@ -10,8 +10,9 @@ import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentDetailListPla
 /** REFERENCES
  * https://stackoverflow.com/a/50374088
  */
-class ViewModelFragmentFactory(private val params: Any): ViewModelProvider.NewInstanceFactory() {
-
+class ViewModelFragmentFactory(
+    private val params: Any,
+) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass == FragmentDetailGalleryViewModel::class.java) {
@@ -21,5 +22,4 @@ class ViewModelFragmentFactory(private val params: Any): ViewModelProvider.NewIn
         }
         return super.create(modelClass)
     }
-
 }

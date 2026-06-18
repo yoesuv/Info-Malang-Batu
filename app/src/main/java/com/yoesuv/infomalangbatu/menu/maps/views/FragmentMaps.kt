@@ -10,6 +10,7 @@ import android.os.SystemClock
 import android.util.TypedValue
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.graphics.toColorInt
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -40,10 +41,12 @@ import com.yoesuv.infomalangbatu.utils.AppHelper
 import com.yoesuv.infomalangbatu.utils.BounceAnimation
 import com.yoesuv.infomalangbatu.widgets.AppDialog
 import kotlin.math.roundToInt
-import androidx.core.graphics.toColorInt
 
-class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback, MenuProvider {
-
+class FragmentMaps :
+    SupportMapFragment(),
+    OnMapReadyCallback,
+    DirectionCallback,
+    MenuProvider {
     private var markerLocation: Marker? = null
     private var mGoogleMap: GoogleMap? = null
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null
@@ -73,7 +76,10 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         progressDialog.setCanceledOnTouchOutside(false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
@@ -109,13 +115,16 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         if (isOk) {
             if (routeList.isNotEmpty()) {
                 mGoogleMap?.clear()
-                mGoogleMap?.addMarker(
-                    MarkerOptions().position(origin!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_origin))
-                )?.tag = MarkerTag("Origin", 3, 0.0, 0.0)
-                mGoogleMap?.addMarker(
-                    MarkerOptions().position(destination!!)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin))
-                )?.tag = MarkerTag("Destination", 3, 0.0, 0.0)
+                mGoogleMap
+                    ?.addMarker(
+                        MarkerOptions().position(origin!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_origin)),
+                    )?.tag = MarkerTag("Origin", 3, 0.0, 0.0)
+                mGoogleMap
+                    ?.addMarker(
+                        MarkerOptions()
+                            .position(destination!!)
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin)),
+                    )?.tag = MarkerTag("Destination", 3, 0.0, 0.0)
                 setCameraWithCoordinationBounds(routeList[0])
                 for (i: Int in routeList.indices) {
                     val color = colors[i % colors.size]
@@ -126,8 +135,8 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
                             requireContext(),
                             directionPositionList,
                             5,
-                            color.toColorInt()
-                        )
+                            color.toColorInt(),
+                        ),
                     )
                 }
             } else {
@@ -142,7 +151,6 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         }
     }
 
-
     override fun onDirectionFailure(t: Throwable) {
         if (progressDialog.isShowing) {
             progressDialog.dismiss()
@@ -152,7 +160,10 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         }
     }
 
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+    override fun onCreateMenu(
+        menu: Menu,
+        menuInflater: MenuInflater,
+    ) {
         menuInflater.inflate(R.menu.menu_maps, menu)
     }
 
@@ -172,7 +183,10 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         }
     }
 
-    private fun setupPin(googleMap: GoogleMap?, listPin: List<PinModel>) {
+    private fun setupPin(
+        googleMap: GoogleMap?,
+        listPin: List<PinModel>,
+    ) {
         if (listPin.isNotEmpty()) {
             for (pin in listPin) {
                 val markerOptions = MarkerOptions()
@@ -214,13 +228,15 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
         val paddingBottom =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150F, resources.displayMetrics).roundToInt()
         googleMap?.setPadding(0, 0, 0, paddingBottom)
-        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 2000)
-            .setWaitForAccurateLocation(false)
-            .build()
+        val locationRequest =
+            LocationRequest
+                .Builder(Priority.PRIORITY_HIGH_ACCURACY, 2000)
+                .setWaitForAccurateLocation(false)
+                .build()
         mFusedLocationProviderClient?.requestLocationUpdates(
             locationRequest,
             myLocationCallback,
-            Looper.getMainLooper()
+            Looper.getMainLooper(),
         )
     }
 
@@ -238,7 +254,8 @@ class FragmentMaps : SupportMapFragment(), OnMapReadyCallback, DirectionCallback
                 destination = LatLng(tag.latitude, tag.longitude)
 
                 val apiKey = requireContext().getString(R.string.DIRECTION_API_KEY)
-                GoogleDirection.withServerKey(apiKey)
+                GoogleDirection
+                    .withServerKey(apiKey)
                     .from(origin!!)
                     .to(destination!!)
                     .alternativeRoute(true)

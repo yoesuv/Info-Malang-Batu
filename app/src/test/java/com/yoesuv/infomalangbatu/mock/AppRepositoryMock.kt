@@ -9,7 +9,7 @@ import com.yoesuv.infomalangbatu.utils.JsonParser
 class AppRepositoryMock : AppRepository {
     override suspend fun getAppData(
         onSuccess: (MutableList<PlaceModel>?, MutableList<GalleryModel>?, MutableList<PinModel>?) -> Unit,
-        onError: (Throwable) -> Unit
+        onError: (Throwable) -> Unit,
     ) {
         try {
             val places = JsonParser.stringToObject("list_place.json", Array<PlaceModel>::class.java).toMutableList()

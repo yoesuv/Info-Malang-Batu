@@ -8,10 +8,10 @@ import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.yoesuv.infomalangbatu.R
 
-
 @BindingAdapter("setImageUrl")
 fun AppCompatImageView.setImageUrl(imageUrl: String) {
-    Glide.with(context)
+    Glide
+        .with(context)
         .load(imageUrl)
         .placeholder(R.drawable.placeholder_image)
         .error(R.drawable.placeholder_image)
@@ -20,4 +20,3 @@ fun AppCompatImageView.setImageUrl(imageUrl: String) {
         .transition(GenericTransitionOptions.with(android.R.anim.fade_in))
         .into(this)
 }
-

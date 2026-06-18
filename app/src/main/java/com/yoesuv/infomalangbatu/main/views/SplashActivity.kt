@@ -16,7 +16,6 @@ import com.yoesuv.infomalangbatu.utils.bindings.SplashViewModelFactory
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivitySplashBinding
     private lateinit var viewModel: SplashViewModel
 

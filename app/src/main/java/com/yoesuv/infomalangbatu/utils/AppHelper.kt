@@ -29,15 +29,22 @@ fun logDebug(message: String) {
 }
 
 object AppHelper {
-
-    fun snackBarWarning(view: View, @StringRes message: Int) {
-        Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+    fun snackBarWarning(
+        view: View,
+        @StringRes message: Int,
+    ) {
+        Snackbar
+            .make(view, message, Snackbar.LENGTH_SHORT)
             .setBackgroundTint(ContextCompat.getColor(view.context, R.color.amber_600))
             .show()
     }
 
-    fun snackBarError(view: View, @StringRes message: Int) {
-        Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+    fun snackBarError(
+        view: View,
+        @StringRes message: Int,
+    ) {
+        Snackbar
+            .make(view, message, Snackbar.LENGTH_SHORT)
             .setBackgroundTint(ContextCompat.getColor(view.context, R.color.red_700))
             .show()
     }
@@ -47,9 +54,7 @@ object AppHelper {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
-    fun fromHtml(source: String): String {
-        return Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY).toString()
-    }
+    fun fromHtml(source: String): String = Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY).toString()
 
     fun isPermissionLocationEnabled(context: Context): Boolean {
         val permission = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -57,7 +62,8 @@ object AppHelper {
     }
 
     fun insetsPadding(
-        view: View, left: Boolean = false,
+        view: View,
+        left: Boolean = false,
         top: Boolean = false,
         right: Boolean = false,
         bottom: Boolean = false,
@@ -69,7 +75,7 @@ object AppHelper {
                 left = if (left) inset.left else v.paddingLeft,
                 top = if (top) inset.top else v.paddingTop,
                 right = if (right) inset.right else v.paddingRight,
-                bottom = if (bottom) inset.bottom else v.paddingBottom
+                bottom = if (bottom) inset.bottom else v.paddingBottom,
             )
             color?.let {
                 v.setBackgroundColor(it)
@@ -77,5 +83,4 @@ object AppHelper {
             windowInset
         }
     }
-
 }

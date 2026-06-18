@@ -8,7 +8,6 @@ import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 
 @Dao
 interface MapPinDaoAccess {
-
     @Insert
     suspend fun insertDbMapPins(pin: List<PinModel>)
 
@@ -16,6 +15,5 @@ interface MapPinDaoAccess {
     fun selectAllDbMapPins(): LiveData<List<PinModel>>
 
     @Query("DELETE FROM PinModel")
-    suspend  fun deleteAllDbMapPins()
-
+    suspend fun deleteAllDbMapPins()
 }
