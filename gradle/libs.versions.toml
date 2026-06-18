@@ -13,7 +13,6 @@ firebaseCrashlyticsPlugin = "3.0.7"
 glide = "4.16.0"
 retrofitVersion = "3.0.0"
 room = "2.8.4"
-multidex = "1.0.3"
 googleDirection = "1.2.1"
 firebaseBom = "34.15.0"
 sdpVersion = "1.1.1"
@@ -43,7 +42,6 @@ retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref 
 roomRuntime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 roomCompiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 roomKtx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
-multidex = { group = "com.android.support", name = "multidex", version.ref = "multidex" }
 googleDirection = { group = "com.akexorcist", name = "google-direction-library", version.ref = "googleDirection" }
 firebaseBom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpVersion" }

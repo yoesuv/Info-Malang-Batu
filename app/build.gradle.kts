@@ -39,7 +39,6 @@ android {
         targetSdk = 36
         versionCode = 19
         versionName = "2.3.7"
-        multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -182,5 +181,4 @@ dependencies {
     implementation(libs.glide)
     kapt(libs.glideCompiler)
     implementation(libs.googleDirection)
-    implementation(libs.multidex)
 }
