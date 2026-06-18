@@ -8,13 +8,12 @@ apiKeyProperties.load(apiKeyPropertiesFile.inputStream())
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.safeArgs)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.perf.plugin)
     alias(libs.plugins.firebase.crashlytics.plugin)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.safeArgs)
     id("jacoco")
 }
 
@@ -38,15 +37,14 @@ android {
         applicationId = "com.yoesuv.infomalangbatu"
         minSdk = 24
         targetSdk = 36
-        versionCode = 18
-        versionName = "2.3.6"
+        versionCode = 19
+        versionName = "2.3.7"
         multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
-        setProperty("archivesBaseName", "$applicationId-v$versionCode($versionName)")
         buildConfigField("String", "BASE_URL", "\"https://info-malang-batu.firebaseapp.com/\"")
         resValue("string", "MAPS_API_KEY", keyMaps)
         resValue("string", "DIRECTION_API_KEY", keyDirections)
@@ -91,6 +89,7 @@ android {
     buildFeatures {
         dataBinding = true
         buildConfig = true
+        resValues = true
     }
     flavorDimensions.add("default")
 }
@@ -162,8 +161,8 @@ dependencies {
     implementation(libs.playServiceLocation)
 
     implementation(platform(libs.firebaseBom))
-    implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-perf")
 
     implementation(libs.lifecycleViewModel)
@@ -171,7 +170,7 @@ dependencies {
     implementation(libs.navigationUi)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.roomRuntime)
-    ksp(libs.roomCompiler)
+    kapt(libs.roomCompiler)
     implementation(libs.roomKtx)
 
     implementation(libs.retrofit)
@@ -181,7 +180,7 @@ dependencies {
     implementation(libs.ssp.android)
     implementation(libs.sdp.android)
     implementation(libs.glide)
-    ksp(libs.glideCompiler)
+    kapt(libs.glideCompiler)
     implementation(libs.googleDirection)
     implementation(libs.multidex)
 }
