@@ -29,35 +29,42 @@ class ListPlaceInstrumentedTest {
     private lateinit var repository: AppDbRepository
     private lateinit var viewModel: FragmentListPlaceViewModel
 
+    companion object {
+        private const val TEST_THUMBNAIL = "test_thumb.jpg"
+        private const val TEST_IMAGE = "test_image.jpg"
+        private const val TEST_CATEGORY = "Test Category"
+        private const val TEST_DESCRIPTION = "Test Description"
+    }
+
     // Test data
     private val placeKotaMalang =
         PlaceModel(
             name = "Test Place Malang",
             location = "Kota Malang",
-            category = "Test Category",
-            description = "Test Description",
-            thumbnail = "test_thumb.jpg",
-            image = "test_image.jpg",
+            category = TEST_CATEGORY,
+            description = TEST_DESCRIPTION,
+            thumbnail = TEST_THUMBNAIL,
+            image = TEST_IMAGE,
         )
 
     private val placeKotaBatu =
         PlaceModel(
             name = "Test Place Batu",
             location = "Kota Batu",
-            category = "Test Category",
-            description = "Test Description",
-            thumbnail = "test_thumb.jpg",
-            image = "test_image.jpg",
+            category = TEST_CATEGORY,
+            description = TEST_DESCRIPTION,
+            thumbnail = TEST_THUMBNAIL,
+            image = TEST_IMAGE,
         )
 
     private val placeKabMalang =
         PlaceModel(
             name = "Test Place Kab Malang",
             location = "Kab. Malang",
-            category = "Test Category",
-            description = "Test Description",
-            thumbnail = "test_thumb.jpg",
-            image = "test_image.jpg",
+            category = TEST_CATEGORY,
+            description = TEST_DESCRIPTION,
+            thumbnail = TEST_THUMBNAIL,
+            image = TEST_IMAGE,
         )
 
     @Before
