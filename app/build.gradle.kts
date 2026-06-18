@@ -71,17 +71,18 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 
     sourceSets {
         getByName("main") {
-            res.srcDirs("src/main/res")
-            res.srcDirs("src/main/res-gallery")
-            res.srcDirs("src/main/res-listplace")
-            res.srcDirs("src/main/res-maps")
-            res.srcDirs("src/main/res-other")
+            res {
+                directories += listOf(
+                    "src/main/res",
+                    "src/main/res-gallery",
+                    "src/main/res-listplace",
+                    "src/main/res-maps",
+                    "src/main/res-other"
+                )
+            }
         }
     }
 
@@ -91,6 +92,12 @@ android {
         resValues = true
     }
     flavorDimensions.add("default")
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+    }
 }
 
 // JaCoCo configuration for code coverage
@@ -109,8 +116,8 @@ tasks.register("jacocoTestReport", JacocoReport::class) {
     reports {
         xml.required.set(true)
         html.required.set(true)
-        xml.outputLocation.set(file("${project.buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"))
-        html.outputLocation.set(file("${project.buildDir}/reports/jacoco/jacocoTestReport/html"))
+        xml.outputLocation.set(layout.buildDirectory.file("reports/jacoco/jacocoTestReport/jacocoTestReport.xml"))
+        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/jacocoTestReport/html"))
     }
 
     val fileFilter = listOf(
@@ -122,7 +129,7 @@ tasks.register("jacocoTestReport", JacocoReport::class) {
         "android/**/*.*",
     )
 
-    val debugTree = fileTree("${project.buildDir}/tmp/kotlin-classes/debug") {
+    val debugTree = fileTree(layout.buildDirectory.dir("tmp/kotlin-classes/debug")) {
         exclude(fileFilter)
     }
 
@@ -131,10 +138,10 @@ tasks.register("jacocoTestReport", JacocoReport::class) {
     sourceDirectories.setFrom(files(mainSrc))
     classDirectories.setFrom(files(debugTree))
     executionData.setFrom(
-        fileTree(project.buildDir) {
+        fileTree(layout.buildDirectory) {
             include(
-                "/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
-                "/outputs/code_coverage/debugAndroidTest/connected/**/coverage.ec"
+                "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
+                "outputs/code_coverage/debugAndroidTest/connected/**/coverage.ec"
             )
         }
     )
