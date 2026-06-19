@@ -7,6 +7,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -40,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationViewMain.itemIconTintList = null
         setupNavigation()
         setupOnBackPressed()
+        setupFragmentContainerInsets()
 
         AppHelper.insetsPadding(binding.coordinatorLayoutMain, top = true, color = ContextCompat.getColor(this, R.color.colorPrimary))
     }
@@ -59,10 +63,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun hideNavigation(value: Boolean) {
-        if (value) {
-            binding.bottomNavigationViewMain.visibility = View.GONE
-        } else {
-            binding.bottomNavigationViewMain.visibility = View.VISIBLE
+        binding.bottomNavigationViewMain.visibility = if (value) View.GONE else View.VISIBLE
+        ViewCompat.requestApplyInsets(binding.fragmentMain)
+    }
+
+    private fun setupFragmentContainerInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.fragmentMain) { view, windowInsets ->
+            val systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(bottom = systemBars.bottom)
+            windowInsets
+        }
+
+        binding.bottomNavigationViewMain.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            ViewCompat.requestApplyInsets(binding.fragmentMain)
         }
     }
 

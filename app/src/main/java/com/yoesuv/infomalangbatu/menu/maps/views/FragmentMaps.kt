@@ -2,17 +2,17 @@ package com.yoesuv.infomalangbatu.menu.maps.views
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
-import android.util.TypedValue
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.toColorInt
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import com.akexorcist.googledirection.DirectionCallback
 import com.akexorcist.googledirection.GoogleDirection
@@ -40,7 +40,6 @@ import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 import com.yoesuv.infomalangbatu.utils.AppHelper
 import com.yoesuv.infomalangbatu.utils.BounceAnimation
 import com.yoesuv.infomalangbatu.widgets.AppDialog
-import kotlin.math.roundToInt
 
 class FragmentMaps :
     SupportMapFragment(),
@@ -56,6 +55,8 @@ class FragmentMaps :
     private var destination: LatLng? = null
     private val colors = arrayListOf("#7F2196f3", "#7F4CAF50", "#7FF44336")
     private lateinit var progressDialog: AppDialog
+
+    private var mapControlsBottomPadding = 0
 
     private var appDbRepository: AppDbRepository? = null
 
@@ -83,7 +84,17 @@ class FragmentMaps :
         super.onViewCreated(view, savedInstanceState)
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        setupMapInsets(view)
         getMapAsync(this)
+    }
+
+    private fun setupMapInsets(view: View) {
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->
+            val systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            mapControlsBottomPadding = systemBars.bottom
+            mGoogleMap?.setPadding(0, 0, 0, mapControlsBottomPadding)
+            windowInsets
+        }
     }
 
     override fun onDestroy() {
@@ -94,6 +105,7 @@ class FragmentMaps :
     override fun onMapReady(googleMap: GoogleMap) {
         mGoogleMap = googleMap
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.style_map))
+        googleMap.setPadding(0, 0, 0, mapControlsBottomPadding)
         getMapPins(googleMap)
         setMarkerAnimation(googleMap)
 
@@ -225,9 +237,7 @@ class FragmentMaps :
         googleMap?.isMyLocationEnabled = true
         googleMap?.uiSettings?.isMyLocationButtonEnabled = true
         googleMap?.uiSettings?.isZoomControlsEnabled = true
-        val paddingBottom =
-            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150F, resources.displayMetrics).roundToInt()
-        googleMap?.setPadding(0, 0, 0, paddingBottom)
+        googleMap?.setPadding(0, 0, 0, mapControlsBottomPadding)
         val locationRequest =
             LocationRequest
                 .Builder(Priority.PRIORITY_HIGH_ACCURACY, 2000)
