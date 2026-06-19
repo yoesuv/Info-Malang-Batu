@@ -99,7 +99,9 @@ class FragmentMaps :
 
     override fun onDestroy() {
         super.onDestroy()
-        LocationServices.getFusedLocationProviderClient(requireContext()).removeLocationUpdates(myLocationCallback)
+        if (::myLocationCallback.isInitialized) {
+            mFusedLocationProviderClient?.removeLocationUpdates(myLocationCallback)
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -129,7 +131,8 @@ class FragmentMaps :
                 mGoogleMap?.clear()
                 mGoogleMap
                     ?.addMarker(
-                        MarkerOptions().position(origin!!).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_origin)),
+                        MarkerOptions().position(origin!!)
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_origin)),
                     )?.tag = MarkerTag("Origin", 3, 0.0, 0.0)
                 mGoogleMap
                     ?.addMarker(
