@@ -61,16 +61,20 @@ class MapsPinController(
 
     fun setupMarkerAnimation(googleMap: GoogleMap?) {
         googleMap?.setOnMarkerClickListener { marker ->
-            val tag: MarkerTag = marker.tag as MarkerTag
-            if (tag.type == 0) {
-                val handler = Handler(Looper.getMainLooper())
-                val anim = BounceAnimation(SystemClock.uptimeMillis(), 1000L, marker, handler)
-                handler.post(anim)
-                marker.showInfoWindow()
-            } else {
-                marker.hideInfoWindow()
-            }
-            return@setOnMarkerClickListener true
+            onMarkerClicked(marker)
         }
+    }
+
+    private fun onMarkerClicked(marker: Marker): Boolean {
+        val tag: MarkerTag = marker.tag as MarkerTag
+        if (tag.type == 0) {
+            val handler = Handler(Looper.getMainLooper())
+            val anim = BounceAnimation(SystemClock.uptimeMillis(), 1000L, marker, handler)
+            handler.post(anim)
+            marker.showInfoWindow()
+        } else {
+            marker.hideInfoWindow()
+        }
+        return true
     }
 }
