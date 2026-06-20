@@ -23,7 +23,7 @@ import com.yoesuv.infomalangbatu.utils.AppHelper
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        var BACK_PRESSED: Long = 0L
+        var backPressed: Long = 0L
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -85,12 +85,12 @@ class MainActivity : AppCompatActivity() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (navController.currentDestination?.id == R.id.fragmentList) {
-                        if ((BACK_PRESSED + 2000L) > System.currentTimeMillis()) {
+                        if ((backPressed + 2000L) > System.currentTimeMillis()) {
                             finish()
                         } else {
                             AppHelper.snackBarWarning(binding.coordinatorLayoutMain.rootView, R.string.confirm_close)
                         }
-                        BACK_PRESSED = System.currentTimeMillis()
+                        backPressed = System.currentTimeMillis()
                     } else {
                         navController.popBackStack()
                     }
