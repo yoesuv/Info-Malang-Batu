@@ -95,6 +95,18 @@ android {
     flavorDimensions.add("default")
 }
 
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        val versionName = variant.outputs.first().versionName.orNull ?: "1.0"
+        val versionCode = variant.outputs.first().versionCode.orNull ?: 1
+        val packageName = variant.applicationId.get()
+
+        variant.outputs.forEach { output ->
+            output.outputFileName.set("${packageName}-${variant.name}-v${versionCode}(${versionName}).apk")
+        }
+    }
+}
+
 kotlin {
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
