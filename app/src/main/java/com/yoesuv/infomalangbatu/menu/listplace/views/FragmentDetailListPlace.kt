@@ -18,7 +18,6 @@ import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentDetailListPla
 import com.yoesuv.infomalangbatu.utils.bindings.ViewModelFragmentFactory
 
 class FragmentDetailListPlace : Fragment() {
-
     private var binding: FragmentDetailListplaceBinding? = null
     private val viewModel: FragmentDetailListPlaceViewModel by viewModels { ViewModelFragmentFactory(placeModel as Any) }
 
@@ -30,7 +29,11 @@ class FragmentDetailListPlace : Fragment() {
         placeModel = args.dataDetailListPlace
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_listplace, container, false)
             binding?.detailListPlace = viewModel
@@ -39,7 +42,10 @@ class FragmentDetailListPlace : Fragment() {
         return binding?.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).hideNavigation(true)
         onBackPressed()
@@ -55,5 +61,4 @@ class FragmentDetailListPlace : Fragment() {
             findNavController().navigateUp()
         }
     }
-
 }

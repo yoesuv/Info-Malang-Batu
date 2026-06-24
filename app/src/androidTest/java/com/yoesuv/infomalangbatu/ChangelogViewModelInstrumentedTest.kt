@@ -16,7 +16,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class ChangelogViewModelInstrumentedTest {
-
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 

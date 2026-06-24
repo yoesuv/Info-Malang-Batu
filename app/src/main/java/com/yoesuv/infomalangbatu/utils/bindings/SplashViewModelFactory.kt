@@ -8,7 +8,7 @@ import com.yoesuv.infomalangbatu.networks.AppRepository
 
 class SplashViewModelFactory(
     private val application: Application,
-    private val appRepository: AppRepository
+    private val appRepository: AppRepository,
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

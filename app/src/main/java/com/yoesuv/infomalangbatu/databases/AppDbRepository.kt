@@ -5,7 +5,9 @@ import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
 
-class AppDbRepository(context: Context) {
+class AppDbRepository(
+    context: Context,
+) {
     private val appDatabase = AppDatabase.getInstance(context)
 
     // place

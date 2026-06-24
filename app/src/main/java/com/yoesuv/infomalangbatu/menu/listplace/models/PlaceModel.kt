@@ -18,7 +18,7 @@ data class PlaceModel(
     @SerializedName("kategori") @Expose val category: String?,
     @SerializedName("deskripsi") @Expose val description: String?,
     @SerializedName("thumbnail") @Expose val thumbnail: String?,
-    @SerializedName("gambar") @Expose val image: String?
+    @SerializedName("gambar") @Expose val image: String?,
 ) : Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)

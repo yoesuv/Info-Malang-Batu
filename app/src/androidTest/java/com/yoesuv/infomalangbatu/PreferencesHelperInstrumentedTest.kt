@@ -13,33 +13,32 @@ import kotlin.math.abs
 
 @RunWith(AndroidJUnit4::class)
 class PreferencesHelperInstrumentedTest {
-
     private lateinit var preferencesHelper: PreferencesHelper
     private lateinit var context: Context
-    
+
     // Test keys
-    private val TEST_KEY_NORMAL = "test_double_normal"
-    private val TEST_KEY_ZERO = "test_double_zero"
-    private val TEST_KEY_NEGATIVE = "test_double_negative"
-    private val TEST_KEY_LARGE = "test_double_large"
-    private val TEST_KEY_SMALL = "test_double_small"
-    private val TEST_KEY_DEFAULT = "test_double_default"
-    
+    private val testKeyNormal = "test_double_normal"
+    private val testKeyZero = "test_double_zero"
+    private val testKeyNegative = "test_double_negative"
+    private val testKeyLarge = "test_double_large"
+    private val testKeySmall = "test_double_small"
+    private val testKeyDefault = "test_double_default"
+
     // Test values
-    private val NORMAL_VALUE = 42.5
-    private val ZERO_VALUE = 0.0
-    private val NEGATIVE_VALUE = -123.456
-    private val LARGE_VALUE = Double.MAX_VALUE
-    private val SMALL_VALUE = Double.MIN_VALUE
-    
+    private val normalValue = 42.5
+    private val zeroValue = 0.0
+    private val negativeValue = -123.456
+    private val largeValue = Double.MAX_VALUE
+    private val smallValue = Double.MIN_VALUE
+
     // Tolerance for floating point comparison
-    private val DELTA = 0.0000001
+    private val delta = 0.0000001
 
     @Before
     fun setUp() {
         context = ApplicationProvider.getApplicationContext()
         preferencesHelper = PreferencesHelper(context)
-        
+
         // Clear any existing test values to ensure clean state
         clearTestValues()
     }
@@ -49,113 +48,113 @@ class PreferencesHelperInstrumentedTest {
         // Clean up after tests
         clearTestValues()
     }
-    
+
     private fun clearTestValues() {
         val sharedPrefs = context.getSharedPreferences("InfoMalangBatuPreferences", Context.MODE_PRIVATE)
         val editor = sharedPrefs.edit()
-        editor.remove(TEST_KEY_NORMAL)
-        editor.remove(TEST_KEY_ZERO)
-        editor.remove(TEST_KEY_NEGATIVE)
-        editor.remove(TEST_KEY_LARGE)
-        editor.remove(TEST_KEY_SMALL)
-        editor.remove(TEST_KEY_DEFAULT)
+        editor.remove(testKeyNormal)
+        editor.remove(testKeyZero)
+        editor.remove(testKeyNegative)
+        editor.remove(testKeyLarge)
+        editor.remove(testKeySmall)
+        editor.remove(testKeyDefault)
         editor.apply()
     }
 
     @Test
     fun testSetAndGetNormalDouble() {
         // Set a normal double value
-        preferencesHelper.setDouble(TEST_KEY_NORMAL, NORMAL_VALUE)
-        
+        preferencesHelper.setDouble(testKeyNormal, normalValue)
+
         // Retrieve the value
-        val retrievedValue = preferencesHelper.getDouble(TEST_KEY_NORMAL)
-        
+        val retrievedValue = preferencesHelper.getDouble(testKeyNormal)
+
         // Verify the retrieved value matches what was set
-        assertEquals(NORMAL_VALUE, retrievedValue, DELTA)
+        assertEquals(normalValue, retrievedValue, delta)
     }
 
     @Test
     fun testSetAndGetZeroDouble() {
         // Set zero value
-        preferencesHelper.setDouble(TEST_KEY_ZERO, ZERO_VALUE)
-        
+        preferencesHelper.setDouble(testKeyZero, zeroValue)
+
         // Retrieve the value
-        val retrievedValue = preferencesHelper.getDouble(TEST_KEY_ZERO)
-        
+        val retrievedValue = preferencesHelper.getDouble(testKeyZero)
+
         // Verify the retrieved value is zero
-        assertEquals(ZERO_VALUE, retrievedValue, DELTA)
+        assertEquals(zeroValue, retrievedValue, delta)
     }
 
     @Test
     fun testSetAndGetNegativeDouble() {
         // Set negative value
-        preferencesHelper.setDouble(TEST_KEY_NEGATIVE, NEGATIVE_VALUE)
-        
+        preferencesHelper.setDouble(testKeyNegative, negativeValue)
+
         // Retrieve the value
-        val retrievedValue = preferencesHelper.getDouble(TEST_KEY_NEGATIVE)
-        
+        val retrievedValue = preferencesHelper.getDouble(testKeyNegative)
+
         // Verify the retrieved value matches what was set
-        assertEquals(NEGATIVE_VALUE, retrievedValue, DELTA)
+        assertEquals(negativeValue, retrievedValue, delta)
     }
 
     @Test
     fun testSetAndGetLargeDouble() {
         // Set maximum double value
-        preferencesHelper.setDouble(TEST_KEY_LARGE, LARGE_VALUE)
-        
+        preferencesHelper.setDouble(testKeyLarge, largeValue)
+
         // Retrieve the value
-        val retrievedValue = preferencesHelper.getDouble(TEST_KEY_LARGE)
-        
+        val retrievedValue = preferencesHelper.getDouble(testKeyLarge)
+
         // Verify the retrieved value matches what was set
-        assertEquals(LARGE_VALUE, retrievedValue, 0.0)
+        assertEquals(largeValue, retrievedValue, 0.0)
     }
 
     @Test
     fun testSetAndGetSmallDouble() {
         // Set minimum double value
-        preferencesHelper.setDouble(TEST_KEY_SMALL, SMALL_VALUE)
-        
+        preferencesHelper.setDouble(testKeySmall, smallValue)
+
         // Retrieve the value
-        val retrievedValue = preferencesHelper.getDouble(TEST_KEY_SMALL)
-        
+        val retrievedValue = preferencesHelper.getDouble(testKeySmall)
+
         // Verify the retrieved value matches what was set
-        assertEquals(SMALL_VALUE, retrievedValue, 0.0)
+        assertEquals(smallValue, retrievedValue, 0.0)
     }
 
     @Test
     fun testGetDefaultValue() {
         // Try to retrieve a value that hasn't been set
-        val retrievedValue = preferencesHelper.getDouble(TEST_KEY_DEFAULT)
-        
+        val retrievedValue = preferencesHelper.getDouble(testKeyDefault)
+
         // Verify the default value (0.0) is returned
-        assertEquals(0.0, retrievedValue, DELTA)
+        assertEquals(0.0, retrievedValue, delta)
     }
-    
+
     @Test
     fun testOverwriteExistingValue() {
         // Set initial value
-        preferencesHelper.setDouble(TEST_KEY_NORMAL, NORMAL_VALUE)
-        
+        preferencesHelper.setDouble(testKeyNormal, normalValue)
+
         // Verify initial value
-        assertEquals(NORMAL_VALUE, preferencesHelper.getDouble(TEST_KEY_NORMAL), DELTA)
-        
+        assertEquals(normalValue, preferencesHelper.getDouble(testKeyNormal), delta)
+
         // Overwrite with new value
         val newValue = 99.9
-        preferencesHelper.setDouble(TEST_KEY_NORMAL, newValue)
-        
+        preferencesHelper.setDouble(testKeyNormal, newValue)
+
         // Verify value was updated
-        assertEquals(newValue, preferencesHelper.getDouble(TEST_KEY_NORMAL), DELTA)
+        assertEquals(newValue, preferencesHelper.getDouble(testKeyNormal), delta)
     }
-    
+
     @Test
     fun testPrecisionMaintained() {
         // Test with a value that requires precision
-        val preciseValue = 1.0 / 3.0  // 0.3333...
-        
-        preferencesHelper.setDouble(TEST_KEY_NORMAL, preciseValue)
-        val retrievedValue = preferencesHelper.getDouble(TEST_KEY_NORMAL)
-        
+        val preciseValue = 1.0 / 3.0 // 0.3333...
+
+        preferencesHelper.setDouble(testKeyNormal, preciseValue)
+        val retrievedValue = preferencesHelper.getDouble(testKeyNormal)
+
         // Verify precision is maintained
-        assertEquals(preciseValue, retrievedValue, DELTA)
+        assertEquals(preciseValue, retrievedValue, delta)
     }
 }

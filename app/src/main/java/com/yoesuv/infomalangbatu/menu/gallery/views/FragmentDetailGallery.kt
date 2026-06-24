@@ -16,7 +16,6 @@ import com.yoesuv.infomalangbatu.menu.gallery.viewmodels.FragmentDetailGalleryVi
 import com.yoesuv.infomalangbatu.utils.bindings.ViewModelFragmentFactory
 
 class FragmentDetailGallery : Fragment() {
-
     private var binding: FragmentDetailGalleryBinding? = null
     private val viewModel: FragmentDetailGalleryViewModel by viewModels { ViewModelFragmentFactory(galleryModel as Any) }
 
@@ -28,7 +27,11 @@ class FragmentDetailGallery : Fragment() {
         galleryModel = args.dataDetailGallery
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         if (binding == null) {
             binding = FragmentDetailGalleryBinding.inflate(inflater, container, false)
             binding?.detailGallery = viewModel
@@ -37,7 +40,10 @@ class FragmentDetailGallery : Fragment() {
         return binding?.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).hideNavigation(true)
         onBackPressed()
@@ -53,5 +59,4 @@ class FragmentDetailGallery : Fragment() {
             findNavController().navigateUp()
         }
     }
-
 }

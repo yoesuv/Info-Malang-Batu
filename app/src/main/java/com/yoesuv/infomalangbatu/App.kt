@@ -1,20 +1,12 @@
 package com.yoesuv.infomalangbatu
 
-import android.content.Context
-import androidx.multidex.MultiDex
-import androidx.multidex.MultiDexApplication
+import android.app.Application
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.yoesuv.infomalangbatu.utils.PreferencesHelper
 
-class App: MultiDexApplication() {
-
+class App : Application() {
     companion object {
         var prefHelper: PreferencesHelper? = null
-    }
-
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
-        MultiDex.install(this)
     }
 
     override fun onCreate() {
@@ -26,5 +18,4 @@ class App: MultiDexApplication() {
     private fun setupFirebaseCrashlytics() {
         FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = !BuildConfig.DEBUG
     }
-
 }

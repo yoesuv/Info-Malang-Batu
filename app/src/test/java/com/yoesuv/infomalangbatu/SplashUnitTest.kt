@@ -40,22 +40,22 @@ import org.mockito.junit.MockitoJUnitRunner
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class SplashUnitTest {
-
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
     @get:Rule
-    val testRule = org.junit.rules.TestRule { base, _ ->
-        object : Statement() {
-            @Throws(Throwable::class)
-            override fun evaluate() {
-                Mockito.mockStatic(Looper::class.java).use { mockedLooper ->
-                    mockedLooper.`when`<Looper> { Looper.getMainLooper() }.thenReturn(mock(Looper::class.java))
-                    base.evaluate()
+    val testRule =
+        org.junit.rules.TestRule { base, _ ->
+            object : Statement() {
+                @Throws(Throwable::class)
+                override fun evaluate() {
+                    Mockito.mockStatic(Looper::class.java).use { mockedLooper ->
+                        mockedLooper.`when`<Looper> { Looper.getMainLooper() }.thenReturn(mock(Looper::class.java))
+                        base.evaluate()
+                    }
                 }
             }
         }
-    }
 
     private val testDispatcher = StandardTestDispatcher()
 
@@ -82,59 +82,55 @@ class SplashUnitTest {
         Dispatchers.resetMain()
     }
 
-    private fun loadPlaceModelsFromJson(): Array<PlaceModel> {
-        return JsonParser.stringToObject("list_place.json", Array<PlaceModel>::class.java)
-    }
+    private fun loadPlaceModelsFromJson(): Array<PlaceModel> = JsonParser.stringToObject("list_place.json", Array<PlaceModel>::class.java)
 
-    private fun loadGalleryModelsFromJson(): Array<GalleryModel> {
-        return JsonParser.stringToObject("gallery.json", Array<GalleryModel>::class.java)
-    }
+    private fun loadGalleryModelsFromJson(): Array<GalleryModel> =
+        JsonParser.stringToObject("gallery.json", Array<GalleryModel>::class.java)
 
-    private fun loadMapsPinModelsFromJson(): Array<PinModel> {
-        return JsonParser.stringToObject("maps_pin.json", Array<PinModel>::class.java)
-    }
+    private fun loadMapsPinModelsFromJson(): Array<PinModel> = JsonParser.stringToObject("maps_pin.json", Array<PinModel>::class.java)
 
     @Test
-    fun testInitDatabase() = runTest {
-        // Use the AppRepositoryMock
-        val mockRepo = AppRepositoryMock()
+    fun testInitDatabase() =
+        runTest {
+            // Use the AppRepositoryMock
+            val mockRepo = AppRepositoryMock()
 
-        // Create a SplashViewModel with the mock repository
-        val testViewModel = SplashViewModel(application, mockRepo)
+            // Create a SplashViewModel with the mock repository
+            val testViewModel = SplashViewModel(application, mockRepo)
 
-        // Directly inject the mocked AppDbRepository instead of creating a new one
-        testViewModel.appDbRepository = appDbRepository
+            // Directly inject the mocked AppDbRepository instead of creating a new one
+            testViewModel.appDbRepository = appDbRepository
 
-        // Load the test data to verify against
-        val places = loadPlaceModelsFromJson().toMutableList()
-        val galleries = loadGalleryModelsFromJson().toMutableList()
-        val pins = loadMapsPinModelsFromJson().toMutableList()
+            // Load the test data to verify against
+            val places = loadPlaceModelsFromJson().toMutableList()
+            val galleries = loadGalleryModelsFromJson().toMutableList()
+            val pins = loadMapsPinModelsFromJson().toMutableList()
 
-        // Create an observer for the boolean LiveData
-        val observer = mock(Observer::class.java) as Observer<Boolean>
-        testViewModel.isDataLoadingComplete.observeForever(observer)
+            // Create an observer for the boolean LiveData
+            val observer = mock(Observer::class.java) as Observer<Boolean>
+            testViewModel.isDataLoadingComplete.observeForever(observer)
 
-        // Call the actual initDatabase function
-        testViewModel.initDataBase {}
+            // Call the actual initDatabase function
+            testViewModel.initDataBase {}
 
-        // Wait for coroutines to complete
-        testDispatcher.scheduler.advanceUntilIdle()
+            // Wait for coroutines to complete
+            testDispatcher.scheduler.advanceUntilIdle()
 
-        // Verify the database operations were called
-        verify(appDbRepository, times(1)).deleteAllPlace()
-        verify(appDbRepository, times(1)).deleteAllGallery()
-        verify(appDbRepository, times(1)).deleteAllMapPins()
-        verify(appDbRepository, times(1)).insertPlaces(places)
-        verify(appDbRepository, times(1)).insertGalleries(galleries)
-        verify(appDbRepository, times(1)).insertMapPins(pins)
+            // Verify the database operations were called
+            verify(appDbRepository, times(1)).deleteAllPlace()
+            verify(appDbRepository, times(1)).deleteAllGallery()
+            verify(appDbRepository, times(1)).deleteAllMapPins()
+            verify(appDbRepository, times(1)).insertPlaces(places)
+            verify(appDbRepository, times(1)).insertGalleries(galleries)
+            verify(appDbRepository, times(1)).insertMapPins(pins)
 
-        // Verify the loading state was updated to true (complete)
-        val argumentCaptor = ArgumentCaptor.forClass(Boolean::class.java)
-        verify(observer, atLeastOnce()).onChanged(argumentCaptor.capture())
+            // Verify the loading state was updated to true (complete)
+            val argumentCaptor = ArgumentCaptor.forClass(Boolean::class.java)
+            verify(observer, atLeastOnce()).onChanged(argumentCaptor.capture())
 
-        // The last value should be true
-        assertTrue(argumentCaptor.value)
-    }
+            // The last value should be true
+            assertTrue(argumentCaptor.value)
+        }
 
     @Test
     fun testSetupProperties() {

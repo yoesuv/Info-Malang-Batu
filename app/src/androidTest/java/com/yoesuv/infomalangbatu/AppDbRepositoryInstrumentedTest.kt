@@ -31,9 +31,11 @@ class AppDbRepositoryInstrumentedTest {
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+        db =
+            Room
+                .inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+                .allowMainThreadQueries()
+                .build()
         repository = AppDbRepository(context)
 
         placeItems = loadPlaceItemsFromJson()
@@ -47,54 +49,60 @@ class AppDbRepositoryInstrumentedTest {
     }
 
     @Test
-    fun insertAndReadPlace() = runBlocking {
-        val place = placeItems.firstOrNull()?.copy() ?: PlaceModel(
-            name = "Test Place",
-            location = "Test Location",
-            category = "Test Category",
-            description = "Test Description",
-            thumbnail = "test_thumb.jpg",
-            image = "test.jpg"
-        )
-        place.id = 1
-        repository.deleteAllPlace()
-        repository.insertPlaces(mutableListOf(place))
-        val allPlaces = repository.selectAllPlace()
-        val places = allPlaces?.getOrAwaitValue() ?: emptyList()
-        assertEquals(1, places.size)
-        assertEquals(place.name, places.first().name)
-    }
+    fun insertAndReadPlace() =
+        runBlocking {
+            val place =
+                placeItems.firstOrNull()?.copy() ?: PlaceModel(
+                    name = "Test Place",
+                    location = "Test Location",
+                    category = "Test Category",
+                    description = "Test Description",
+                    thumbnail = "test_thumb.jpg",
+                    image = "test.jpg",
+                )
+            place.id = 1
+            repository.deleteAllPlace()
+            repository.insertPlaces(mutableListOf(place))
+            val allPlaces = repository.selectAllPlace()
+            val places = allPlaces?.getOrAwaitValue() ?: emptyList()
+            assertEquals(1, places.size)
+            assertEquals(place.name, places.first().name)
+        }
 
     @Test
-    fun insertAndReadGallery() = runBlocking {
-        val gallery = galleryItems.firstOrNull()?.copy() ?: GalleryModel(
-            caption = "Repo Test Caption",
-            thumbnail = "repo_thumb.jpg",
-            image = "repo_image.jpg"
-        )
-        gallery.id = 1
-        repository.deleteAllGallery()
-        repository.insertGalleries(mutableListOf(gallery))
-        val allGalleries = repository.selectAllGallery()
-        val galleries = allGalleries?.getOrAwaitValue() ?: emptyList()
-        assertEquals(1, galleries.size)
-        assertEquals(gallery.caption, galleries.first().caption)
-    }
+    fun insertAndReadGallery() =
+        runBlocking {
+            val gallery =
+                galleryItems.firstOrNull()?.copy() ?: GalleryModel(
+                    caption = "Repo Test Caption",
+                    thumbnail = "repo_thumb.jpg",
+                    image = "repo_image.jpg",
+                )
+            gallery.id = 1
+            repository.deleteAllGallery()
+            repository.insertGalleries(mutableListOf(gallery))
+            val allGalleries = repository.selectAllGallery()
+            val galleries = allGalleries?.getOrAwaitValue() ?: emptyList()
+            assertEquals(1, galleries.size)
+            assertEquals(gallery.caption, galleries.first().caption)
+        }
 
     @Test
-    fun insertAndReadPin() = runBlocking {
-        val pin = pinItems.firstOrNull()?.copy() ?: PinModel(
-            name = "Test Pin",
-            location = 123,
-            latitude = -7.982,
-            longitude = 112.630
-        )
-        pin.id = 1
-        repository.deleteAllMapPins()
-        repository.insertMapPins(mutableListOf(pin))
-        val allPins = repository.selectAllMapPins()
-        val pins = allPins?.getOrAwaitValue() ?: emptyList()
-        assertEquals(1, pins.size)
-        assertEquals(pin.name, pins.first().name)
-    }
+    fun insertAndReadPin() =
+        runBlocking {
+            val pin =
+                pinItems.firstOrNull()?.copy() ?: PinModel(
+                    name = "Test Pin",
+                    location = 123,
+                    latitude = -7.982,
+                    longitude = 112.630,
+                )
+            pin.id = 1
+            repository.deleteAllMapPins()
+            repository.insertMapPins(mutableListOf(pin))
+            val allPins = repository.selectAllMapPins()
+            val pins = allPins?.getOrAwaitValue() ?: emptyList()
+            assertEquals(1, pins.size)
+            assertEquals(pin.name, pins.first().name)
+        }
 }

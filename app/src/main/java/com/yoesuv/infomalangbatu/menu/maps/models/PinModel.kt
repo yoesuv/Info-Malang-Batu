@@ -12,7 +12,7 @@ data class PinModel(
     @SerializedName("name") @Expose val name: String?,
     @SerializedName("lokasi") @Expose val location: Int?,
     @SerializedName("latitude") @Expose val latitude: Double?,
-    @SerializedName("longitude") @Expose val longitude: Double?
+    @SerializedName("longitude") @Expose val longitude: Double?,
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null

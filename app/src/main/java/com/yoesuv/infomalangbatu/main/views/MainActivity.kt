@@ -1,13 +1,16 @@
 package com.yoesuv.infomalangbatu.main.views
 
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -19,9 +22,8 @@ import com.yoesuv.infomalangbatu.main.viewmodels.MainViewModel
 import com.yoesuv.infomalangbatu.utils.AppHelper
 
 class MainActivity : AppCompatActivity() {
-
     companion object {
-        var BACK_PRESSED: Long = 0L
+        var backPressed: Long = 0L
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -31,10 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (AppHelper.isVanillaIceCreamAndUp()) {
-            enableEdgeToEdge()
-        }
-
+        enableEdgeToEdge()
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
@@ -44,14 +43,12 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationViewMain.itemIconTintList = null
         setupNavigation()
         setupOnBackPressed()
+        setupFragmentContainerInsets()
 
         AppHelper.insetsPadding(binding.coordinatorLayoutMain, top = true, color = ContextCompat.getColor(this, R.color.colorPrimary))
     }
 
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp()
-    }
+    override fun onSupportNavigateUp(): Boolean = navController.navigateUp()
 
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbarMain)
@@ -66,28 +63,39 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun hideNavigation(value: Boolean) {
-        if (value) {
-            binding.bottomNavigationViewMain.visibility = View.GONE
-        } else {
-            binding.bottomNavigationViewMain.visibility = View.VISIBLE
+        binding.bottomNavigationViewMain.visibility = if (value) View.GONE else View.VISIBLE
+        ViewCompat.requestApplyInsets(binding.fragmentMain)
+    }
+
+    private fun setupFragmentContainerInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.fragmentMain) { view, windowInsets ->
+            val systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(bottom = systemBars.bottom)
+            windowInsets
+        }
+
+        binding.bottomNavigationViewMain.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            ViewCompat.requestApplyInsets(binding.fragmentMain)
         }
     }
 
     private fun setupOnBackPressed() {
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (navController.currentDestination?.id == R.id.fragmentList) {
-                    if ((BACK_PRESSED + 2000L) > System.currentTimeMillis()) {
-                        finish()
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (navController.currentDestination?.id == R.id.fragmentList) {
+                        if ((backPressed + 2000L) > System.currentTimeMillis()) {
+                            finish()
+                        } else {
+                            AppHelper.snackBarWarning(binding.coordinatorLayoutMain.rootView, R.string.confirm_close)
+                        }
+                        backPressed = System.currentTimeMillis()
                     } else {
-                        AppHelper.snackBarWarning(binding.coordinatorLayoutMain.rootView, R.string.confirm_close)
+                        navController.popBackStack()
                     }
-                    BACK_PRESSED = System.currentTimeMillis()
-                } else {
-                    navController.popBackStack()
                 }
-            }
-        })
+            },
+        )
     }
-
 }

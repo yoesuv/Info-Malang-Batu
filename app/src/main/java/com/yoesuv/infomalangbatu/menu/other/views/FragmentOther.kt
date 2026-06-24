@@ -1,23 +1,26 @@
 package com.yoesuv.infomalangbatu.menu.other.views
 
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import com.google.android.material.appbar.AppBarLayout
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.yoesuv.infomalangbatu.R
 import com.yoesuv.infomalangbatu.databinding.FragmentOtherBinding
 import com.yoesuv.infomalangbatu.menu.other.adapters.NewTabOtherAdapter
 
 class FragmentOther : Fragment() {
-
     private var binding: FragmentOtherBinding? = null
     private lateinit var tabAdapter: NewTabOtherAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_other, container, false)
         }
@@ -26,7 +29,10 @@ class FragmentOther : Fragment() {
         return binding?.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setupViewPager()
     }
@@ -55,5 +61,4 @@ class FragmentOther : Fragment() {
             }.attach()
         }
     }
-
 }

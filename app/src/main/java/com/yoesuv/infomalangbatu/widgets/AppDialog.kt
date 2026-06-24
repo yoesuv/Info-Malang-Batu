@@ -7,8 +7,9 @@ import android.graphics.drawable.ColorDrawable
 import android.view.Window
 import com.yoesuv.infomalangbatu.R
 
-class AppDialog(context: Context) : Dialog(context) {
-
+class AppDialog(
+    context: Context,
+) : Dialog(context) {
     init {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.dialog_progress)

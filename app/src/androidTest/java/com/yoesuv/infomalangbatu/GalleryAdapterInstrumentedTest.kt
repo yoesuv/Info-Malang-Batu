@@ -7,7 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.yoesuv.infomalangbatu.menu.gallery.adapters.GalleryAdapter
 import com.yoesuv.infomalangbatu.menu.gallery.models.GalleryModel
 import com.yoesuv.infomalangbatu.utils.loadGalleryItemsFromJson
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,7 +15,6 @@ import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(AndroidJUnit4::class)
 class GalleryAdapterInstrumentedTest {
-
     private lateinit var context: Context
     private lateinit var adapter: GalleryAdapter
     private lateinit var galleryItems: List<GalleryModel>
@@ -29,9 +28,10 @@ class GalleryAdapterInstrumentedTest {
 
         galleryItems = loadGalleryItemsFromJson()
 
-        adapter = GalleryAdapter { galleryModel ->
-            clickedItem.set(galleryModel)
-        }
+        adapter =
+            GalleryAdapter { galleryModel ->
+                clickedItem.set(galleryModel)
+            }
 
         adapter.submitList(galleryItems)
     }

@@ -8,13 +8,12 @@ apiKeyProperties.load(apiKeyPropertiesFile.inputStream())
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.safeArgs)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.perf.plugin)
     alias(libs.plugins.firebase.crashlytics.plugin)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.safeArgs)
     id("jacoco")
 }
 
@@ -38,15 +37,13 @@ android {
         applicationId = "com.yoesuv.infomalangbatu"
         minSdk = 24
         targetSdk = 36
-        versionCode = 18
-        versionName = "2.3.6"
-        multiDexEnabled = true
+        versionCode = 19
+        versionName = "2.3.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
-        setProperty("archivesBaseName", "$applicationId-v$versionCode($versionName)")
         buildConfigField("String", "BASE_URL", "\"https://info-malang-batu.firebaseapp.com/\"")
         resValue("string", "MAPS_API_KEY", keyMaps)
         resValue("string", "DIRECTION_API_KEY", keyDirections)
@@ -74,25 +71,46 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 
     sourceSets {
         getByName("main") {
-            res.srcDirs("src/main/res")
-            res.srcDirs("src/main/res-gallery")
-            res.srcDirs("src/main/res-listplace")
-            res.srcDirs("src/main/res-maps")
-            res.srcDirs("src/main/res-other")
+            res {
+                directories +=
+                    listOf(
+                        "src/main/res",
+                        "src/main/res-gallery",
+                        "src/main/res-listplace",
+                        "src/main/res-maps",
+                        "src/main/res-other",
+                    )
+            }
         }
     }
 
     buildFeatures {
         dataBinding = true
         buildConfig = true
+        resValues = true
     }
     flavorDimensions.add("default")
+}
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        val versionName = variant.outputs.first().versionName.orNull ?: "1.0"
+        val versionCode = variant.outputs.first().versionCode.orNull ?: 1
+        val packageName = variant.applicationId.get()
+
+        variant.outputs.forEach { output ->
+            output.outputFileName.set("${packageName}-${variant.name}-v${versionCode}(${versionName}).apk")
+        }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+    }
 }
 
 // JaCoCo configuration for code coverage
@@ -111,34 +129,36 @@ tasks.register("jacocoTestReport", JacocoReport::class) {
     reports {
         xml.required.set(true)
         html.required.set(true)
-        xml.outputLocation.set(file("${project.buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"))
-        html.outputLocation.set(file("${project.buildDir}/reports/jacoco/jacocoTestReport/html"))
+        xml.outputLocation.set(layout.buildDirectory.file("reports/jacoco/jacocoTestReport/jacocoTestReport.xml"))
+        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/jacocoTestReport/html"))
     }
 
-    val fileFilter = listOf(
-        "**/R.class",
-        "**/R$*.class",
-        "**/BuildConfig.*",
-        "**/Manifest*.*",
-        "**/*Test*.*",
-        "android/**/*.*",
-    )
+    val fileFilter =
+        listOf(
+            "**/R.class",
+            "**/R$*.class",
+            "**/BuildConfig.*",
+            "**/Manifest*.*",
+            "**/*Test*.*",
+            "android/**/*.*",
+        )
 
-    val debugTree = fileTree("${project.buildDir}/tmp/kotlin-classes/debug") {
-        exclude(fileFilter)
-    }
+    val debugTree =
+        fileTree(layout.buildDirectory.dir("tmp/kotlin-classes/debug")) {
+            exclude(fileFilter)
+        }
 
     val mainSrc = "${project.projectDir}/src/main/java"
 
     sourceDirectories.setFrom(files(mainSrc))
     classDirectories.setFrom(files(debugTree))
     executionData.setFrom(
-        fileTree(project.buildDir) {
+        fileTree(layout.buildDirectory) {
             include(
-                "/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
-                "/outputs/code_coverage/debugAndroidTest/connected/**/coverage.ec"
+                "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
+                "outputs/code_coverage/debugAndroidTest/connected/**/coverage.ec",
             )
-        }
+        },
     )
 }
 
@@ -162,8 +182,8 @@ dependencies {
     implementation(libs.playServiceLocation)
 
     implementation(platform(libs.firebaseBom))
-    implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-perf")
 
     implementation(libs.lifecycleViewModel)
@@ -171,7 +191,7 @@ dependencies {
     implementation(libs.navigationUi)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.roomRuntime)
-    ksp(libs.roomCompiler)
+    kapt(libs.roomCompiler)
     implementation(libs.roomKtx)
 
     implementation(libs.retrofit)
@@ -181,7 +201,6 @@ dependencies {
     implementation(libs.ssp.android)
     implementation(libs.sdp.android)
     implementation(libs.glide)
-    ksp(libs.glideCompiler)
+    kapt(libs.glideCompiler)
     implementation(libs.googleDirection)
-    implementation(libs.multidex)
 }

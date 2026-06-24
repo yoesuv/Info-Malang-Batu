@@ -25,11 +25,13 @@ object ServiceFactory {
         clientBuilder.connectTimeout(AppConstants.CONNECTION_TIME_OUT, TimeUnit.SECONDS)
         clientBuilder.readTimeout(AppConstants.CONNECTION_TIME_OUT, TimeUnit.SECONDS)
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(clientBuilder.build())
-            .build()
+        val retrofit =
+            Retrofit
+                .Builder()
+                .baseUrl(BuildConfig.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(clientBuilder.build())
+                .build()
         return retrofit.create(RestApi::class.java)
     }
 }

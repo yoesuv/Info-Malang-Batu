@@ -8,7 +8,6 @@ import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 
 @Dao
 interface PlaceDaoAccess {
-
     @Insert
     suspend fun insertPlaces(places: List<PlaceModel>)
 
@@ -20,5 +19,4 @@ interface PlaceDaoAccess {
 
     @Query("DELETE FROM PlaceModel")
     suspend fun deleteAllPlace()
-
 }

@@ -14,7 +14,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DetailViewModelsInstrumentedTest {
-
     private lateinit var placeItems: List<PlaceModel>
     private lateinit var galleryItems: List<GalleryModel>
 
@@ -45,14 +44,15 @@ class DetailViewModelsInstrumentedTest {
 
     @Test
     fun testFragmentDetailListPlaceViewModel_NullSafety() {
-        val placeModel = PlaceModel(
-            name = null,
-            location = null,
-            category = null,
-            description = null,
-            thumbnail = null,
-            image = null
-        )
+        val placeModel =
+            PlaceModel(
+                name = null,
+                location = null,
+                category = null,
+                description = null,
+                thumbnail = null,
+                image = null,
+            )
 
         var exceptionThrown = false
         try {
@@ -66,11 +66,12 @@ class DetailViewModelsInstrumentedTest {
 
     @Test
     fun testFragmentDetailGalleryViewModel_NullValues() {
-        val galleryModel = GalleryModel(
-            caption = null,
-            thumbnail = null,
-            image = null
-        )
+        val galleryModel =
+            GalleryModel(
+                caption = null,
+                thumbnail = null,
+                image = null,
+            )
 
         val viewModel = FragmentDetailGalleryViewModel(galleryModel)
 

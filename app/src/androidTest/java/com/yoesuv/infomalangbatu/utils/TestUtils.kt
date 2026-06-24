@@ -13,19 +13,20 @@ import java.util.concurrent.TimeoutException
 fun <T> LiveData<T>.getOrAwaitValue(
     time: Long = 2,
     timeUnit: TimeUnit = TimeUnit.SECONDS,
-    afterObserve: () -> Unit = {}
+    afterObserve: () -> Unit = {},
 ): T {
     var data: T? = null
     val latch = CountDownLatch(1)
-    val observer = object : Observer<T> {
-        override fun onChanged(value: T) {
-            data = value
-            latch.countDown()
-            runOnUiThread {
-                removeObserver(this)
+    val observer =
+        object : Observer<T> {
+            override fun onChanged(value: T) {
+                data = value
+                latch.countDown()
+                runOnUiThread {
+                    removeObserver(this)
+                }
             }
         }
-    }
     runOnUiThread {
         observeForever(observer)
     }
@@ -50,17 +51,18 @@ fun <T> LiveData<T>.getOrAwaitValue(
 fun <T> LiveData<T>.getOrAwaitValuee(
     time: Long = 2,
     timeUnit: TimeUnit = TimeUnit.SECONDS,
-    afterObserve: () -> Unit = {}
+    afterObserve: () -> Unit = {},
 ): T {
     var data: T? = null
     val latch = CountDownLatch(1)
-    val observer = object : Observer<T> {
-        override fun onChanged(value: T) {
-            data = value
-            latch.countDown()
-            this@getOrAwaitValuee.removeObserver(this)
+    val observer =
+        object : Observer<T> {
+            override fun onChanged(value: T) {
+                data = value
+                latch.countDown()
+                this@getOrAwaitValuee.removeObserver(this)
+            }
         }
-    }
     this.observeForever(observer)
 
     try {
@@ -70,7 +72,6 @@ fun <T> LiveData<T>.getOrAwaitValuee(
         if (!latch.await(time, timeUnit)) {
             throw TimeoutException("LiveData value was never set.")
         }
-
     } finally {
         this.removeObserver(observer)
     }
@@ -79,14 +80,8 @@ fun <T> LiveData<T>.getOrAwaitValuee(
     return data as T
 }
 
-fun loadPlaceItemsFromJson(): List<PlaceModel> {
-    return JsonParser.stringToObject("list_place.json", Array<PlaceModel>::class.java).toList()
-}
+fun loadPlaceItemsFromJson(): List<PlaceModel> = JsonParser.stringToObject("list_place.json", Array<PlaceModel>::class.java).toList()
 
-fun loadGalleryItemsFromJson(): List<GalleryModel> {
-    return JsonParser.stringToObject("gallery.json", Array<GalleryModel>::class.java).toList()
-}
+fun loadGalleryItemsFromJson(): List<GalleryModel> = JsonParser.stringToObject("gallery.json", Array<GalleryModel>::class.java).toList()
 
-fun loadMapsPinItemsFromJson(): List<PinModel> {
-    return JsonParser.stringToObject("maps_pin.json", Array<PinModel>::class.java).toList()
-}
+fun loadMapsPinItemsFromJson(): List<PinModel> = JsonParser.stringToObject("maps_pin.json", Array<PinModel>::class.java).toList()

@@ -1,10 +1,15 @@
 package com.yoesuv.infomalangbatu.menu.listplace.views
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
@@ -17,15 +22,20 @@ import com.yoesuv.infomalangbatu.menu.listplace.models.PlaceModel
 import com.yoesuv.infomalangbatu.menu.listplace.viewmodels.FragmentListPlaceViewModel
 import com.yoesuv.infomalangbatu.utils.bindings.ViewModelFactory
 
-class FragmentListPlace : Fragment(), MenuProvider {
-
+class FragmentListPlace :
+    Fragment(),
+    MenuProvider {
     private var binding: FragmentListplaceBinding? = null
     private lateinit var adapter: ListPlaceAdapter
     private val viewModel: FragmentListPlaceViewModel by viewModels {
         ViewModelFactory(AppDbRepository(requireContext()))
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         if (binding == null) {
             binding = FragmentListplaceBinding.inflate(inflater, container, false)
             binding?.listplace = viewModel
@@ -38,19 +48,26 @@ class FragmentListPlace : Fragment(), MenuProvider {
         return binding?.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         loadPlace(PlaceLocation.ALL)
     }
 
     private fun setupRecycler() {
-        adapter = ListPlaceAdapter {
-            onItemClick(it)
-        }
+        adapter =
+            ListPlaceAdapter {
+                onItemClick(it)
+            }
         binding?.recyclerViewListPlace?.adapter = adapter
     }
 
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+    override fun onCreateMenu(
+        menu: Menu,
+        menuInflater: MenuInflater,
+    ) {
         menuInflater.inflate(R.menu.menu_list_place, menu)
     }
 
@@ -89,5 +106,4 @@ class FragmentListPlace : Fragment(), MenuProvider {
         action.dataDetailListPlace = placeModel
         findNavController().navigate(action)
     }
-
 }

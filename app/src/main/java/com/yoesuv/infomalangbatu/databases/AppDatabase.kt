@@ -13,14 +13,16 @@ import com.yoesuv.infomalangbatu.menu.maps.models.PinModel
     entities = [
         PlaceModel::class,
         GalleryModel::class,
-        PinModel::class
-    ], version = 7,
-    exportSchema = false
+        PinModel::class,
+    ],
+    version = 7,
+    exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {
-
     abstract fun placeDaoAccess(): PlaceDaoAccess
+
     abstract fun galleryDaoAccess(): GalleryDaoAccess
+
     abstract fun mapPinDaoAccess(): MapPinDaoAccess
 
     companion object {
@@ -35,12 +37,10 @@ abstract class AppDatabase : RoomDatabase() {
             return instance
         }
 
-        private fun create(context: Context): AppDatabase {
-            return Room.databaseBuilder(context, AppDatabase::class.java, AppConstants.DATABASE_NAME)
+        private fun create(context: Context): AppDatabase =
+            Room
+                .databaseBuilder(context, AppDatabase::class.java, AppConstants.DATABASE_NAME)
                 .fallbackToDestructiveMigration(dropAllTables = true)
                 .build()
-        }
     }
-
-
 }

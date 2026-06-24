@@ -1,10 +1,10 @@
 package com.yoesuv.infomalangbatu.menu.gallery.views
 
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,14 +17,17 @@ import com.yoesuv.infomalangbatu.menu.gallery.viewmodels.FragmentGalleryViewMode
 import com.yoesuv.infomalangbatu.utils.bindings.ViewModelFactory
 
 class FragmentGallery : Fragment() {
-
     private var binding: FragmentGalleryBinding? = null
     private lateinit var adapter: GalleryAdapter
     private val viewModel: FragmentGalleryViewModel by viewModels {
         ViewModelFactory(AppDbRepository(requireContext()))
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false)
             binding?.gallery = viewModel
@@ -34,15 +37,19 @@ class FragmentGallery : Fragment() {
         return binding?.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         loadGallery()
     }
 
     private fun setupRecycler() {
-        adapter = GalleryAdapter { galleryModel ->
-            onItemGalleryClick(galleryModel)
-        }
+        adapter =
+            GalleryAdapter { galleryModel ->
+                onItemGalleryClick(galleryModel)
+            }
         binding?.recyclerViewGallery?.adapter = adapter
     }
 
@@ -63,5 +70,4 @@ class FragmentGallery : Fragment() {
         action.dataDetailGallery = galleryModel
         findNavController().navigate(action)
     }
-
 }
